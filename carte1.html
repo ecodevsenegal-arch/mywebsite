@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 500px; width: 100%; }
+
+    .legend {
+      background: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+      line-height: 1.8;
+      font-size: 12px;
+    }
+    .legend h4 { margin: 0 0 8px 0; font-size: 12px; }
+    .legend-bubble {
+      display: inline-block;
+      border-radius: 50%;
+      background: rgba(0, 102, 204, 0.5);
+      border: 2px solid #0066cc;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([15.8, -15.0], 7);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Données des départements
+    const departements = [
+      { nom: 'Saint-Louis', lat: 16.0326, lng: -16.4818, beneficiaires: 1000, region: 'Saint-Louis' },
+      { nom: 'Dagana',      lat: 16.5167, lng: -15.5000, beneficiaires: 2500, region: 'Saint-Louis' },
+      { nom: 'Podor',       lat: 16.6503, lng: -14.9603, beneficiaires: 3000, region: 'Saint-Louis' },
+      { nom: 'Ranérou',     lat: 15.3000, lng: -13.9667, beneficiaires:  900, region: 'Matam'       },
+      { nom: 'Kanel',       lat: 15.4958, lng: -13.1769, beneficiaires: 1200, region: 'Matam'       },
+      { nom: 'Matam',       lat: 15.6559, lng: -13.2553, beneficiaires: 2000, region: 'Matam'       },
+    ];
+
+    // Rayon proportionnel : on ramène la valeur max à 40px
+    const maxBenef  = Math.max(...departements.map(d => d.beneficiaires));
+    const maxRadius = 20;
+    const getRadius = b => Math.sqrt(b / maxBenef) * maxRadius;
+
+    // Couleur par région
+    const couleurs = {
+      'Saint-Louis': { fill: 'rgba(0, 102, 204, 0.5)', border: '#0066cc' },
+      'Matam':       { fill: 'rgba(220, 80,  20, 0.5)', border: '#dc5014' },
+    };
+
+    departements.forEach(d => {
+      const c = couleurs[d.region];
+      L.circleMarker([d.lat, d.lng], {
+        radius:      getRadius(d.beneficiaires),
+        fillColor:   c.fill,
+        color:       c.border,
+        weight:      2,
+        opacity:     1,
+        fillOpacity: 0.7,
+      })
+      .addTo(map)
+      .bindPopup(`
+        <b>${d.nom}</b><br>
+        Région : ${d.region}<br>
+        Bénéficiaires : <b>${d.beneficiaires.toLocaleString()}</b>
+      `);
+    });
+
+    // ── Légende ───────────────────────────────────────────
+    const legend = L.control({ position: 'bottomright' });
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div', 'legend');
+      div.innerHTML = `
+        <h4>Bénéficiaires</h4>
+        ${[3000, 2000, 1000].map(v => `
+          <div>
+            <span class="legend-bubble" style="
+              width:${getRadius(v) * 2}px;
+              height:${getRadius(v) * 2}px;">
+            </span>
+            ${v.toLocaleString()}
+          </div>`).join('')}
+        <hr style="margin:8px 0">
+        <div><span class="legend-bubble" style="width:14px;height:14px;background:rgba(0,102,204,0.5);border-color:#0066cc"></span> Saint-Louis</div>
+        <div><span class="legend-bubble" style="width:14px;height:14px;background:rgba(220,80,20,0.5);border-color:#dc5014"></span> Matam</div>
+      `;
+      return div;
+    };
+    legend.addTo(map);
+  </script>
+  <a href="index.html">Accueil</a>
+</body>
+</html>

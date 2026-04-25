@@ -2,6 +2,9 @@
 <html>
 <head>
     <style>
+        html{
+            scroll-behavior:smooth;
+       }
         nav {
             display: flex;
             gap: 10px;
@@ -16,20 +19,22 @@
             border-radius: 5px;
             font-family: Arial, sans-serif;
             background-color: #444;
-            transition: background-color 0.3s;
+            transition: background-color 0.5s;
         }
 
         nav a:hover {
-            background-color: #0056cc;
-            color: white;
+            background-color:aqua;
+            color: #0056cc;
+            font-weight: bold;
         }
 
         nav a.active {
-            background-color: #007bff;
+            background-color: #0056cc;
             color: white;
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
+    
     </style>
 </head>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -45,6 +50,7 @@
     <a href="Formations.html">Formations</a>
     <a href="contacts.html">Contact</a>
 </nav>
+
 
 <hr style="border: 1.5px solid blue; margin: 0 0 5px 0;">
 <h1 style="border: solid blue; margin:0 1000px 0 10px;border-radius: 10px;background-color:aqua;">Titre 1</h1>
@@ -70,13 +76,13 @@
     </ol>
 </ol>
 </div>
-<div>
+<div style="float: left;">
 <a href="https://www.ecodev-senegal.com" target="_blank">Visitez notre site</a>
-<p>
-    <a href="contacts.html">Contact</a>
-</p>
 </div>
-<div>
+<div style="float: right;">
+<a href="contacts.html">Contact</a>
+</div>
+<div style="float: right;">
     <img src="Formation TDB Power BI V2.jpg" alt="Enseigne ECODEV" height="600" style="margin: 0 200px;border-style: solid red;">
 </div>
 </body>
