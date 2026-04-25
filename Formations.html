@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <title>Formations - ECODEV</title>
+</head>
 <style>
     .texte1 {
         font-family: Arial, sans-serif;
@@ -40,14 +43,31 @@
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
-        nav a.inactive {
-            background-color: #007bff;
+        nav1 {
+            gap: 5px;
+            padding: 0px 0px;
+        }
+        nav1 a {
+            color: #aaa;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            background-color: #444;
+            transition: background-color 0.5s;
+        }
+        nav1 a:hover {
+            background-color:#aaf3c1;
+            color: #0056cc;
+            font-weight: bold;
+        }
+         nav1 a.active {
+            background-color: #02932f;
             color: white;
             font-weight: bold;
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+            box-shadow: 0 0 10px rgba(113, 250, 191, 0.7);
         }
 </style>
-</head>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
 <div>
@@ -67,15 +87,15 @@ class="titre">ESPACE FORMATION</h1></hr>
 <p class="texte1"> ECODEV est un cabinet d’expertise pluridisciplinaire, spécialisé dans l'ingénierie et le conseil dans les domaines de l’aménagement du territoire, le système d’information géographique (SIG) et la cartographie, l’agroforesterie, la gestion des organisations, le management et le suivi évaluation de projets et programmes. L’équipe est composée de plusieurs associés / collaborateurs, d’experts et spécialistes de l’environnement et du développement durable.</p>
 </div>
 <div>
-<h2 class="titre">Mission</h2>
-<nav style="background-color: transparent; display: flex;
+<h2 class="titre">Nos formations</h2>
+<nav1 style="background-color: transparent; display: flex;
             gap: 10px;padding: 20px 25px;">
-    <a href="formation_excel.html" class="inactive">Excel</a>
-    <a href="formation_power_bi.html" class="inactive">Power BI</a>
-    <a href="formation_power_query.html" class="inactive">Power Query</a>
-    <a href="Formations.html" class="inactive">Analyse de données</a>
-    <a href="formation_psse_gar.html" class="inactive">Suivi-évaluation</a>
-</nav>
+    <a href="formation_excel.html">Excel</a>
+    <a href="formation_power_bi.html">Power BI</a>
+    <a href="formation_power_query.html">Power Query</a>
+    <a href="Formations.html">Analyse de données</a>
+    <a href="formation_psse_gar.html">Suivi-évaluation</a>
+</nav1>
 </div>
 <div>
 <a href="https://www.ecodev-senegal.com" target="_blank">Visitez notre site</a>
