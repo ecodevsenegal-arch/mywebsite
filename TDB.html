@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tableau de Bord Logistique</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #0078d4;
+      color: white;
+      padding: 5px 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      padding: 10px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e8e8e8;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #555;
+      background: #fafafa;
+    }
+
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      /* Ratio 1140 / 541.25 ≈ 56.25% (proche du 16:9) */
+      padding-top: 40.25%;
+    }
+
+    .iframe-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 0.8rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    📊 <h1>Tableau de Bord — Logistique & Matériels Électroniques</h1>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">📈 Rapport Power BI</div>
+      <div class="iframe-wrapper">
+        <iframe
+          title="TABLEAU DE BORD LOGISTIQUE-MATÉRIELS ÉLECTRONIQUES"
+          src="https://app.powerbi.com/reportEmbed?reportId=2f3863c4-3c24-40f0-851c-89a0c0015cc6&autoAuth=true&ctid=86fc4b31-2ff6-4309-b7f3-133bd49cbce6"
+          frameborder="0"
+          allowfullscreen="true">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+     2026 — Tableau de Bord Logistique
+  </footer>
+
+</body>
+</html>
