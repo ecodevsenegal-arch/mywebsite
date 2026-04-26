@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Formations - ECODEV</title>
 </head>
+<link rel="stylesheet" href="Styles formations.CSS">
 <style>
     .texte1 {
         font-family: Arial, sans-serif;
@@ -70,20 +71,44 @@
             font-weight: bold;
             box-shadow: 0 0 10px rgba(113, 250, 191, 0.7);
         }
+        nav2 {
+            display: flex;
+            gap: 15px;
+            padding: 10px 10px;
+            border-radius: 15px;
+        }
+        nav2 img:hover {
+            color: #0056cc;
+            font-weight: bold;
+            width: 250px;
+            height: 200px;
+        }
 </style>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
 <div>
     <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
 </div>
-
+<div class="nav-dropdown">
 <nav>
     <a href="index.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/images/refs/heads/main/icons8-page-d%E2%80%99accueil-96.png" height="25" ;style="margin: 0 30px 0 0;padding-right: 10px;">Accueil</a>
     <a href="a propos.html ">À propos</a>
     <a href="services.html">Services</a>
     <a href="Formations.html" class="active">Formations</a>
     <a href="contacts.html">Contact</a>
-</nav>
+    <a href="Espace_formation_ECODEV.html">Espace campus</a>
+
+</nav><!-- Sous-menu qui apparaît au survol -->
+<div class="dropdown-menu">
+    <a href="formation_excel.html">🟩 Excel</a>
+    <a href="formation_power_bi.html">🟨 Power BI</a>
+    <a href="formation_power_query.html">🟩 Power Query</a>
+    <a href="formation_kobo.html">🔵 KoboToolbox</a>
+    <a href="formation_kobo.html">📊 Analyse de données</a>
+    <a href="formation_suivi.html">🔴 Suivi-Évaluation</a>
+  </div>
+
+</div>
 
 <hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"><h1
 class="titre">ESPACE FORMATION</h1></hr>
@@ -114,7 +139,7 @@ class="titre">ESPACE FORMATION</h1></hr>
     <a href="contacts.html">Contact</a>
 </p>
 </div>
-
+<footer style="float: right;font-weight: bold;">@ECODEV SENEGAL-2026</footer>
 </body>
 
 </html>

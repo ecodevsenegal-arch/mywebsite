@@ -1,0 +1,82 @@
+/* CSS */
+.nav-dropdown {
+  position: relative;
+  display: flex;
+}
+
+/* Sous-menu caché par défaut */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;          /* juste en dessous du bouton */
+  left: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  min-width: 200px;
+  z-index: 999;
+  overflow: hidden;
+}
+
+/* Liens du sous-menu */
+.dropdown-menu a {
+  display: flex;
+  padding: 11px 18px;
+  text-decoration: none;
+  color: #1a2d5a;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.35s;
+}
+
+.dropdown-menu a:hover {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+/* ✅ Afficher au survol du conteneur */
+.nav-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Optionnel : animation douce */
+.dropdown-menu {
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+nav {
+            display: flex;
+            gap: 10px;
+            padding: 10px 20px;
+            background-color: #97e0f4;
+            border-radius: 10px 10px 0 0;
+        }
+nav a {
+            color: #444;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            background-color: #AAA;
+            transition: background-color 0.3s;
+        }
+nav a:hover {
+            background-color:#d4f7b3;
+            color: #011A1E;
+            font-weight: bold;
+        }
+nav a.active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+        }

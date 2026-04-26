@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECODEV – Espace Formation</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Styles formations.CSS">
+<style>
+  :root {
+    --navy: #1a2d5a;
+    --blue: #1565c0;
+    --sky: #29b6f6;
+    --cyan: #00e5ff;
+    --teal: #00bfa5;
+    --green: #2e7d32;
+    --light-green: #43a047;
+    --white: #ffffff;
+    --off-white: #f0f8ff;
+    --card-bg: rgba(255,255,255,0.92);
+    --shadow: 0 8px 32px rgba(21,101,192,0.13);
+    --radius: 14px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;
+    min-height: 100vh;
+    color: #1a2d5a;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: white;
+    padding: 14px 36px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    position: sticky; top: 0; z-index: 100;
+  }
+  /* ── NAV ── */
+  nav {
+    background: linear-gradient(90deg, #b3d9f7 0%, #c8ecf7 50%, #b3e5fc 100%);
+    padding: 10px 36px;
+    display: flex; gap: 8px; align-items: center;
+    border-bottom: 3px solid var(--blue);
+  }
+  nav :hover { background: white; }
+  nav .active { background: var(--blue); color: white; }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO SECTION ── */
+  .hero-banner {
+    background: linear-gradient(90deg, var(--cyan) 0%, #00e5c8 100%);
+    margin: 28px 36px 0;
+    border-radius: 10px;
+    padding: 16px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-banner h2 { font-family: 'Raleway', sans-serif; font-size: 28px; font-weight: 900; color: var(--navy); }
+
+  .intro-text {
+    margin: 18px 36px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #1a2d5a;
+    max-width: 1000px;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    background: linear-gradient(90deg, var(--cyan) 0%, #00e5c8 100%);
+    margin: 24px 36px 16px;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 18px; font-weight: 800;
+    color: var(--navy);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+
+  /* ── FORMATION CARDS GRID ── */
+  .formations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    padding: 0 36px 40px;
+    margin-top: 8px;
+  }
+
+  .formation-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  .formation-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(21,101,192,0.18);
+    border-color: var(--sky);
+  }
+
+  .card-header {
+    padding: 22px 20px 16px;
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .card-title { font-family: 'Raleway', sans-serif; font-size: 17px; font-weight: 800; color: var(--navy); }
+  .card-sub { font-size: 12px; color: #666; margin-top: 2px; }
+
+  .card-body { padding: 0 20px 16px; }
+  .card-desc { font-size: 13.5px; color: #444; line-height: 1.6; }
+
+  .card-sessions {
+    margin: 12px 0 0;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .session-badge {
+    background: #e3f2fd; color: var(--blue);
+    border-radius: 20px; font-size: 11.5px; font-weight: 700;
+    padding: 4px 10px;
+  }
+
+  .card-footer {
+    padding: 14px 20px;
+    border-top: 1px solid #e8f4fd;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .btn-voir {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px; font-weight: 800;
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s;
+  }
+  .btn-voir:hover { filter: brightness(1.12); transform: scale(1.04); }
+
+  .card-meta { font-size: 12px; color: #888; }
+  .card-meta span { display: block; }
+
+  /* ── VIDEO PAGE ── */
+  .video-page-header {
+    background: var(--navy);
+    padding: 20px 36px;
+    display: flex; align-items: center; gap: 16px;
+    color: white;
+  }
+  .back-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700; font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.25); }
+
+  .video-page-title { font-family: 'Raleway', sans-serif; font-size: 22px; font-weight: 900; }
+  .video-page-sub { font-size: 13px; opacity: 0.8; margin-top: 2px; }
+
+  .video-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    padding: 24px 36px 40px;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* Main Video */
+  .main-video-wrap {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .main-video-player {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #0a1628;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .video-placeholder {
+    text-align: center; color: rgba(255,255,255,0.7);
+  }
+  .video-placeholder .play-btn {
+    width: 70px; height: 70px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+  .video-placeholder .play-btn:hover { background: rgba(255,255,255,0.25); }
+  .video-placeholder p { font-size: 14px; }
+
+  iframe.video-frame { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+
+  .video-info { padding: 18px 20px; }
+  .video-info h3 { font-family: 'Raleway', sans-serif; font-size: 17px; font-weight: 800; color: var(--navy); }
+  .video-info p { font-size: 13.5px; color: #555; margin-top: 6px; line-height: 1.6; }
+  .video-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px; }
+  .vtag { background: #e8f5e9; color: var(--green); border-radius: 20px; font-size: 11.5px; font-weight: 700; padding: 4px 11px; }
+
+  /* Playlist */
+  .playlist-wrap {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    height: fit-content;
+  }
+
+  .playlist-header {
+    padding: 14px 18px;
+    border-bottom: 2px solid #e8f4fd;
+    font-weight: 800; font-size: 14px;
+    color: var(--navy);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .playlist-count {
+    background: var(--blue); color: white;
+    border-radius: 20px; font-size: 11px; font-weight: 800;
+    padding: 2px 9px;
+  }
+
+  .playlist-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 18px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f7ff;
+    transition: background 0.15s;
+  }
+  .playlist-item:hover { background: #e8f4fd; }
+  .playlist-item.active { background: #dbeafe; border-left: 3px solid var(--blue); }
+
+  .pi-thumb {
+    width: 70px; height: 45px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #1a2d5a;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .pi-info { flex: 1; min-width: 0; }
+  .pi-title { font-size: 13px; font-weight: 700; color: #1a2d5a; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pi-dur { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .pi-num {
+    font-size: 12px; font-weight: 800;
+    color: #aaa; min-width: 20px; text-align: right;
+  }
+  .playlist-item.active .pi-num { color: var(--blue); }
+
+  /* ── FILTERS BAR ── */
+  .filter-bar {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    padding: 0 36px 20px;
+    align-items: center;
+  }
+  .filter-label { font-size: 13px; font-weight: 700; color: #666; }
+  .filter-btn {
+    background: rgba(255,255,255,0.7);
+    border: 2px solid #dde;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12.5px; font-weight: 700;
+    color: #1a2d5a;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar { height: 4px; background: #e3f2fd; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .video-layout { grid-template-columns: 1fr; }
+    header, nav, .hero-banner, .intro-text, .section-title, .formations-grid, .filter-bar { margin-left: 16px; margin-right: 16px; padding-left: 0; padding-right: 0; }
+    .video-layout { padding: 16px; }
+    .video-page-header { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header style="height: 75px;background: transparent;">
+  <div>
+    <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
+</div>
+
+</header>
+
+<!-- NAV -->
+<nav>
+    <a href="index.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/images/refs/heads/main/icons8-page-d%E2%80%99accueil-96.png" height="20" ;style="margin: 0 0 0 0;padding-right: 10px; gap: 10px;">Accueil</a>
+    <a href="a propos.html ">À propos</a>
+    <a href="services.html">Services</a>
+    <a href="Formations.html" >Formations</a>
+    <a href="contacts.html">Contact</a>
+    <a href="Espace_formation_ECODEV.html" class="active">Espace campus</a>
+</nav>
+
+<!-- ════════════════════════════════════════
+     PAGE: FORMATIONS (liste)
+════════════════════════════════════════ -->
+<div id="page-formations" class="page active">
+
+  <div class="hero-banner">
+    <span style="font-size:28px">🎓</span>
+    <h2>ESPACE FORMATION</h2>
+  </div>
+
+  <p class="intro-text">
+    ECODEV est un cabinet d'expertise pluridisciplinaire, spécialisé dans l'ingénierie et le conseil dans les domaines de l'aménagement du territoire, le système d'information géographique (SIG) et la cartographie, l'agroforesterie, la gestion des organisations, le management et le suivi évaluation de projets et programmes.
+    L'équipe est composée de plusieurs associés / collaborateurs, d'experts et spécialistes de l'environnement et du développement durable.
+  </p>
+
+  <div class="section-title">📚 Nos formations disponibles</div>
+
+  <div class="filter-bar" style="margin-top:0;">
+    <span class="filter-label">Filtrer :</span>
+    <button class="filter-btn active" onclick="filterCards('all',this)">Toutes</button>
+    <button class="filter-btn" onclick="filterCards('debutant',this)">Débutant</button>
+    <button class="filter-btn" onclick="filterCards('intermediaire',this)">Intermédiaire</button>
+    <button class="filter-btn" onclick="filterCards('avance',this)">Avancé</button>
+  </div>
+
+  <div class="formations-grid">
+
+    <!-- Excel -->
+    <div class="formation-card" data-level="debutant intermediaire avance" onclick="openVideoPage('excel')">
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;">
+          <img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="35" style="margin: 0 0 0 0;">
+        </div>
+        <div>
+          <div class="card-title">Microsoft Excel</div>
+          <div class="card-sub">Tableur & Analyse de données</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Maîtrisez Excel de A à Z : formules avancées, tableaux croisés dynamiques, macros VBA et tableaux de bord professionnels.</p>
+        <div class="card-sessions">
+          <span class="session-badge">📅 Session Débutant</span>
+          <span class="session-badge">📅 Session Intermédiaire</span>
+          <span class="session-badge">📅 Session Avancé</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span>📹 12 vidéos</span>
+          <span>⏱ ~8h de contenu</span>
+        </div>
+        <button class="btn-voir" style="background:linear-gradient(135deg,#2e7d32,#43a047)">Voir les cours →</button>
+      </div>
+    </div>
+
+    <!-- Power BI -->
+    <div class="formation-card" data-level="intermediaire avance" onclick="openVideoPage('powerbi')">
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;">
+      <img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="45" style="margin: 0 0 0 0;">
+        </div>
+        <div>
+          <div class="card-title">Power BI</div>
+          <div class="card-sub">Business Intelligence & Dashboards</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Créez des rapports interactifs et des tableaux de bord dynamiques pour visualiser et analyser vos données efficacement.</p>
+        <div class="card-sessions">
+          <span class="session-badge">📅 Session Intermédiaire</span>
+          <span class="session-badge">📅 Session Avancé</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span>📹 10 vidéos</span>
+          <span>⏱ ~6h de contenu</span>
+        </div>
+        <button class="btn-voir" style="background:linear-gradient(135deg,#e65100,#f4a900)">Voir les cours →</button>
+      </div>
+    </div>
+
+    <!-- Power Query -->
+    <div class="formation-card" data-level="intermediaire" onclick="openVideoPage('powerquery')">
+      <div class="card-header">
+      <div class="card-icon" style="background:transparent;">
+      <img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="45" style="margin: 0 0 0 0;">
+        </div>
+        <div>
+          <div class="card-title">Power Query</div>
+          <div class="card-sub">ETL & Transformation de données</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Importez, nettoyez et transformez vos données depuis n'importe quelle source grâce à Power Query dans Excel et Power BI.</p>
+        <div class="card-sessions">
+          <span class="session-badge">📅 Session Intermédiaire</span>
+          <span class="session-badge">📅 Session Pratique</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span>📹 8 vidéos</span>
+          <span>⏱ ~5h de contenu</span>
+        </div>
+        <button class="btn-voir" style="background:linear-gradient(135deg,#1b5e20,#388e3c)">Voir les cours →</button>
+      </div>
+    </div>
+
+    <!-- KoboToolbox -->
+    <div class="formation-card" data-level="debutant intermediaire" onclick="openVideoPage('kobotoolbox')">
+      <div class="card-header">
+        <div class="card-icon" style="background:#e3f2fd;">🔵</div>
+        <div>
+          <div class="card-title">KoboToolbox</div>
+          <div class="card-sub">Collecte de données terrain</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Concevez et déployez des formulaires de collecte de données sur le terrain, hors connexion, pour vos enquêtes et études.</p>
+        <div class="card-sessions">
+          <span class="session-badge">📅 Session Débutant</span>
+          <span class="session-badge">📅 Session Avancé</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span>📹 9 vidéos</span>
+          <span>⏱ ~5h30 de contenu</span>
+        </div>
+        <button class="btn-voir" style="background:linear-gradient(135deg,#0d47a1,#1976d2)">Voir les cours →</button>
+      </div>
+    </div>
+<!-- dataanalyse -->
+    <div class="formation-card" data-level="debutant intermediaire" onclick="openVideoPage('dataanalyse')">
+      <div class="card-header">
+        <div class="card-icon" style="background:#e3f2fd;">🔵</div>
+        <div>
+          <div class="card-title">Analyse de données</div>
+          <div class="card-sub">Collecte, transformation et analyse de données</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Collectez, transformez et nettoyez des données, analysez et créez des tableaux de bord interactifs</p>
+        <div class="card-sessions">
+          <span class="session-badge">📅 Session Débutant</span>
+          <span class="session-badge">📅 Session Avancé</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span>📹 9 vidéos</span>
+          <span>⏱ ~5h30 de contenu</span>
+        </div>
+        <button class="btn-voir" style="background:linear-gradient(135deg,#0d47a1,#1976d2)">Voir les cours →</button>
+      </div>
+    </div>
+    <!-- Suivi-Évaluation -->
+    <div class="formation-card" data-level="intermediaire avance" onclick="openVideoPage('suivieval')">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fce4ec;">🔴</div>
+        <div>
+          <div class="card-title">Suivi-Évaluation</div>
+          <div class="card-sub">Projets & Programmes</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Maîtrisez les outils et méthodes du suivi-évaluation de projets et programmes : cadre logique, indicateurs, rapportage.</p>
+        <div class="card-sessions">
+          <span class="session-badge">📅 Session Intermédiaire</span>
+          <span class="session-badge">📅 Session Pratique</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span>📹 11 vidéos</span>
+          <span>⏱ ~7h de contenu</span>
+        </div>
+        <button class="btn-voir" style="background:linear-gradient(135deg,#880e4f,#c2185b)">Voir les cours →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE: VIDÉOS (template dynamique)
+════════════════════════════════════════ -->
+<div id="page-videos" class="page">
+
+  <div class="video-page-header" id="video-page-header">
+    <button class="back-btn" onclick="showMainPage()">← Retour aux formations</button>
+    <div>
+      <div class="video-page-title" id="vp-title">Titre</div>
+      <div class="video-page-sub" id="vp-sub">Sous-titre</div>
+    </div>
+  </div>
+
+  <div class="video-layout">
+
+    <!-- Main player + info -->
+    <div>
+      <div class="main-video-wrap">
+        <div class="main-video-player" id="main-player">
+          <div class="video-placeholder" id="player-placeholder">
+            <div class="play-btn" onclick="playVideo()">▶</div>
+            <p id="placeholder-text">Sélectionnez une vidéo dans la liste</p>
+          </div>
+          <iframe class="video-frame" id="video-iframe" src="" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen style="display:none;"></iframe>
+        </div>
+        <div class="video-info">
+          <h3 id="current-video-title">Titre de la vidéo</h3>
+          <p id="current-video-desc">Description de la vidéo</p>
+          <div class="video-tags" id="current-video-tags"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Playlist -->
+    <div>
+      <div class="playlist-wrap">
+        <div class="playlist-header">
+          <span>📋 Programme</span>
+          <span class="playlist-count" id="playlist-count">0</span>
+        </div>
+        <div id="playlist-items"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     DATA & SCRIPT
+════════════════════════════════════════ -->
+<script>
+const formations = {
+  excel: {
+    title: "Microsoft Excel",
+    sub: "Tableur & Analyse de données avancée",
+    color: "#2e7d32",
+    emoji: "📊",
+    videos: [
+      { title: "Les bases et fondamentaux de Microsoft Excel", dur: "22 min", desc: "Découverte de l'interface Excel, navigation dans les feuilles, raccourcis clavier essentiels.", tags: ["Débutant","Interface"], youtubeId: "FzMIoG4DFn0" },
+      { title: "Formules de base : SOMME, MOYENNE, NB", dur: "30 min", desc: "Les formules fondamentales pour calculer, compter et analyser des données.", tags: ["Débutant","Formules"], youtubeId: "" },
+      { title: "Formules conditionnelles : SI, SI.ENS, SOMME.SI", dur: "38 min", desc: "Apprenez à écrire des formules logiques et conditionnelles pour automatiser vos calculs.", tags: ["Intermédiaire","Formules"], youtubeId: "" },
+      { title: "Fonctions de recherche : RECHERCHEV, INDEX-EQUIV", dur: "42 min", desc: "Récupérez des données entre tableaux avec les fonctions de recherche les plus puissantes.", tags: ["Intermédiaire","Formules"], youtubeId: "" },
+      { title: "Mise en forme conditionnelle avancée", dur: "26 min", desc: "Visualisez vos données automatiquement grâce aux règles de mise en forme conditionnelle.", tags: ["Intermédiaire","Visualisation"], youtubeId: "" },
+      { title: "Tableaux croisés dynamiques (TCD) — Niveau 1", dur: "45 min", desc: "Créez des synthèses et analyses croisées sans écrire une seule formule.", tags: ["Intermédiaire","TCD"], youtubeId: "" },
+      { title: "Tableaux croisés dynamiques (TCD) — Niveau 2", dur: "48 min", desc: "Champs calculés, segments, chronologies et liaisons entre TCD.", tags: ["Avancé","TCD"], youtubeId: "" },
+      { title: "Graphiques & Visualisation de données", dur: "36 min", desc: "Créez des graphiques professionnels et interactifs pour vos présentations.", tags: ["Intermédiaire","Visualisation"], youtubeId: "" },
+      { title: "Introduction aux Macros VBA", dur: "52 min", desc: "Automatisez les tâches répétitives avec l'enregistreur de macros et les bases de VBA.", tags: ["Avancé","VBA"], youtubeId: "" },
+      { title: "Tableau de bord professionnel complet", dur: "60 min", desc: "Projet final : construisez un tableau de bord interactif de A à Z.", tags: ["Avancé","Projet"], youtubeId: "" },
+    ]
+  },
+
+  powerbi: {
+    title: "Power BI",
+    sub: "Business Intelligence & Tableaux de bord interactifs",
+    color: "#e65100",
+    emoji: "🟨",
+    videos: [
+      { title: "Introduction aux Tableaux de Bord et aux Outils du BI", dur: "01 heure 33 min", desc: "Téléchargement, installation et première prise en main de l'interface Power BI Desktop.", tags: ["Débutant","Interface"], youtubeId: "x3ZQbHKa5KQ" },
+      { title: "Préparation des données dans Excel & Power BI", dur: "01 heure 37 min", desc: "Connexion à Excel, CSV, bases de données SQL et sources web, préparez et transformez vos données directement dans Power BI.", tags: ["Débutant","Données"], youtubeId: "ElFZUIpmUBo" },
+      { title: "01. La modélisation des données & relations", dur: "02 heure 18 min", desc: "Créez un modèle de données efficace avec des relations entre tables.", tags: ["Intermédiaire","Power Query"], youtubeId: "hnx_JXK_8H8" },
+      { title: "O2. La modélisation des données & relations", dur: "01 heure 06 min", desc: "Créez un modèle de données efficace avec des relations entre tables.", tags: ["Intermédiaire","Power Query"], youtubeId: "OeMqs3IiItI" },
+      { title: "Calculs et indicateurs (formules Excel et DAX)", dur: "45 min", desc: "Écrivez vos premières mesures et colonnes calculées en DAX.", tags: ["Intermédiaire","DAX"], youtubeId: "" },
+      { title: "Conception de Tableaux de Bord avec Excel", dur: "55 min", desc: "Concevez votre premièr tableau de bord avec Excel.", tags: ["Intermédiaire","Tableau de Bord"], youtubeId: "" },
+      { title: "Mesures DAX avancées : CALCULATE, FILTER", dur: "50 min", desc: "Maîtrisez les fonctions CALCULATE et FILTER pour des analyses complexes.", tags: ["Avancé","DAX"], youtubeId: "" },
+      { title: "Conception de Tableaux de Bord avec Power BI & Création de visuels interactifs", dur: "42 min", desc: "Graphiques, cartes, KPI, segments et filtres croisés sur vos rapports.", tags: ["Intermédiaire","Visuels"], youtubeId: "" },
+      { title: "Publication & Partage sur Power BI Service", dur: "30 min", desc: "Publiez vos rapports en ligne et partagez avec votre équipe.", tags: ["Avancé","Service"], youtubeId: "" },
+      { title: "Projet complet : Tableau de bord RH", dur: "65 min", desc: "Cas pratique : dashboard de suivi des ressources humaines de A à Z.", tags: ["Avancé","Projet"], youtubeId: "" },
+    ]
+  },
+
+  powerquery: {
+    title: "Power Query",
+    sub: "ETL & Transformation de données",
+    color: "#1b5e20",
+    emoji: "🟩",
+    videos: [
+      { title: "Qu'est-ce que Power Query ?", dur: "18 min", desc: "Présentation de Power Query, ses cas d'usage et son intégration dans Excel et Power BI.", tags: ["Débutant","Introduction"], youtubeId: "" },
+      { title: "Importer des données depuis différentes sources", dur: "32 min", desc: "Connexion à Excel, CSV, web, dossiers et bases de données.", tags: ["Débutant","Import"], youtubeId: "" },
+      { title: "Nettoyer et transformer des données", dur: "42 min", desc: "Supprimer doublons, gérer les erreurs, renommer colonnes, pivoter/dépivoter.", tags: ["Intermédiaire","Nettoyage"], youtubeId: "" },
+      { title: "Fusionner & Combiner des requêtes", dur: "38 min", desc: "Jointures entre tables, append de requêtes, fusion conditionnelle.", tags: ["Intermédiaire","Fusion"], youtubeId: "" },
+      { title: "Introduction au langage M", dur: "45 min", desc: "Comprenez la syntaxe M et éditez vos requêtes manuellement.", tags: ["Avancé","Langage M"], youtubeId: "" },
+      { title: "Automatisation & Actualisation des données", dur: "28 min", desc: "Planifiez l'actualisation automatique de vos requêtes Power Query.", tags: ["Avancé","Automatisation"], youtubeId: "" },
+      { title: "Cas pratique : Pipeline de données terrain", dur: "55 min", desc: "Projet complet : nettoyage et consolidation de données collectées sur le terrain.", tags: ["Avancé","Projet"], youtubeId: "" },
+    ]
+  },
+
+  kobotoolbox: {
+    title: "KoboToolbox",
+    sub: "Collecte de données terrain & Enquêtes",
+    color: "#0d47a1",
+    emoji: "🔵",
+    videos: [
+      { title: "Introduction à KoboToolbox", dur: "20 min", desc: "Présentation de la plateforme, création de compte et navigation dans l'interface.", tags: ["Débutant","Introduction"], youtubeId: "" },
+      { title: "Créer votre premier formulaire", dur: "35 min", desc: "Conception d'un questionnaire : types de questions, logique, contraintes.", tags: ["Débutant","Formulaire"], youtubeId: "" },
+      { title: "Logique conditionnelle & Skip Logic", dur: "30 min", desc: "Afficher ou masquer des questions selon les réponses précédentes.", tags: ["Intermédiaire","Logique"], youtubeId: "" },
+      { title: "Collecte de données hors ligne", dur: "25 min", desc: "Utiliser KoboCollect sur Android pour collecter des données sans internet.", tags: ["Intermédiaire","Terrain"], youtubeId: "" },
+      { title: "Gestion des soumissions & Validation", dur: "28 min", desc: "Supervisez les données collectées, validez et corrigez les soumissions.", tags: ["Intermédiaire","Gestion"], youtubeId: "" },
+      { title: "Exportation & Analyse des données", dur: "38 min", desc: "Exportez vers Excel, intégrez avec Power BI, analysez vos résultats.", tags: ["Avancé","Analyse"], youtubeId: "" },
+      { title: "Formulaires avancés : matrices & répétitions", dur: "42 min", desc: "Groupes de questions, questions répétées et matrices complexes.", tags: ["Avancé","Avancé"], youtubeId: "" },
+      { title: "Projet : Enquête de suivi communautaire", dur: "50 min", desc: "Cas pratique complet : conception et déploiement d'une enquête terrain.", tags: ["Avancé","Projet"], youtubeId: "" },
+    ]
+  },
+
+  dataanalyse: {
+    title: "Analyse de données",
+    sub: "Méthodes & Outils pour projets et programmes",
+    color: "#880e4f",
+    emoji: "🔴",
+    videos: [
+      { title: "Concepts fondamentaux du Suivi-Évaluation", dur: "30 min", desc: "Définitions, fonctions, acteurs et cycle du suivi-évaluation dans les projets.", tags: ["Débutant","Concepts"], youtubeId: "" },
+      { title: "Le cadre logique : construction & utilisation", dur: "45 min", desc: "Construisez un cadre logique solide : inputs, activités, outputs, outcomes, impacts.", tags: ["Débutant","Cadre logique"], youtubeId: "" },
+      { title: "Définir et sélectionner des indicateurs SMART", dur: "38 min", desc: "Choisissez des indicateurs pertinents, mesurables et alignés avec vos objectifs.", tags: ["Intermédiaire","Indicateurs"], youtubeId: "" },
+      { title: "Plan de Suivi-Évaluation (PSE) — Élaboration", dur: "42 min", desc: "Rédigez un plan de suivi complet : sources de données, fréquence, responsables.", tags: ["Intermédiaire","PSE"], youtubeId: "" },
+      { title: "Collecte & Gestion des données de suivi", dur: "35 min", desc: "Outils de collecte (KoboToolbox, Excel), bases de données de suivi.", tags: ["Intermédiaire","Collecte"], youtubeId: "" },
+      { title: "Analyse des données & Visualisation des résultats", dur: "48 min", desc: "Analysez et présentez vos données de suivi avec Excel et Power BI.", tags: ["Avancé","Analyse"], youtubeId: "" },
+      { title: "Rapportage & Communication des résultats", dur: "32 min", desc: "Rédigez des rapports de suivi clairs et adaptés à chaque audience.", tags: ["Avancé","Rapportage"], youtubeId: "" },
+      { title: "Évaluation : types, critères & méthodes", dur: "50 min", desc: "Évaluations intermédiaire et finale : pertinence, efficacité, efficience, impact, durabilité.", tags: ["Avancé","Évaluation"], youtubeId: "" },
+      { title: "Atelier pratique : Suivi d'un projet réel", dur: "60 min", desc: "Cas pratique complet : construction d'un système de S&E de A à Z.", tags: ["Avancé","Projet"], youtubeId: "" },
+    ]
+  },
+suivieval: {
+    title: "Suivi-Évaluation",
+    sub: "Méthodes & Outils pour projets et programmes",
+    color: "#880e4f",
+    emoji: "🔴",
+    videos: [
+      { title: "Concepts fondamentaux du Suivi-Évaluation", dur: "30 min", desc: "Définitions, fonctions, acteurs et cycle du suivi-évaluation dans les projets.", tags: ["Débutant","Concepts"], youtubeId: "" },
+      { title: "Le cadre logique : construction & utilisation", dur: "45 min", desc: "Construisez un cadre logique solide : inputs, activités, outputs, outcomes, impacts.", tags: ["Débutant","Cadre logique"], youtubeId: "" },
+      { title: "Définir et sélectionner des indicateurs SMART", dur: "38 min", desc: "Choisissez des indicateurs pertinents, mesurables et alignés avec vos objectifs.", tags: ["Intermédiaire","Indicateurs"], youtubeId: "" },
+      { title: "Plan de Suivi-Évaluation (PSE) — Élaboration", dur: "42 min", desc: "Rédigez un plan de suivi complet : sources de données, fréquence, responsables.", tags: ["Intermédiaire","PSE"], youtubeId: "" },
+      { title: "Collecte & Gestion des données de suivi", dur: "35 min", desc: "Outils de collecte (KoboToolbox, Excel), bases de données de suivi.", tags: ["Intermédiaire","Collecte"], youtubeId: "" },
+      { title: "Analyse des données & Visualisation des résultats", dur: "48 min", desc: "Analysez et présentez vos données de suivi avec Excel et Power BI.", tags: ["Avancé","Analyse"], youtubeId: "" },
+      { title: "Rapportage & Communication des résultats", dur: "32 min", desc: "Rédigez des rapports de suivi clairs et adaptés à chaque audience.", tags: ["Avancé","Rapportage"], youtubeId: "" },
+      { title: "Évaluation : types, critères & méthodes", dur: "50 min", desc: "Évaluations intermédiaire et finale : pertinence, efficacité, efficience, impact, durabilité.", tags: ["Avancé","Évaluation"], youtubeId: "" },
+      { title: "Atelier pratique : Suivi d'un projet réel", dur: "60 min", desc: "Cas pratique complet : construction d'un système de S&E de A à Z.", tags: ["Avancé","Projet"], youtubeId: "" },
+    ]
+  }
+};
+
+let currentFormation = null;
+let currentVideoIndex = 0;
+
+function showMainPage() {
+  document.getElementById('page-formations').classList.add('active');
+  document.getElementById('page-videos').classList.remove('active');
+}
+
+function openVideoPage(key) {
+  const f = formations[key];
+  currentFormation = key;
+  currentVideoIndex = 0;
+
+  document.getElementById('page-formations').classList.remove('active');
+  document.getElementById('page-videos').classList.add('active');
+
+  document.getElementById('vp-title').textContent = f.emoji + ' ' + f.title;
+  document.getElementById('vp-sub').textContent = f.sub;
+  document.getElementById('video-page-header').style.background = f.color;
+
+  document.getElementById('playlist-count').textContent = f.videos.length;
+
+  buildPlaylist(f);
+  loadVideo(0);
+}
+
+function buildPlaylist(f) {
+  const container = document.getElementById('playlist-items');
+  container.innerHTML = '';
+  f.videos.forEach((v, i) => {
+    const div = document.createElement('div');
+    div.className = 'playlist-item' + (i === 0 ? ' active' : '');
+    div.onclick = () => loadVideo(i);
+    div.innerHTML = `
+      <div class="pi-thumb" style="background:${f.color}22;color:${f.color};">▶</div>
+      <div class="pi-info">
+        <div class="pi-title">${v.title}</div>
+        <div class="pi-dur">⏱ ${v.dur}</div>
+      </div>
+      <div class="pi-num">${String(i+1).padStart(2,'0')}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function loadVideo(index) {
+  const f = formations[currentFormation];
+  const v = f.videos[index];
+  currentVideoIndex = index;
+
+  // Update playlist active state
+  document.querySelectorAll('.playlist-item').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+
+  // Update info
+  document.getElementById('current-video-title').textContent = v.title;
+  document.getElementById('current-video-desc').textContent = v.desc;
+
+  const tagsEl = document.getElementById('current-video-tags');
+  tagsEl.innerHTML = v.tags.map(t => `<span class="vtag">${t}</span>`).join('');
+
+  // Player
+  const iframe = document.getElementById('video-iframe');
+  const placeholder = document.getElementById('player-placeholder');
+
+  if (v.youtubeId) {
+    iframe.src = `https://www.youtube.com/embed/${v.youtubeId}?autoplay=1`;
+    iframe.style.display = 'block';
+    placeholder.style.display = 'none';
+  } else {
+    iframe.src = '';
+    iframe.style.display = 'none';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.alignItems = 'center';
+    document.getElementById('placeholder-text').textContent = `📹 "${v.title}" — Vidéo à venir`;
+  }
+}
+
+function playVideo() {
+  const f = formations[currentFormation];
+  const v = f.videos[currentVideoIndex];
+  if (v.youtubeId) {
+    document.getElementById('video-iframe').src = `https://www.youtube.com/embed/${v.youtubeId}?autoplay=1`;
+    document.getElementById('video-iframe').style.display = 'block';
+    document.getElementById('player-placeholder').style.display = 'none';
+  }
+}
+
+function filterCards(level, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.formation-card').forEach(card => {
+    if (level === 'all' || card.dataset.level.includes(level)) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
