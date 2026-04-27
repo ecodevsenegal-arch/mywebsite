@@ -47,7 +47,7 @@
     display: flex; gap: 8px; align-items: center;
     border-bottom: 3px solid var(--blue);
   }
-  nav :hover { background: white; }
+  nav :hover { background: white; scale: 1.125;}
   nav .active { background: var(--blue); color: white; }
 
   /* ── PAGES ── */
@@ -451,7 +451,9 @@
     <!-- KoboToolbox -->
     <div class="formation-card" data-level="debutant intermediaire" onclick="openVideoPage('kobotoolbox')">
       <div class="card-header">
-        <div class="card-icon" style="background:#e3f2fd;">🔵</div>
+        <div class="card-icon" style="background:transparent;">
+          <img src="Images & icones/kobo.png" style="width:55px;margin: 0 0 0 0;">
+        </div>
         <div>
           <div class="card-title">KoboToolbox</div>
           <div class="card-sub">Collecte de données terrain</div>
@@ -476,7 +478,9 @@
 <!-- dataanalyse -->
     <div class="formation-card" data-level="debutant intermediaire" onclick="openVideoPage('dataanalyse')">
       <div class="card-header">
-        <div class="card-icon" style="background:#e3f2fd;">🔵</div>
+        <div class="card-icon" style="background:transparent;">
+        <img src="Images & icones/data-analytic 2.svg"  style="margin: 0 0 0 0; height:55px;">
+        </div>
         <div>
           <div class="card-title">Analyse de données</div>
           <div class="card-sub">Collecte, transformation et analyse de données</div>
@@ -625,7 +629,7 @@ const formations = {
     title: "Power Query",
     sub: "ETL & Transformation de données",
     color: "#1b5e20",
-    emoji: "🟩",
+    emoji: "🟩P",
     videos: [
       { title: "Qu'est-ce que Power Query ?", dur: "18 min", desc: "Présentation de Power Query, ses cas d'usage et son intégration dans Excel et Power BI.", tags: ["Débutant","Introduction"], youtubeId: "" },
       { title: "Importer des données depuis différentes sources", dur: "32 min", desc: "Connexion à Excel, CSV, web, dossiers et bases de données.", tags: ["Débutant","Import"], youtubeId: "" },
