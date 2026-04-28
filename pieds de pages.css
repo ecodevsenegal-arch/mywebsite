@@ -1,0 +1,14 @@
+/* PIEDS DE PAGES */
+footer{
+            font-weight: bold;
+            display: flex;
+            margin: 0 0 0 0; 
+            font-size: 15px;
+            align-items: center;
+            gap:500px; 
+            justify-content: center;
+            padding: 0 0 0 0;
+            background-color: #97e0f4;
+            border-radius: 0 0 10px 10px;
+            height: 150px;
+        }
