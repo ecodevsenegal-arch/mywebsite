@@ -6,6 +6,7 @@
 <title>ECODEV – Espace Formation</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="Styles formations.CSS">
+<link rel="stylesheet" href="bouton_deconnection.css">
 <style>
   :root {
     --navy: #1a2d5a;
@@ -314,6 +315,19 @@
     .video-layout { padding: 16px; }
     .video-page-header { padding: 16px; }
   }
+  footer{
+            font-weight: bold;
+            display: flex;
+            margin: 0 0 0 0; 
+            font-size: 15px;
+            align-items: center;
+            gap:500px; 
+            justify-content: center;
+            padding: 0 0 0 0;
+            background-color: #97e0f4;
+            border-radius: 0 0 10px 10px;
+            height: 150px;
+        }
 </style>
 </head>
 <body>
@@ -323,7 +337,11 @@
   <div>
     <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
 </div>
-
+<!-- Bouton déconnexion -->
+  <button class="btn-logout" onclick="deconnecter()">
+    <span class="btn-icon">⏻</span>
+    <span>Déconnexion</span>
+  </button>
 </header>
 
 <!-- NAV -->
@@ -335,7 +353,7 @@
     <a href="contacts.html">Contact</a>
     <a href="Espace_formation_ECODEV.html" class="active">Espace campus</a>
 </nav>
-
+<hr style="border: solid blue; margin: 0 0 0 0;">
 <!-- ════════════════════════════════════════
      PAGE: FORMATIONS (liste)
 ════════════════════════════════════════ -->
@@ -629,7 +647,7 @@ const formations = {
     title: "Power Query",
     sub: "ETL & Transformation de données",
     color: "#1b5e20",
-    emoji: "🟩P",
+    emoji: "🟩",
     videos: [
       { title: "Qu'est-ce que Power Query ?", dur: "18 min", desc: "Présentation de Power Query, ses cas d'usage et son intégration dans Excel et Power BI.", tags: ["Débutant","Introduction"], youtubeId: "" },
       { title: "Importer des données depuis différentes sources", dur: "32 min", desc: "Connexion à Excel, CSV, web, dossiers et bases de données.", tags: ["Débutant","Import"], youtubeId: "" },
@@ -796,7 +814,19 @@ function filterCards(level, btn) {
     }
   });
 }
+  function deconnecter() {
+    if (confirm("Voulez-vous vraiment vous déconnecter ?")) {
+      window.location.href = "login_acces_formation.html"; // 👈 redirige vers ta page login
+    }
+  }
 </script>
-
+  <hr style="border: solid blue; margin: 0 0 0 0;">
+<footer>
+    <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
+    <div>
+    <h4>Téléphone: +221 77 272 13 24 | +221 77 214 58 74</h4>
+    <h4>Email: ecodev.senegal@gmail.com</h4>
+    <h3>@ECODEV SENEGAL-2026</h3>
+    </div>
 </body>
 </html>

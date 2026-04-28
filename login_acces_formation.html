@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECODEV – Connexion</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2d5a;
+    --blue: #1565c0;
+    --sky: #29b6f6;
+    --cyan: #00e5ff;
+    --teal: #00bfa5;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── ANIMATED BACKGROUND ── */
+  .bg-shapes {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .bg-shapes::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,229,255,0.12) 0%, transparent 70%);
+    top: -200px; left: -200px;
+    animation: pulse1 8s ease-in-out infinite;
+  }
+
+  .bg-shapes::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,191,165,0.10) 0%, transparent 70%);
+    bottom: -150px; right: -150px;
+    animation: pulse2 10s ease-in-out infinite;
+  }
+
+  @keyframes pulse1 {
+    0%, 100% { transform: scale(1) translate(0, 0); }
+    50% { transform: scale(1.15) translate(30px, 20px); }
+  }
+
+  @keyframes pulse2 {
+    0%, 100% { transform: scale(1) translate(0, 0); }
+    50% { transform: scale(1.1) translate(-20px, -30px); }
+  }
+
+  /* Grid pattern overlay */
+  .grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* ── LOGIN CARD ── */
+  .login-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 440px;
+    padding: 20px;
+    animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Logo area */
+  .login-logo {
+    text-align: center;
+    margin-bottom: 0;
+    animation: slideUp 0.7s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .login-logo img {
+    height: 80px;
+    filter: brightness(0) invert(1);
+    shape-outside: 0 0 20px rgba(0,229,255,0.4);
+  }
+
+  .logo-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--cyan), var(--teal));
+    color: var(--navy);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 1px 10px;
+    border-radius: 20px;
+    margin-top: 0;
+  }
+
+  /* Card */
+  .login-card {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(0,229,255,0.15);
+    border-radius: 10px;
+    padding: 10px 35px 15px;
+    margin-top: 0;
+    box-shadow:
+      0 32px 80px rgba(0,0,0,0.4),
+      0 0 0 1px rgba(255,255,255,0.05) inset,
+      0 1px 0 rgba(255,255,255,0.1) inset;
+    animation: slideUp 0.7s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .card-top {
+    margin-bottom: 3px;
+  }
+
+  .card-top h1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.3px;
+  }
+
+  .card-top p {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+
+  .divider-line {
+    height: 5px;
+    background: linear-gradient(90deg, var(--cyan), transparent);
+    margin-bottom: 30px;
+    opacity: 0.3;
+  }
+
+  /* Form fields */
+  .field-group {
+    margin-bottom: 15px;
+  }
+
+  .field-label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 8px;
+  }
+
+  .field-wrap {
+    position: relative;
+  }
+
+  .field-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .field-wrap:focus-within .field-icon {
+    opacity: 1;
+  }
+
+  .field-input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 5px;
+    padding: 13px 14px 13px 44px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: white;
+    outline: none;
+    transition: all 0.25s;
+  }
+
+  .field-input::placeholder {
+    color: rgba(255,255,255,0.2);
+    font-weight: 400;
+  }
+
+  .field-input:focus {
+    border-color: var(--cyan);
+    background: rgba(0,229,255,0.06);
+    box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
+  }
+
+  /* Show password toggle */
+  .toggle-pw {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(255,255,255,0.3);
+    font-size: 16px;
+    transition: color 0.2s;
+    padding: 4px;
+  }
+  .toggle-pw:hover { color: var(--cyan); }
+
+  /* Error message */
+  .error-msg {
+    display: none;
+    background: rgba(229,57,53,0.15);
+    border: 1px solid rgba(229,57,53,0.4);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #ff8a80;
+    margin-bottom: 18px;
+    align-items: center;
+    gap: 8px;
+    animation: shake 0.4s ease;
+  }
+
+  .error-msg.show { display: flex; }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+
+  /* Submit button */
+  .btn-login {
+    width: 100%;
+    background: linear-gradient(90deg, var(--cyan) 0%, var(--teal) 100%);
+    color: var(--navy);
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-login::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+
+  .btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,229,255,0.35);
+  }
+
+  .btn-login:hover::before { transform: translateX(100%); }
+  .btn-login:active { transform: translateY(0); }
+
+  .btn-login.loading {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  /* Footer card */
+  .card-footer-note {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .card-footer-note strong {
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Success overlay */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--navy);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .success-overlay.show { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  .success-icon {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--cyan), var(--teal));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0); } to { transform: scale(1); }
+  }
+
+  .success-text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+  }
+
+  .success-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .progress-bar-login {
+    width: 200px;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .progress-fill-login {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), var(--teal));
+    border-radius: 10px;
+    animation: fillBar 1.8s ease forwards;
+  }
+
+  @keyframes fillBar {
+    from { width: 0%; } to { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-shapes"></div>
+<div class="grid-overlay"></div>
+
+<!-- Login Form -->
+<div class="login-wrapper">
+
+  <div class="login-logo">
+    <img src="Enseigne_ECODEV_FINALE_V03.png"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+         alt="ECODEV">
+    <div style="display:none; font-family:'Raleway',sans-serif; font-size:32px; font-weight:900; color:white; letter-spacing:-1px;">
+      ECO<span style="color:var(--cyan);">DEV</span>
+    </div>
+    <div class="logo-badge">Espace Campus</div>
+  </div>
+
+  <div class="login-card">
+    <div class="card-top">
+      <h1>🔐 Connexion</h1>
+      <p>Accédez à votre espace de formation en ligne ECODEV.</p>
+    </div>
+
+    <div class="divider-line"></div>
+
+    <!-- Error -->
+    <div class="error-msg" id="error-msg">
+      <span>⚠️</span>
+      <span>Identifiant ou mot de passe incorrect.</span>
+    </div>
+
+    <!-- Login field -->
+    <div class="field-group">
+      <label class="field-label" for="username">Identifiant</label>
+      <div class="field-wrap">
+        <span class="field-icon">👤</span>
+        <input
+          class="field-input"
+          type="text"
+          id="username"
+          placeholder="Votre identifiant"
+          autocomplete="username"
+          onkeydown="if(event.key==='Enter') document.getElementById('password').focus()"
+        >
+      </div>
+    </div>
+
+    <!-- Password field -->
+    <div class="field-group">
+      <label class="field-label" for="password">Mot de passe</label>
+      <div class="field-wrap">
+        <span class="field-icon">🔑</span>
+        <input
+          class="field-input"
+          type="password"
+          id="password"
+          placeholder="Votre mot de passe"
+          autocomplete="current-password"
+          onkeydown="if(event.key==='Enter') login()"
+        >
+        <button class="toggle-pw" type="button" onclick="togglePw()" title="Afficher/masquer">👁</button>
+      </div>
+    </div>
+
+    <button class="btn-login" id="btn-login" onclick="login()">
+      Se connecter →
+    </button>
+
+    <div class="card-footer-note">
+      Accès réservé aux <strong>membres ECODEV</strong><br>
+      Pour toute demande : <strong>ecodev.senegal@gmail.com</strong>
+    </div>
+  </div>
+
+</div>
+
+<!-- Success overlay -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-icon">✓</div>
+  <div class="success-text">Connexion réussie !</div>
+  <div class="success-sub">Bienvenue sur l'Espace Campus ECODEV</div>
+  <div class="progress-bar-login">
+    <div class="progress-fill-login"></div>
+  </div>
+</div>
+
+
+<script>
+  const CREDENTIALS = [
+    { login: "m.sarr",       password: "ecodev@2026" },
+    { login: "mamadou.sarr", password: "ecodev@2025" }
+  ];
+
+  // Redirect target — same folder
+  const TARGET_PAGE = "Espace_formation_ECODEV.html";
+
+  function login() {
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value;
+    const errEl = document.getElementById('error-msg');
+    const btn = document.getElementById('btn-login');
+
+    // Clear previous error
+    errEl.classList.remove('show');
+
+    const valid = CREDENTIALS.some(c => c.login === user && c.password === pass);
+    if (valid) {
+      // Success
+      btn.textContent = '✓ Connexion...';
+      btn.classList.add('loading');
+      document.getElementById('success-overlay').classList.add('show');
+
+      // Redirect after animation
+      setTimeout(() => {
+        window.location.href = TARGET_PAGE;
+      }, 2000);
+
+    } else {
+      // Error
+      errEl.classList.add('show');
+      // Re-trigger shake animation
+      errEl.style.animation = 'none';
+      errEl.offsetHeight; // reflow
+      errEl.style.animation = '';
+
+      document.getElementById('password').value = '';
+      document.getElementById('password').focus();
+    }
+  }
+
+  function togglePw() {
+    const pw = document.getElementById('password');
+    const btn = document.querySelector('.toggle-pw');
+    if (pw.type === 'password') {
+      pw.type = 'text';
+      btn.textContent = '🙈';
+    } else {
+      pw.type = 'password';
+      btn.textContent = '👁';
+    }
+  }
+
+  // Auto-focus on load
+  window.addEventListener('load', () => {
+    document.getElementById('username').focus();
+  });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+.btn-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 2px solid rgba(229, 57, 53, 0.5);
+    border-radius: 10px;
+    color: #ef5350;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-logout:hover {
+    background: rgba(229, 57, 53, 0.1);
+    border-color: #ef5350;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(229, 57, 53, 0.25);
+  }
+
+  .btn-logout:active {
+    transform: translateY(0);
+  }
+
+  .btn-icon {
+    font-size: 17px;
+    line-height: 1;
+  }
