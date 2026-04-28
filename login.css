@@ -1,0 +1,29 @@
+nav {
+            display: flex;
+            gap: 4px;
+            padding: 5px 3px;
+            background-color: transparent;
+            border-radius: 10px 10px 0 0;
+        }
+
+        nav a {
+            color: #444;
+            text-decoration: none;
+            padding: 5px 5px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            background-color: #AAA;
+            transition: background-color 0.5s;
+        }
+
+        nav a:hover {
+            background-color:#d4f7b3;
+            color: #011A1E;
+        }
+
+        nav a.active {
+            background-color: #0056cc;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+        }

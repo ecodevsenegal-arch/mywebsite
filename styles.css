@@ -43,6 +43,7 @@ nav a.active {
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
+/* PIEDS DE PAGES */
 footer{
             font-weight: bold;
             display: flex;

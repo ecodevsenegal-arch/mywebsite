@@ -1,0 +1,115 @@
+/* ── NOS FORMATIONS ── */
+    .formations-wrap {
+        max-width: 100px;
+        margin: 0 auto;
+        padding: 24px 12px 18px;
+    }
+    
+    .section-eyebrow {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--vert-foret);
+        text-align: center;
+        padding: 15px;
+        margin-top: 10px;
+        margin-right: 170px;
+        margin-left: 150px;
+        border-radius: 10px;
+        background-color: transparent;
+        border: #011A1E solid 2px;
+    }
+    nav.section-eyebrow {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--vert-foret);
+        text-align: center;
+        padding: 0;
+        margin-top: 5px;
+        margin-right: 230px;
+        margin-left: 150px;
+        border-radius: 10px;
+        background-color: transparent;
+        border: #011A1E solid 2px;
+    }
+    .section-title {
+        font-size: clamp(10px, 3vw, 18px);
+        font-weight: 700;
+        color: var(--vert-fonce);
+        text-align: center;
+        margin-bottom: 16px;
+        margin-right: 100px;
+        line-height: 1.25;
+        align-items: center;
+    }
+    .benefits-grid {
+        display: flex;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        flex-direction: column;
+        
+    }
+    .benefits-grid :hover {
+        background-color: #d4f7b3;
+        color: #011A1E;
+        font-weight: bold;
+        border: 2px solid transparent;
+    }
+    .benefit-card:hover {
+        background-color: #d4f7b3;
+        color: #011A1E;
+        font-weight: bold;
+        border: 2px solid green
+    }
+.benefit-card {
+        background: #67e2e9;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 10px;
+        text-align: center;
+        align-items: center;
+        margin: 0 70px;
+        width: 400px;
+    }
+    .benefit-card .b-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+    .benefit-card .b-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--vert-fonce);
+        margin-bottom: 8px;
+        line-height: 1.3;
+    }
+    .benefit-card .b-desc {
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.5;
+}
+.benefit-card .b-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+    .benefit-card .b-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--vert-fonce);
+        margin-bottom: 8px;
+        line-height: 1.3;
+    }
+    .benefit-card .b-desc {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+    }
+    
+    .container {
+        display: flex;
+        margin: 0;
+        gap:50px;
+    }
+   

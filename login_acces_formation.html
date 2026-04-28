@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ECODEV – Connexion</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Styles formations.CSS">
+<link rel="stylesheet" href="login.css">
 <style>
   :root {
     --navy: #1a2d5a;
@@ -101,7 +103,6 @@
 
   .login-logo img {
     height: 80px;
-    filter: brightness(0) invert(1);
     shape-outside: 0 0 20px rgba(0,229,255,0.4);
   }
 
@@ -143,22 +144,22 @@
     font-family: 'Raleway', sans-serif;
     font-size: 24px;
     font-weight: 900;
-    color: var(--white);
+    color: var(--blue);
     letter-spacing: -0.3px;
   }
 
   .card-top p {
-    font-size: 13.5px;
-    color: rgba(255,255,255,0.45);
+    font-size: 14.5px;
+    color: rgba(17, 2, 51, 0.45);
     margin-top: 5px;
     line-height: 1.5;
   }
 
   .divider-line {
     height: 5px;
-    background: linear-gradient(90deg, var(--cyan), transparent);
+    background: linear-gradient(90deg, var(--blue), transparent);
     margin-bottom: 30px;
-    opacity: 0.3;
+    opacity: 0.5;
   }
 
   /* Form fields */
@@ -168,11 +169,11 @@
 
   .field-label {
     display: block;
-    font-size: 11.5px;
-    font-weight: 800;
+    font-size: 12.5px;
+    font-weight: 900;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--cyan);
+    color: var(--blue);
     margin-bottom: 8px;
   }
 
@@ -204,18 +205,18 @@
     font-family: 'Nunito', sans-serif;
     font-size: 14.5px;
     font-weight: 600;
-    color: white;
+    color: rgba(17, 4, 81, 0.427);
     outline: none;
     transition: all 0.25s;
   }
 
   .field-input::placeholder {
-    color: rgba(255,255,255,0.2);
-    font-weight: 400;
+    color: rgba(3, 1, 30, 0.2);
+    font-weight: 900;
   }
 
   .field-input:focus {
-    border-color: var(--cyan);
+    border-color: var(--blue);
     background: rgba(0,229,255,0.06);
     box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
   }
@@ -229,12 +230,12 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: rgba(255,255,255,0.3);
+    color: rgba(32, 1, 1, 0.3);
     font-size: 16px;
     transition: color 0.2s;
     padding: 4px;
   }
-  .toggle-pw:hover { color: var(--cyan); }
+  .toggle-pw:hover { color: var(--blue); }
 
   /* Error message */
   .error-msg {
@@ -263,12 +264,12 @@
   .btn-login {
     width: 100%;
     background: linear-gradient(90deg, var(--cyan) 0%, var(--teal) 100%);
-    color: var(--navy);
+    color: var(--blue);
     font-family: 'Raleway', sans-serif;
-    font-size: 15px;
-    font-weight: 900;
+    font-size: 20px;
+    font-weight: 950;
     letter-spacing: 0.5px;
-    border: none;
+    border: solid 1px var(--blue);
     border-radius: 10px;
     padding: 14px;
     cursor: pointer;
@@ -306,12 +307,12 @@
     padding-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.06);
     text-align: center;
-    font-size: 12px;
-    color: rgba(255,255,255,0.25);
+    font-size: 14px;
+    color: rgba(2, 2, 28, 0.4);
   }
 
   .card-footer-note strong {
-    color: rgba(255,255,255,0.4);
+    color: rgba(2, 2, 20, 0.4);
   }
 
   /* Success overlay */
@@ -380,7 +381,7 @@
   }
 </style>
 </head>
-<body>
+<body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
 <!-- Background -->
 <div class="bg-shapes"></div>
@@ -396,6 +397,13 @@
     <div style="display:none; font-family:'Raleway',sans-serif; font-size:32px; font-weight:900; color:white; letter-spacing:-1px;">
       ECO<span style="color:var(--cyan);">DEV</span>
     </div>
+    <nav>
+    <a href="index.html" class="active">Accueil</a>
+    <a href="a propos.html">À propos</a>
+    <a href="services.html">Services</a>
+    <a href="Formations.html">Formations</a>
+    <a href="contacts.html">Contact</a>
+</nav>
     <div class="logo-badge">Espace Campus</div>
   </div>
 
