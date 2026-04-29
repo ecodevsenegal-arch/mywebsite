@@ -27,7 +27,12 @@
 <hr style="border: solid blue; margin: 0 0 0 0;">
 <div class="container">
   
- 
+ <Div>
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('form-tab', this)">📋 Formulaire d'Inscription</button>
+</div>
+
 <!-- ══════════════════════════════════════
      TAB 1 — FORMULAIRE
 ══════════════════════════════════════ -->
@@ -41,7 +46,7 @@
   </div>
 
   <div class="form-wrapper">
-    <form id="ecodevForm" novalidate>
+    <form id="ecodevForm" action="https://formspree.io/f/mykoggdz" method="POST" enctype="multipart/form-data" novalidate>
 
       <!-- SECTION 1 — IDENTITÉ -->
       <div class="section-card">
@@ -200,7 +205,7 @@
             </div>
             <div class="field-group">
               <label for="telephone">Numéro de téléphone <span class="required-star">*</span></label>
-              <input type="tel" id="telephone" name="telephone">
+              <input type="tel" id="telephone" name="telephone" placeholder="+221 77 XXX XX XX" required>
             </div>
           </div>
 
@@ -291,7 +296,266 @@
 </div><!-- /form-tab -->
 
 
-  <!-- NOS FORMATIONS -->
+<!-- ══════════════════════════════════════
+     TAB 2 — GUIDE D'INTÉGRATION
+══════════════════════════════════════ -->
+<div id="guide-tab" class="tab-panel">
+
+  <div class="guide-header">
+    <div class="header-badge" style="background:#c0392b;">Guide Technique</div>
+    <h1>Intégration & Gestion des Données</h1>
+    <p>Comment intégrer ce formulaire dans un site web, connecter Google Forms et exporter vers Excel.</p>
+  </div>
+
+  <div class="guide-wrapper">
+
+    <!-- ÉTAPE 1 — Intégration dans un site web -->
+    <div class="guide-step">
+      <div class="guide-step-header">
+        <div class="step-icon html">🌐</div>
+        <div>
+          <h3>Étape 1 — Intégrer le formulaire dans votre site web</h3>
+          <p>3 méthodes selon votre type de site (WordPress, HTML pur, CMS)</p>
+        </div>
+      </div>
+      <div class="step-body">
+
+        <p style="font-size:14px; margin-bottom:16px;"><strong>Méthode A — iFrame (la plus simple, fonctionne partout)</strong></p>
+        <div class="code-block">
+          <span class="code-label">HTML</span>
+          <pre>&lt;!-- Coller dans votre page HTML ou éditeur WordPress --&gt;
+&lt;iframe
+  src="formulaire_ecodev.html"
+  width="100%"
+  height="900"
+  style="border:none; border-radius:12px;"
+  title="Formulaire d'inscription ECODEV"&gt;
+&lt;/iframe&gt;</pre>
+        </div>
+
+        <p style="font-size:14px; margin-bottom:12px; margin-top:20px;"><strong>Méthode B — Inclusion directe dans une page HTML</strong></p>
+        <div class="code-block">
+          <span class="code-label">HTML</span>
+          <pre>&lt;!-- Dans votre page principale, remplacez le &lt;body&gt; --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;ECODEV — Inscription&lt;/title&gt;
+  &lt;!-- Coller le contenu &lt;style&gt; du formulaire ici --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Coller le contenu &lt;body&gt; du formulaire ici --&gt;
+  &lt;script src="form-logic.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+
+        <p style="font-size:14px; margin-bottom:12px; margin-top:20px;"><strong>Méthode C — WordPress (bloc HTML personnalisé)</strong></p>
+        <ul class="step-list">
+          <li><span class="num">1</span> Dans WordPress, ouvrez l'éditeur Gutenberg</li>
+          <li><span class="num">2</span> Ajoutez un bloc <strong>"HTML personnalisé"</strong></li>
+          <li><span class="num">3</span> Collez le code iFrame de la Méthode A</li>
+          <li><span class="num">4</span> Hébergez le fichier <code>formulaire_ecodev.html</code> dans le dossier <code>/wp-content/uploads/</code></li>
+          <li><span class="num">5</span> Ajustez l'URL <code>src=""</code> avec le chemin complet vers votre fichier</li>
+        </ul>
+
+        <div class="info-box">
+          <span class="icon">💡</span>
+          <span>Pour les données de production, remplacez l'action du formulaire par une URL de traitement serveur (voir Étape 3 pour Formspree ou EmailJS).</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 2 — Envoyer vers un backend -->
+    <div class="guide-step">
+      <div class="guide-step-header">
+        <div class="step-icon embed">⚙️</div>
+        <div>
+          <h3>Étape 2 — Recevoir les données (sans serveur)</h3>
+          <p>Utilisez Formspree ou EmailJS pour collecter les inscriptions par email</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <p style="font-size:14px; margin-bottom:12px;"><strong>Option A — Formspree (gratuit, 50 soumissions/mois)</strong></p>
+        <ul class="step-list">
+          <li><span class="num">1</span> Créez un compte sur <strong>formspree.io</strong></li>
+          <li><span class="num">2</span> Créez un nouveau formulaire → copiez votre <strong>endpoint unique</strong></li>
+          <li><span class="num">3</span> Modifiez la balise <code>&lt;form&gt;</code> dans le fichier HTML :</li>
+        </ul>
+        <div class="code-block">
+          <pre>&lt;!-- Remplacer cette ligne dans le HTML --&gt;
+&lt;form id="ecodevForm" novalidate&gt;
+
+&lt;!-- Par ceci (avec votre ID Formspree) --&gt;
+&lt;form id="ecodevForm" 
+      action="https://formspree.io/f/VOTRE_ID"
+      method="POST"&gt;</pre>
+        </div>
+        <div class="info-box">
+          <span class="icon">📧</span>
+          <span>Chaque soumission vous sera envoyée par email ET visible dans le tableau de bord Formspree avec export CSV/Excel.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 3 — Google Forms -->
+    <div class="guide-step">
+      <div class="guide-step-header">
+        <div class="step-icon gform">📊</div>
+        <div>
+          <h3>Étape 3 — Importer dans Google Forms</h3>
+          <p>Recréer le formulaire dans Google Forms et exporter les réponses</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <p style="font-size:14px; margin-bottom:12px; color:var(--gray-dark);"><em>Google Forms ne permet pas d'importer directement un fichier HTML. Voici le mapping complet de tous les champs :</em></p>
+
+        <div class="gs-columns">
+          <div class="gs-col">
+            <h4>🟢 Champs à créer dans Google Forms</h4>
+            <ul>
+              <li>Titre → <strong>Choix multiples</strong> (Madame / Monsieur)</li>
+              <li>Prénom → <strong>Réponse courte</strong></li>
+              <li>Nom de famille → <strong>Réponse courte</strong></li>
+              <li>Structure / Service → <strong>Réponse courte</strong></li>
+              <li>Fonction → <strong>Réponse courte</strong></li>
+              <li>Email → <strong>Réponse courte</strong> (validation email)</li>
+              <li>Adresse → <strong>Réponse courte</strong></li>
+              <li>Ville → <strong>Réponse courte</strong></li>
+              <li>Pays → <strong>Liste déroulante</strong> (58 pays)</li>
+              <li>Autre pays → <strong>Réponse courte</strong></li>
+              <li>Téléphone → <strong>Réponse courte</strong></li>
+              <li>Formation → <strong>Liste déroulante</strong></li>
+              <li>Autre formation → <strong>Réponse courte</strong></li>
+              <li>Mode de participation → <strong>Choix multiples</strong></li>
+            </ul>
+          </div>
+          <div class="gs-col">
+            <h4>📋 Procédure étape par étape</h4>
+            <ul>
+              <li>Aller sur <strong>forms.google.com</strong></li>
+              <li>Cliquer <strong>"+ Nouveau formulaire"</strong></li>
+              <li>Ajouter le titre : "Inscription Formation ECODEV"</li>
+              <li>Ajouter chaque champ selon le mapping</li>
+              <li>Activer <strong>"Obligatoire"</strong> sur les champs requis</li>
+              <li>Utiliser <strong>"Logique de section"</strong> pour pays=Autre</li>
+              <li>Cliquer <strong>Envoyer → Lien</strong> à partager</li>
+              <li>Ou <strong>Envoyer → Intégrer</strong> pour obtenir l'iFrame</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <span class="code-label">Script Google Apps (automatisation)</span>
+          <pre>// Coller dans Extensions → Apps Script du Google Form
+// Pour envoyer une confirmation email à chaque inscription
+
+function onFormSubmit(e) {
+  var reponses = e.response.getItemResponses();
+  var email = "";
+  var nom = "";
+  var formation = "";
+  
+  reponses.forEach(function(r) {
+    if (r.getItem().getTitle() === "Email") email = r.getResponse();
+    if (r.getItem().getTitle() === "Nom de famille") nom = r.getResponse();
+    if (r.getItem().getTitle() === "Formation") formation = r.getResponse();
+  });
+  
+  if (email) {
+    MailApp.sendEmail({
+      to: email,
+      subject: "✅ Confirmation d'inscription — ECODEV",
+      body: "Bonjour " + nom + ",\n\n" +
+            "Votre inscription à la formation « " + formation + " » " +
+            "a bien été reçue.\n\n" +
+            "L'équipe ECODEV vous contactera prochainement.\n\n" +
+            "Cordialement,\nECODEV Centre de Formation"
+    });
+  }
+}
+
+// Lier ce script au déclencheur "À l'envoi du formulaire"</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 4 — Export Excel -->
+    <div class="guide-step">
+      <div class="guide-step-header">
+        <div class="step-icon excel">📥</div>
+        <div>
+          <h3>Étape 4 — Télécharger les données sous Excel</h3>
+          <p>3 méthodes pour exporter les inscriptions en fichier .xlsx</p>
+        </div>
+      </div>
+      <div class="step-body">
+
+        <p style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--green-deep);">✅ Méthode 1 — Via Google Forms (la plus simple)</p>
+        <ul class="step-list">
+          <li><span class="num">1</span> Ouvrez votre Google Form → onglet <strong>Réponses</strong></li>
+          <li><span class="num">2</span> Cliquez le bouton <strong>Google Sheets</strong> (icône tableau) pour créer une feuille liée</li>
+          <li><span class="num">3</span> Dans la Google Sheet → <strong>Fichier → Télécharger → Microsoft Excel (.xlsx)</strong></li>
+          <li><span class="num">4</span> Le fichier contient toutes les inscriptions avec date et heure automatiques</li>
+        </ul>
+
+        <div class="warning-box" style="margin: 12px 0;">
+          <span class="icon">⚡</span>
+          <span>La Google Sheet se met à jour automatiquement à chaque nouvelle inscription. Il suffit de la télécharger quand vous en avez besoin.</span>
+        </div>
+
+        <p style="font-size:14px; font-weight:600; margin:18px 0 10px; color:var(--green-deep);">✅ Méthode 2 — Via Formspree Dashboard</p>
+        <ul class="step-list">
+          <li><span class="num blue">1</span> Connectez-vous à <strong>formspree.io</strong> → votre formulaire</li>
+          <li><span class="num blue">2</span> Onglet <strong>"Submissions"</strong> → bouton <strong>"Export CSV"</strong></li>
+          <li><span class="num blue">3</span> Ouvrez le CSV dans Excel → <strong>Fichier → Enregistrer sous → Format Excel</strong></li>
+        </ul>
+
+        <p style="font-size:14px; font-weight:600; margin:18px 0 10px; color:var(--green-deep);">✅ Méthode 3 — Script Apps Script automatique (envoi hebdomadaire)</p>
+        <div class="code-block">
+          <pre>// Exporter automatiquement vers Excel chaque lundi
+// Coller dans Extensions → Apps Script de la Google Sheet
+
+function exportWeeklyExcel() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  
+  // Créer un fichier Excel temporaire
+  var blob = ss.getBlob().setContentType(
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  );
+  
+  // Envoyer par email
+  MailApp.sendEmail({
+    to: "votre-email@domaine.com",
+    subject: "📊 Export Inscriptions ECODEV — " + new Date().toLocaleDateString('fr-FR'),
+    body: "Veuillez trouver en pièce jointe l'export des inscriptions.",
+    attachments: [blob]
+  });
+}
+
+// Créer un déclencheur temporel :
+// Extensions → Apps Script → Déclencheurs → Ajouter
+// Choisir : exportWeeklyExcel / Hebdomadaire / Lundi / 8h-9h</pre>
+        </div>
+
+        <div class="info-box" style="margin-top:16px;">
+          <span class="icon">🎯</span>
+          <div>
+            <strong>Recommandation ECODEV :</strong> Utilisez <strong>Google Forms + Google Sheets</strong> pour la collecte, puis téléchargez en Excel à la demande. C'est gratuit, sans configuration serveur, et les données sont sécurisées dans votre compte Google.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /guide-wrapper -->
+</div><!-- /guide-tab -->
+</div>
+
+
     <div>
         <nav class="section-eyebrow"><a href="Formations.html">NOS FORMATIONS</a></nav>
         <p class="section-title">Tout pour maîtriser l'analyse de données et les outils de la business intelligence</p>
@@ -402,29 +666,6 @@ const modeOptions = {
   ]
 };
 
-// ── GOOGLE SHEETS APPS SCRIPT ENDPOINT ──
-const GOOGLE_SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwTPiBlLEfakHN3rEm5dxHyc1ifoFkBoShMO_2jLYWLNF7rincaoeN9uv0-CgrVMwQt/exec';
-
-function sendFormToGoogleSheet(payload) {
-  return fetch(GOOGLE_SHEET_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  }).then(async function(response) {
-    if (!response.ok) {
-      var text = await response.text();
-      throw new Error('Erreur de réseau: ' + response.status + ' ' + text);
-    }
-    var contentType = response.headers.get('content-type') || '';
-    if (contentType.indexOf('application/json') !== -1) {
-      return response.json();
-    }
-    return response.text();
-  });
-}
-
 // ── CONDITIONAL LOGIC ──
 function toggleAutrePays() {
   var pays = document.getElementById('pays').value;
@@ -475,7 +716,6 @@ function updateModeParticipation() {
 
 // ── FORM VALIDATION & SUBMISSION ──
 document.getElementById('ecodevForm').addEventListener('submit', function(e) {
-  e.preventDefault();
   var form = this;
   var valid = true;
 
@@ -525,34 +765,15 @@ document.getElementById('ecodevForm').addEventListener('submit', function(e) {
   }
 
   if (!valid) {
+    e.preventDefault();
     var firstErr = document.querySelector('.error');
     if (firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
 
-  var fd = new FormData(form);
-  var data = {};
-  fd.forEach(function(v,k){ data[k]=v; });
-  data.timestamp = new Date().toISOString();
-
   var submitButton = form.querySelector('button[type="submit"]');
   submitButton.disabled = true;
-  submitButton.textContent = 'Envoie en cours...';
-
-  sendFormToGoogleSheet(data)
-    .then(function(response) {
-      console.log('Données soumises:', data, response);
-      form.style.display = 'none';
-      var msg = document.getElementById('successMsg');
-      msg.style.display = 'block';
-      msg.scrollIntoView({behavior:'smooth'});
-    })
-    .catch(function(error) {
-      console.error('Erreur lors de l’envoi :', error);
-      submitButton.disabled = false;
-      submitButton.textContent = '✔ Soumettre mon inscription';
-      alert('Une erreur est survenue lors de l’envoi. Veuillez réessayer ou contacter l’administrateur.');
-    });
+  submitButton.textContent = 'Envoi en cours...';
 });
 
 // Remove error on input

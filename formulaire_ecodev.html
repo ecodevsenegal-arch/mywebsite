@@ -560,7 +560,7 @@
   </div>
 
   <div class="form-wrapper">
-    <form id="ecodevForm" novalidate>
+    <form id="ecodevForm" action="https://formspree.io/f/mykoggdz" method="POST" enctype="multipart/form-data" novalidate>
 
       <!-- SECTION 1 — IDENTITÉ -->
       <div class="section-card">
@@ -1237,23 +1237,14 @@ document.getElementById('ecodevForm').addEventListener('submit', function(e) {
   }
 
   if (!valid) {
+    e.preventDefault();
     // Scroll to first error
     var firstErr = document.querySelector('.error');
     if (firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
 
-  // Collect data
-  var fd = new FormData(this);
-  var data = {};
-  fd.forEach(function(v,k){ data[k]=v; });
-  console.log('Données soumises:', data);
-
-  // Show success
-  this.style.display = 'none';
-  var msg = document.getElementById('successMsg');
-  msg.style.display = 'block';
-  msg.scrollIntoView({behavior:'smooth'});
+  // Valid form: let browser submit to Formspree
 });
 
 // Remove error on input
