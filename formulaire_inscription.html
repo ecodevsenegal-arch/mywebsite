@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulaire-inscription</title>
+   
   <link rel="stylesheet" href="vue mobile.css">
   <link rel="icon" type="image/png" href="Enseigne_ECODEV_FINALE_0022.png">
   <link rel="stylesheet" href="Styles.css">
   <link rel="stylesheet" href="nos formations.css">
-  
+  <link rel="stylesheet" href="styles formulaires inscription.css">
 </head>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
 <div>
@@ -26,15 +27,270 @@
 <hr style="border: solid blue; margin: 0 0 0 0;">
 <div class="container">
   
-    <!-- FORMULAIRE D'INSCRIPTION -->
-<div>
-<h3>Pour participer remplir ce formulaire d'inscription</h3>
-  <iframe
-    src="https://ee.kobotoolbox.org/x/xVxG2yKN"
-   frameborder="0" marginheight="0" marginwidth="0" style="border: solid 3px #0dd639;border-radius: 10px;width: 700px; height: 700px;">
-    Chargement du formulaire...
-  </iframe>
+ 
+<!-- ══════════════════════════════════════
+     TAB 1 — FORMULAIRE
+══════════════════════════════════════ -->
+<div id="form-tab" class="tab-panel active">
+
+  <div class="form-header">
+    <div class="header-badge">ECODEV — Centre de Formation</div>
+    <h1>Formulaire d'Inscription<br>aux Formations</h1>
+    <p>Merci de remplir ce formulaire pour vous inscrire à l'une de nos formations professionnelles.<br>Les champs marqués d'un <strong style="color:var(--gold-light)">*</strong> sont obligatoires.</p>
+    <div class="gold-line"></div>
   </div>
+
+  <div class="form-wrapper">
+    <form id="ecodevForm" novalidate>
+
+      <!-- SECTION 1 — IDENTITÉ -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-number">1</div>
+          <div class="section-title">Informations Personnelles</div>
+        </div>
+        <div class="section-body">
+
+          <!-- Titre -->
+          <div class="field-row single" style="margin-bottom:18px;">
+            <div class="field-group">
+              <label>Titre <span class="required-star">*</span></label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="titre" value="1" required>
+                  <span class="radio-dot"></span> Madame
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="titre" value="2">
+                  <span class="radio-dot"></span> Monsieur
+                </label>
+              </div>
+              <div class="error-msg" id="err-titre"></div>
+            </div>
+          </div>
+
+          <!-- Prénom / Nom -->
+          <div class="field-row">
+            <div class="field-group">
+              <label for="prenom">Prénom <span class="required-star">*</span></label>
+              <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
+            </div>
+            <div class="field-group">
+              <label for="nom">Nom de famille <span class="required-star">*</span></label>
+              <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+            </div>
+          </div>
+
+          <!-- Structure / Fonction -->
+          <div class="field-row">
+            <div class="field-group">
+              <label for="structure">Structure / Service</label>
+              <input type="text" id="structure" name="structure" placeholder="Organisation ou service">
+            </div>
+            <div class="field-group">
+              <label for="fonction">Fonction / Poste</label>
+              <input type="text" id="fonction" name="fonction" placeholder="Votre fonction">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="field-row single">
+            <div class="field-group">
+              <label for="email">Adresse Email <span class="required-star">*</span></label>
+              <input type="email" id="email" name="email" placeholder="exemple@domaine.com" required>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 2 — COORDONNÉES -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-number">2</div>
+          <div class="section-title">Coordonnées & Localisation</div>
+        </div>
+        <div class="section-body">
+
+          <!-- Adresse -->
+          <div class="field-row single">
+            <div class="field-group">
+              <label for="adresse">Numéro et rue</label>
+              <input type="text" id="adresse" name="adresse" placeholder="Ex : 12, Avenue Léopold Sédar Senghor">
+            </div>
+          </div>
+
+          <!-- Ville -->
+          <div class="field-row single">
+            <div class="field-group">
+              <label for="ville">Ville <span class="required-star">*</span></label>
+              <input type="text" id="ville" name="ville" placeholder="Votre ville" required>
+            </div>
+          </div>
+
+          <!-- Pays -->
+          <div class="field-row">
+            <div class="field-group">
+              <label for="pays">Pays <span class="required-star">*</span></label>
+              <div class="select-wrap">
+                <select id="pays" name="pays" required onchange="toggleAutrePays()">
+                  <option value="">— Sélectionner votre pays —</option>
+                  <option value="1">Afrique du Sud</option>
+                  <option value="2">Algérie</option>
+                  <option value="3">Angola</option>
+                  <option value="4">Bénin</option>
+                  <option value="5">Botswana</option>
+                  <option value="6">Burkina Faso</option>
+                  <option value="7">Burundi</option>
+                  <option value="8">Cabo Verde</option>
+                  <option value="9">Cameroun</option>
+                  <option value="10">Comores</option>
+                  <option value="11">Congo</option>
+                  <option value="12">Côte d'Ivoire</option>
+                  <option value="13">Djibouti</option>
+                  <option value="14">Égypte</option>
+                  <option value="15">Érythrée</option>
+                  <option value="16">Eswatini</option>
+                  <option value="17">Éthiopie</option>
+                  <option value="18">Gabon</option>
+                  <option value="19">Gambie</option>
+                  <option value="20">Ghana</option>
+                  <option value="21">Guinée</option>
+                  <option value="22">Guinée équatoriale</option>
+                  <option value="23">Guinée-Bissau</option>
+                  <option value="24">Kenya</option>
+                  <option value="25">La Réunion</option>
+                  <option value="26">Lesotho</option>
+                  <option value="27">Libéria</option>
+                  <option value="28">Libye</option>
+                  <option value="29">Madagascar</option>
+                  <option value="30">Malawi</option>
+                  <option value="31">Mali</option>
+                  <option value="32">Maroc</option>
+                  <option value="33">Maurice</option>
+                  <option value="34">Mauritanie</option>
+                  <option value="35">Mayotte</option>
+                  <option value="36">Mozambique</option>
+                  <option value="37">Namibie</option>
+                  <option value="38">Niger</option>
+                  <option value="39">Nigéria</option>
+                  <option value="40">Ouganda</option>
+                  <option value="41">RD Congo</option>
+                  <option value="42">République centrafricaine</option>
+                  <option value="43">Rwanda</option>
+                  <option value="44">Sahara occidental</option>
+                  <option value="45">Sainte-Hélène</option>
+                  <option value="46">Sao Tomé-et-Principe</option>
+                  <option value="47">Sénégal</option>
+                  <option value="48">Seychelles</option>
+                  <option value="49">Sierra Leone</option>
+                  <option value="50">Somalie</option>
+                  <option value="51">Soudan</option>
+                  <option value="52">Soudan du Sud</option>
+                  <option value="53">Tanzanie</option>
+                  <option value="54">Tchad</option>
+                  <option value="55">Togo</option>
+                  <option value="56">Tunisie</option>
+                  <option value="57">Zambie</option>
+                  <option value="58">Zimbabwe</option>
+                  <option value="59">Autre</option>
+                </select>
+              </div>
+              <span class="hint-text">Veuillez sélectionner votre pays</span>
+            </div>
+            <div class="field-group">
+              <label for="telephone">Numéro de téléphone <span class="required-star">*</span></label>
+              <input type="tel" id="telephone" name="telephone">
+            </div>
+          </div>
+
+          <!-- Autre pays (conditionnel) -->
+          <div class="conditional-field" id="autre-pays-wrap">
+            <label for="autre_pays">Précisez votre pays <span class="required-star">*</span></label>
+            <input type="text" id="autre_pays" name="autre_pays" placeholder="Nom de votre pays">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 3 — FORMATION -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-number">3</div>
+          <div class="section-title">Choix de la Formation</div>
+        </div>
+        <div class="section-body">
+
+          <!-- Formation -->
+          <div class="field-row single">
+            <div class="field-group">
+              <label for="formation">Formation souhaitée <span class="required-star">*</span></label>
+              <div class="select-wrap">
+                <select id="formation" name="formation" required onchange="updateModeParticipation()">
+                  <option value="">— Sélectionner une formation —</option>
+                  <option value="excel_avance">Excel niveau avancé</option>
+                  <option value="excel_debutant">Excel niveau débutant</option>
+                  <option value="power_bi">Conception de Tableaux de Bord avec Excel &amp; Power BI</option>
+                  <option value="power_query">Power Query : collecte, nettoyage, transformation et modélisation de données</option>
+                  <option value="kobotoolbox">Techniques d'enquête et de collecte de données avec Kobocollect et ODK Collect</option>
+                  <option value="ms_project">Planification &amp; Suivi de projets avec MS Project</option>
+                  <option value="pssegar">Planification stratégique, Gestion axée sur les Résultats et Suivi-Évaluation</option>
+                  <option value="smiler">Approche SMILER (Suivi-Évaluation)</option>
+                  <option value="autre">Autre formation souhaitée</option>
+                </select>
+              </div>
+              <span class="hint-text">Veuillez sélectionner ici la formation que vous souhaitez suivre</span>
+            </div>
+          </div>
+
+          <!-- Autre formation (conditionnel) -->
+          <div class="conditional-field" id="autre-formation-wrap">
+            <label for="autre_formation">Précisez la formation souhaitée <span class="required-star">*</span></label>
+            <input type="text" id="autre_formation" name="autre_formation" placeholder="Décrivez la formation souhaitée">
+          </div>
+
+          <!-- Mode de participation (filtré) -->
+          <div class="field-row single" id="mode-wrap" style="display:none; margin-top:16px;">
+            <div class="field-group">
+              <label for="mode_participation">Mode de participation <span class="required-star">*</span></label>
+              <div class="select-wrap">
+                <select id="mode_participation" name="mode_participation" required>
+                  <option value="">— Sélectionner le mode —</option>
+                </select>
+              </div>
+              <span class="hint-text">Veuillez sélectionner le mode de participation à la formation</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MENTION LÉGALE -->
+      <div class="legal-box">
+        <strong>🔒 Protection des données personnelles</strong><br>
+        Compte tenu des dispositions de la loi n° <strong>2008-12 du 25 janvier 2008</strong> portant sur la Protection des données à caractère personnel, dans le respect des articles 34 et 35, les informations fournies ici seront exclusivement utilisées dans le cadre de cette formation.
+      </div>
+
+      <!-- BOUTON SOUMETTRE -->
+      <div class="submit-area">
+        <button type="submit" class="submit-btn">
+          <span>✔ Soumettre mon inscription</span>
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Message de succès -->
+    <div class="success-msg" id="successMsg">
+      <div class="checkmark">✓</div>
+      <h3>Inscription enregistrée !</h3>
+      <p>Merci pour votre inscription. L'équipe ECODEV vous contactera prochainement pour confirmer votre participation.</p>
+    </div>
+
+  </div><!-- /form-wrapper -->
+</div><!-- /form-tab -->
+
+
   <!-- NOS FORMATIONS -->
     <div>
         <nav class="section-eyebrow"><a href="Formations.html">NOS FORMATIONS</a></nav>
@@ -73,5 +329,237 @@
     <h4>Email: ecodev.senegal@gmail.com</h4>
     <h3>@ECODEV SENEGAL-2026</h3>
     </div>
+</footer>
+
+<script>
+// ── TAB SWITCHING ──
+function showTab(tabId, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── MODE PARTICIPATION DATA ──
+const modeOptions = {
+  excel_avance: [
+    {v:'presentiel_ea', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_ea', l:'Individuel en ligne'},
+    {v:'en_ligne_ea', l:'Participation en ligne'},
+    {v:'a_domicile_ea', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_ea', l:'En entreprise'}
+  ],
+  excel_debutant: [
+    {v:'presentiel_ed', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_ed', l:'Individuel en ligne'},
+    {v:'en_ligne_ed', l:'Participation en ligne'},
+    {v:'a_domicile_ed', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_ed', l:'En entreprise'}
+  ],
+  power_bi: [
+    {v:'presentiel_pbi', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_pbi', l:'Individuel en ligne'},
+    {v:'en_ligne_pbi', l:'Participation en ligne'},
+    {v:'a_domicile_pbi', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_pbi', l:'En entreprise'}
+  ],
+  power_query: [
+    {v:'presentiel_pq', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_pq', l:'Individuel en ligne'},
+    {v:'en_ligne_pq', l:'Participation en ligne'},
+    {v:'a_domicile_pq', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_pq', l:'En entreprise'}
+  ],
+  kobotoolbox: [
+    {v:'presentiel_kobo', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_kobo', l:'Individuel en ligne'},
+    {v:'en_ligne_kobo', l:'Participation en ligne'},
+    {v:'a_domicile_kobo', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_kobo', l:'En entreprise'}
+  ],
+  ms_project: [
+    {v:'presentiel_msp', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_msp', l:'Individuel en ligne'},
+    {v:'en_ligne_msp', l:'Participation en ligne'},
+    {v:'a_domicile_msp', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_msp', l:'En entreprise'}
+  ],
+  pssegar: [
+    {v:'presentiel_se', l:'Participation en présentiel'},
+    {v:'en_ligne_se', l:'Participation en ligne'},
+    {v:'en_entreprise_se', l:'En entreprise'}
+  ],
+  smiler: [
+    {v:'presentiel_sml', l:'Participation en présentiel'},
+    {v:'en_entreprise_sml', l:'En entreprise'}
+  ],
+  autre: [
+    {v:'presentiel_autre', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_autre', l:'Individuel en ligne'},
+    {v:'en_ligne_autre', l:'Participation en ligne'},
+    {v:'a_domicile_autre', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_autre', l:'En entreprise'}
+  ]
+};
+
+// ── GOOGLE SHEETS APPS SCRIPT ENDPOINT ──
+const GOOGLE_SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwTPiBlLEfakHN3rEm5dxHyc1ifoFkBoShMO_2jLYWLNF7rincaoeN9uv0-CgrVMwQt/exec';
+
+function sendFormToGoogleSheet(payload) {
+  return fetch(GOOGLE_SHEET_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  }).then(async function(response) {
+    if (!response.ok) {
+      var text = await response.text();
+      throw new Error('Erreur de réseau: ' + response.status + ' ' + text);
+    }
+    var contentType = response.headers.get('content-type') || '';
+    if (contentType.indexOf('application/json') !== -1) {
+      return response.json();
+    }
+    return response.text();
+  });
+}
+
+// ── CONDITIONAL LOGIC ──
+function toggleAutrePays() {
+  var pays = document.getElementById('pays').value;
+  var wrap = document.getElementById('autre-pays-wrap');
+  var input = document.getElementById('autre_pays');
+  if (pays === '59') {
+    wrap.classList.add('visible');
+    input.required = true;
+  } else {
+    wrap.classList.remove('visible');
+    input.required = false;
+    input.value = '';
+  }
+}
+
+function updateModeParticipation() {
+  var formation = document.getElementById('formation').value;
+  var modeWrap = document.getElementById('mode-wrap');
+  var modeSelect = document.getElementById('mode_participation');
+  var autreFormWrap = document.getElementById('autre-formation-wrap');
+  var autreFormInput = document.getElementById('autre_formation');
+
+  // Autre formation
+  if (formation === 'autre') {
+    autreFormWrap.classList.add('visible');
+    autreFormInput.required = true;
+  } else {
+    autreFormWrap.classList.remove('visible');
+    autreFormInput.required = false;
+    autreFormInput.value = '';
+  }
+
+  // Mode participation
+  if (!formation) {
+    modeWrap.style.display = 'none';
+    return;
+  }
+  modeWrap.style.display = '';
+  modeSelect.innerHTML = '<option value="">— Sélectionner le mode —</option>';
+  var opts = modeOptions[formation] || [];
+  opts.forEach(function(o) {
+    var el = document.createElement('option');
+    el.value = o.v;
+    el.textContent = o.l;
+    modeSelect.appendChild(el);
+  });
+}
+
+// ── FORM VALIDATION & SUBMISSION ──
+document.getElementById('ecodevForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var form = this;
+  var valid = true;
+
+  // Titre
+  var titreChecked = document.querySelector('input[name="titre"]:checked');
+  if (!titreChecked) {
+    valid = false;
+    document.getElementById('err-titre').textContent = 'Veuillez sélectionner votre titre.';
+  } else {
+    document.getElementById('err-titre').textContent = '';
+  }
+
+  // Required text/email/tel fields
+  ['prenom','nom','email','ville','telephone'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.classList.add('error');
+      valid = false;
+    } else {
+      el.classList.remove('error');
+    }
+  });
+
+  // Pays
+  var pays = document.getElementById('pays');
+  if (!pays.value) { pays.classList.add('error'); valid = false; }
+  else pays.classList.remove('error');
+
+  // Autre pays
+  if (pays.value === '59') {
+    var ap = document.getElementById('autre_pays');
+    if (!ap.value.trim()) { ap.classList.add('error'); valid = false; }
+    else ap.classList.remove('error');
+  }
+
+  // Formation
+  var formation = document.getElementById('formation');
+  if (!formation.value) { formation.classList.add('error'); valid = false; }
+  else formation.classList.remove('error');
+
+  // Mode
+  var modeWrap = document.getElementById('mode-wrap');
+  if (modeWrap.style.display !== 'none') {
+    var mode = document.getElementById('mode_participation');
+    if (!mode.value) { mode.classList.add('error'); valid = false; }
+    else mode.classList.remove('error');
+  }
+
+  if (!valid) {
+    var firstErr = document.querySelector('.error');
+    if (firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  var fd = new FormData(form);
+  var data = {};
+  fd.forEach(function(v,k){ data[k]=v; });
+  data.timestamp = new Date().toISOString();
+
+  var submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.textContent = 'Envoie en cours...';
+
+  sendFormToGoogleSheet(data)
+    .then(function(response) {
+      console.log('Données soumises:', data, response);
+      form.style.display = 'none';
+      var msg = document.getElementById('successMsg');
+      msg.style.display = 'block';
+      msg.scrollIntoView({behavior:'smooth'});
+    })
+    .catch(function(error) {
+      console.error('Erreur lors de l’envoi :', error);
+      submitButton.disabled = false;
+      submitButton.textContent = '✔ Soumettre mon inscription';
+      alert('Une erreur est survenue lors de l’envoi. Veuillez réessayer ou contacter l’administrateur.');
+    });
+});
+
+// Remove error on input
+document.querySelectorAll('input, select').forEach(function(el) {
+  el.addEventListener('input', function(){ this.classList.remove('error'); });
+  el.addEventListener('change', function(){ this.classList.remove('error'); });
+});
+</script>
 </body>
 </html>

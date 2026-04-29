@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECODEV — Formulaire d'Inscription aux Formations</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #0d4f3c;
+    --green-mid: #1a7a5e;
+    --green-light: #2faa82;
+    --gold: #c8922a;
+    --gold-light: #e8b94f;
+    --cream: #faf8f4;
+    --warm-white: #ffffff;
+    --gray-light: #f0ede8;
+    --gray-mid: #c4bfb8;
+    --gray-dark: #7a7470;
+    --text-dark: #1c1a18;
+    --text-body: #3d3a38;
+    --error: #c0392b;
+    --shadow: 0 2px 20px rgba(13,79,60,0.08);
+    --shadow-hover: 0 8px 40px rgba(13,79,60,0.16);
+    --radius: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-body);
+    min-height: 100vh;
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    background: var(--green-deep);
+    display: flex;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 14px 20px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.25s;
+    text-transform: uppercase;
+  }
+  .tab-btn:hover { color: var(--gold-light); }
+  .tab-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold-light);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── HEADER ── */
+  .form-header {
+    background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 60%, var(--green-light) 100%);
+    padding: 60px 32px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-bottom: 5px;
+  }
+  .form-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 38px);
+    color: white;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+  .form-header p {
+    color: rgba(255,255,255,0.75);
+    font-size: 14px;
+    font-weight: 300;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1;
+  }
+  .gold-line {
+    width: 100px;
+    height: 1px;
+    background: var(--gold);
+    margin: 5px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── FORM WRAPPER ── */
+  .form-wrapper {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 20px 10px 30px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .section-header {
+    background: linear-gradient(90deg, var(--green-deep), var(--green-mid));
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .section-number {
+    width: 28px;
+    height: 28px;
+    background: var(--gold);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 8px 12px;
+  }
+  .section-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+  }
+  .section-body { padding: 14px 12px; }
+
+  /* ── FIELDS ── */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .field-row.single { grid-template-columns: 1fr; }
+  .field-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green-deep);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+  .required-star { color: var(--gold); margin-left: 3px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--gray-mid);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+    background: var(--cream);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--green-light);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(47,170,130,0.12);
+  }
+  input.error, select.error { border-color: var(--error); }
+
+  /* Select arrow */
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green-mid);
+    pointer-events: none;
+    font-size: 14px;
+  }
+  select { cursor: pointer; padding-right: 36px; }
+
+  /* Radio group for titre */
+  .radio-group {
+    display: flex;
+    gap: 12px;
+  }
+  .radio-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1.5px solid var(--gray-mid);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: var(--text-dark);
+    background: var(--cream);
+  }
+  .radio-option input[type="radio"] { display: none; }
+  .radio-option .radio-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--gray-mid);
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .radio-option:has(input:checked) {
+    border-color: var(--green-light);
+    background: rgba(47,170,130,0.06);
+  }
+  .radio-option:has(input:checked) .radio-dot {
+    border-color: var(--green-light);
+    background: var(--green-light);
+    box-shadow: inset 0 0 0 3px white;
+  }
+
+  /* Hidden field */
+  .conditional-field { display: none; }
+  .conditional-field.visible { display: flex; flex-direction: column; gap: 6px; }
+
+  /* Hint text */
+  .hint-text {
+    font-size: 11px;
+    color: var(--gray-dark);
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  /* Legal notice */
+  .legal-box {
+    background: linear-gradient(135deg, rgba(13,79,60,0.05), rgba(200,146,42,0.05));
+    border: 1px solid rgba(13,79,60,0.15);
+    border-left: 4px solid var(--green-mid);
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 12px;
+    color: var(--gray-dark);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .legal-box strong { color: var(--green-deep); }
+
+  /* Submit */
+  .submit-area { text-align: center; padding-top: 8px; }
+  .submit-btn {
+    background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(13,79,60,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(13,79,60,0.4); }
+  .submit-btn:hover::after { opacity: 1; }
+  .submit-btn span { position: relative; z-index: 1; }
+
+  /* Success message */
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 40px 24px;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-top: 24px;
+  }
+  .success-msg .checkmark {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+    color: white;
+  }
+  .success-msg h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--green-deep);
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .success-msg p { color: var(--gray-dark); font-size: 14px; }
+
+  /* ── GUIDE TAB ── */
+  .guide-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    padding: 48px 32px 40px;
+    text-align: center;
+  }
+  .guide-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3.5vw, 34px);
+    color: white;
+    margin-bottom: 10px;
+  }
+  .guide-header p { color: rgba(255,255,255,0.65); font-size: 14px; }
+
+  .guide-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  .guide-step {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .guide-step-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: #f8f9fc;
+    border-bottom: 1px solid #e8eaf0;
+  }
+  .step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .step-icon.html { background: #fff3e0; }
+  .step-icon.gform { background: #e8f5e9; }
+  .step-icon.excel { background: #e3f2fd; }
+  .step-icon.embed { background: #fce4ec; }
+
+  .guide-step-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--text-dark);
+  }
+  .guide-step-header p {
+    font-size: 12px;
+    color: var(--gray-dark);
+    margin-top: 2px;
+  }
+  .step-body { padding: 24px; }
+
+  .code-block {
+    background: #1e1e2e;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+    margin: 12px 0;
+    position: relative;
+  }
+  .code-block pre {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #cdd6f4;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .code-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 10px;
+    color: rgba(205,214,244,0.5);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .copy-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+
+  .step-list { list-style: none; padding: 0; }
+  .step-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-light);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li .num {
+    width: 22px;
+    height: 22px;
+    background: var(--green-mid);
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-list li .num.blue { background: #1565c0; }
+  .step-list li .num.purple { background: #6a1b9a; }
+
+  .info-box {
+    background: rgba(47,170,130,0.08);
+    border: 1px solid rgba(47,170,130,0.3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--green-deep);
+    margin: 12px 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .info-box .icon { font-size: 16px; flex-shrink: 0; }
+
+  .warning-box {
+    background: rgba(200,146,42,0.08);
+    border: 1px solid rgba(200,146,42,0.3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #7a5a10;
+    margin: 12px 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .gs-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .gs-col {
+    background: var(--gray-light);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .gs-col h4 { font-size: 13px; font-weight: 600; color: var(--green-deep); margin-bottom: 10px; }
+  .gs-col ul { list-style: none; }
+  .gs-col ul li {
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .gs-col ul li::before { content: '→'; color: var(--green-light); font-size: 11px; }
+
+  .highlight { color: var(--green-light); font-family: monospace; }
+  .tag { background: var(--green-deep); color: white; font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: 600; margin-left: 4px; }
+
+  @media (max-width: 600px) {
+    .field-row { grid-template-columns: 1fr; }
+    .gs-columns { grid-template-columns: 1fr; }
+    .tab-btn { font-size: 11px; padding: 12px 8px; }
+    .section-body { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('form-tab', this)">📋 Formulaire d'Inscription</button>
+  <button class="tab-btn" onclick="showTab('guide-tab', this)">🔧 Guide d'Intégration</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     TAB 1 — FORMULAIRE
+══════════════════════════════════════ -->
+<div id="form-tab" class="tab-panel active">
+
+  <div class="form-header">
+    <div class="header-badge">ECODEV — Centre de Formation</div>
+    <h1>Formulaire d'Inscription<br>aux Formations</h1>
+    <p>Merci de remplir ce formulaire pour vous inscrire à l'une de nos formations professionnelles.<br>Les champs marqués d'un <strong style="color:var(--gold-light)">*</strong> sont obligatoires.</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="form-wrapper">
+    <form id="ecodevForm" novalidate>
+
+      <!-- SECTION 1 — IDENTITÉ -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-number">1</div>
+          <div class="section-title">Informations Personnelles</div>
+        </div>
+        <div class="section-body">
+
+          <!-- Titre -->
+          <div class="field-row single" style="margin-bottom:18px;">
+            <div class="field-group">
+              <label>Titre <span class="required-star">*</span></label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="titre" value="1" required>
+                  <span class="radio-dot"></span> Madame
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="titre" value="2">
+                  <span class="radio-dot"></span> Monsieur
+                </label>
+              </div>
+              <div class="error-msg" id="err-titre"></div>
+            </div>
+          </div>
+
+          <!-- Prénom / Nom -->
+          <div class="field-row">
+            <div class="field-group">
+              <label for="prenom">Prénom <span class="required-star">*</span></label>
+              <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
+            </div>
+            <div class="field-group">
+              <label for="nom">Nom de famille <span class="required-star">*</span></label>
+              <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+            </div>
+          </div>
+
+          <!-- Structure / Fonction -->
+          <div class="field-row">
+            <div class="field-group">
+              <label for="structure">Structure / Service</label>
+              <input type="text" id="structure" name="structure" placeholder="Organisation ou service">
+            </div>
+            <div class="field-group">
+              <label for="fonction">Fonction / Poste</label>
+              <input type="text" id="fonction" name="fonction" placeholder="Votre fonction">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="field-row single">
+            <div class="field-group">
+              <label for="email">Adresse Email <span class="required-star">*</span></label>
+              <input type="email" id="email" name="email" placeholder="exemple@domaine.com" required>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 2 — COORDONNÉES -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-number">2</div>
+          <div class="section-title">Coordonnées & Localisation</div>
+        </div>
+        <div class="section-body">
+
+          <!-- Adresse -->
+          <div class="field-row single">
+            <div class="field-group">
+              <label for="adresse">Numéro et rue</label>
+              <input type="text" id="adresse" name="adresse" placeholder="Ex : 12, Avenue Léopold Sédar Senghor">
+            </div>
+          </div>
+
+          <!-- Ville -->
+          <div class="field-row single">
+            <div class="field-group">
+              <label for="ville">Ville <span class="required-star">*</span></label>
+              <input type="text" id="ville" name="ville" placeholder="Votre ville" required>
+            </div>
+          </div>
+
+          <!-- Pays -->
+          <div class="field-row">
+            <div class="field-group">
+              <label for="pays">Pays <span class="required-star">*</span></label>
+              <div class="select-wrap">
+                <select id="pays" name="pays" required onchange="toggleAutrePays()">
+                  <option value="">— Sélectionner votre pays —</option>
+                  <option value="1">Afrique du Sud</option>
+                  <option value="2">Algérie</option>
+                  <option value="3">Angola</option>
+                  <option value="4">Bénin</option>
+                  <option value="5">Botswana</option>
+                  <option value="6">Burkina Faso</option>
+                  <option value="7">Burundi</option>
+                  <option value="8">Cabo Verde</option>
+                  <option value="9">Cameroun</option>
+                  <option value="10">Comores</option>
+                  <option value="11">Congo</option>
+                  <option value="12">Côte d'Ivoire</option>
+                  <option value="13">Djibouti</option>
+                  <option value="14">Égypte</option>
+                  <option value="15">Érythrée</option>
+                  <option value="16">Eswatini</option>
+                  <option value="17">Éthiopie</option>
+                  <option value="18">Gabon</option>
+                  <option value="19">Gambie</option>
+                  <option value="20">Ghana</option>
+                  <option value="21">Guinée</option>
+                  <option value="22">Guinée équatoriale</option>
+                  <option value="23">Guinée-Bissau</option>
+                  <option value="24">Kenya</option>
+                  <option value="25">La Réunion</option>
+                  <option value="26">Lesotho</option>
+                  <option value="27">Libéria</option>
+                  <option value="28">Libye</option>
+                  <option value="29">Madagascar</option>
+                  <option value="30">Malawi</option>
+                  <option value="31">Mali</option>
+                  <option value="32">Maroc</option>
+                  <option value="33">Maurice</option>
+                  <option value="34">Mauritanie</option>
+                  <option value="35">Mayotte</option>
+                  <option value="36">Mozambique</option>
+                  <option value="37">Namibie</option>
+                  <option value="38">Niger</option>
+                  <option value="39">Nigéria</option>
+                  <option value="40">Ouganda</option>
+                  <option value="41">RD Congo</option>
+                  <option value="42">République centrafricaine</option>
+                  <option value="43">Rwanda</option>
+                  <option value="44">Sahara occidental</option>
+                  <option value="45">Sainte-Hélène</option>
+                  <option value="46">Sao Tomé-et-Principe</option>
+                  <option value="47">Sénégal</option>
+                  <option value="48">Seychelles</option>
+                  <option value="49">Sierra Leone</option>
+                  <option value="50">Somalie</option>
+                  <option value="51">Soudan</option>
+                  <option value="52">Soudan du Sud</option>
+                  <option value="53">Tanzanie</option>
+                  <option value="54">Tchad</option>
+                  <option value="55">Togo</option>
+                  <option value="56">Tunisie</option>
+                  <option value="57">Zambie</option>
+                  <option value="58">Zimbabwe</option>
+                  <option value="59">Autre</option>
+                </select>
+              </div>
+              <span class="hint-text">Veuillez sélectionner votre pays</span>
+            </div>
+            <div class="field-group">
+              <label for="telephone">Numéro de téléphone <span class="required-star">*</span></label>
+              <input type="tel" id="telephone" name="telephone" placeholder="+221 77 XXX XX XX" required>
+            </div>
+          </div>
+
+          <!-- Autre pays (conditionnel) -->
+          <div class="conditional-field" id="autre-pays-wrap">
+            <label for="autre_pays">Précisez votre pays <span class="required-star">*</span></label>
+            <input type="text" id="autre_pays" name="autre_pays" placeholder="Nom de votre pays">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 3 — FORMATION -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-number">3</div>
+          <div class="section-title">Choix de la Formation</div>
+        </div>
+        <div class="section-body">
+
+          <!-- Formation -->
+          <div class="field-row single">
+            <div class="field-group">
+              <label for="formation">Formation souhaitée <span class="required-star">*</span></label>
+              <div class="select-wrap">
+                <select id="formation" name="formation" required onchange="updateModeParticipation()">
+                  <option value="">— Sélectionner une formation —</option>
+                  <option value="excel_avance">Excel niveau avancé</option>
+                  <option value="excel_debutant">Excel niveau débutant</option>
+                  <option value="power_bi">Conception de Tableaux de Bord avec Excel &amp; Power BI</option>
+                  <option value="power_query">Power Query : collecte, nettoyage, transformation et modélisation de données</option>
+                  <option value="kobotoolbox">Techniques d'enquête et de collecte de données avec Kobocollect et ODK Collect</option>
+                  <option value="ms_project">Planification &amp; Suivi de projets avec MS Project</option>
+                  <option value="pssegar">Planification stratégique, Gestion axée sur les Résultats et Suivi-Évaluation</option>
+                  <option value="smiler">Approche SMILER (Suivi-Évaluation)</option>
+                  <option value="autre">Autre formation souhaitée</option>
+                </select>
+              </div>
+              <span class="hint-text">Veuillez sélectionner ici la formation que vous souhaitez suivre</span>
+            </div>
+          </div>
+
+          <!-- Autre formation (conditionnel) -->
+          <div class="conditional-field" id="autre-formation-wrap">
+            <label for="autre_formation">Précisez la formation souhaitée <span class="required-star">*</span></label>
+            <input type="text" id="autre_formation" name="autre_formation" placeholder="Décrivez la formation souhaitée">
+          </div>
+
+          <!-- Mode de participation (filtré) -->
+          <div class="field-row single" id="mode-wrap" style="display:none; margin-top:16px;">
+            <div class="field-group">
+              <label for="mode_participation">Mode de participation <span class="required-star">*</span></label>
+              <div class="select-wrap">
+                <select id="mode_participation" name="mode_participation" required>
+                  <option value="">— Sélectionner le mode —</option>
+                </select>
+              </div>
+              <span class="hint-text">Veuillez sélectionner le mode de participation à la formation</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MENTION LÉGALE -->
+      <div class="legal-box">
+        <strong>🔒 Protection des données personnelles</strong><br>
+        Compte tenu des dispositions de la loi n° <strong>2008-12 du 25 janvier 2008</strong> portant sur la Protection des données à caractère personnel, dans le respect des articles 34 et 35, les informations fournies ici seront exclusivement utilisées dans le cadre de cette formation.
+      </div>
+
+      <!-- BOUTON SOUMETTRE -->
+      <div class="submit-area">
+        <button type="submit" class="submit-btn">
+          <span>✔ Soumettre mon inscription</span>
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Message de succès -->
+    <div class="success-msg" id="successMsg">
+      <div class="checkmark">✓</div>
+      <h3>Inscription enregistrée !</h3>
+      <p>Merci pour votre inscription. L'équipe ECODEV vous contactera prochainement pour confirmer votre participation.</p>
+    </div>
+
+  </div><!-- /form-wrapper -->
+</div><!-- /form-tab -->
+
+
+<!-- ══════════════════════════════════════
+     TAB 2 — GUIDE D'INTÉGRATION
+══════════════════════════════════════ -->
+<div id="guide-tab" class="tab-panel">
+
+  <div class="guide-header">
+    <div class="header-badge" style="background:#c0392b;">Guide Technique</div>
+    <h1>Intégration & Gestion des Données</h1>
+    <p>Comment intégrer ce formulaire dans un site web, connecter Google Forms et exporter vers Excel.</p>
+  </div>
+
+  <div class="guide-wrapper">
+
+    <!-- ÉTAPE 1 — Intégration dans un site web -->
+    <div class="guide-step">
+      <div class="guide-step-header">
+        <div class="step-icon html">🌐</div>
+        <div>
+          <h3>Étape 1 — Intégrer le formulaire dans votre site web</h3>
+          <p>3 méthodes selon votre type de site (WordPress, HTML pur, CMS)</p>
+        </div>
+      </div>
+      <div class="step-body">
+
+        <p style="font-size:14px; margin-bottom:16px;"><strong>Méthode A — iFrame (la plus simple, fonctionne partout)</strong></p>
+        <div class="code-block">
+          <span class="code-label">HTML</span>
+          <pre>&lt;!-- Coller dans votre page HTML ou éditeur WordPress --&gt;
+&lt;iframe
+  src="formulaire_ecodev.html"
+  width="100%"
+  height="900"
+  style="border:none; border-radius:12px;"
+  title="Formulaire d'inscription ECODEV"&gt;
+&lt;/iframe&gt;</pre>
+        </div>
+
+        <p style="font-size:14px; margin-bottom:12px; margin-top:20px;"><strong>Méthode B — Inclusion directe dans une page HTML</strong></p>
+        <div class="code-block">
+          <span class="code-label">HTML</span>
+          <pre>&lt;!-- Dans votre page principale, remplacez le &lt;body&gt; --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;ECODEV — Inscription&lt;/title&gt;
+  &lt;!-- Coller le contenu &lt;style&gt; du formulaire ici --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Coller le contenu &lt;body&gt; du formulaire ici --&gt;
+  &lt;script src="form-logic.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+
+        <p style="font-size:14px; margin-bottom:12px; margin-top:20px;"><strong>Méthode C — WordPress (bloc HTML personnalisé)</strong></p>
+        <ul class="step-list">
+          <li><span class="num">1</span> Dans WordPress, ouvrez l'éditeur Gutenberg</li>
+          <li><span class="num">2</span> Ajoutez un bloc <strong>"HTML personnalisé"</strong></li>
+          <li><span class="num">3</span> Collez le code iFrame de la Méthode A</li>
+          <li><span class="num">4</span> Hébergez le fichier <code>formulaire_ecodev.html</code> dans le dossier <code>/wp-content/uploads/</code></li>
+          <li><span class="num">5</span> Ajustez l'URL <code>src=""</code> avec le chemin complet vers votre fichier</li>
+        </ul>
+
+        <div class="info-box">
+          <span class="icon">💡</span>
+          <span>Pour les données de production, remplacez l'action du formulaire par une URL de traitement serveur (voir Étape 3 pour Formspree ou EmailJS).</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 2 — Envoyer vers un backend -->
+    <div class="guide-step">
+      <div class="guide-step-header">
+        <div class="step-icon embed">⚙️</div>
+        <div>
+          <h3>Étape 2 — Recevoir les données (sans serveur)</h3>
+          <p>Utilisez Formspree ou EmailJS pour collecter les inscriptions par email</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <p style="font-size:14px; margin-bottom:12px;"><strong>Option A — Formspree (gratuit, 50 soumissions/mois)</strong></p>
+        <ul class="step-list">
+          <li><span class="num">1</span> Créez un compte sur <strong>formspree.io</strong></li>
+          <li><span class="num">2</span> Créez un nouveau formulaire → copiez votre <strong>endpoint unique</strong></li>
+          <li><span class="num">3</span> Modifiez la balise <code>&lt;form&gt;</code> dans le fichier HTML :</li>
+        </ul>
+        <div class="code-block">
+          <pre>&lt;!-- Remplacer cette ligne dans le HTML --&gt;
+&lt;form id="ecodevForm" novalidate&gt;
+
+&lt;!-- Par ceci (avec votre ID Formspree) --&gt;
+&lt;form id="ecodevForm" 
+      action="https://formspree.io/f/VOTRE_ID"
+      method="POST"&gt;</pre>
+        </div>
+        <div class="info-box">
+          <span class="icon">📧</span>
+          <span>Chaque soumission vous sera envoyée par email ET visible dans le tableau de bord Formspree avec export CSV/Excel.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 3 — Google Forms -->
+    <div class="guide-step">
+      <div class="guide-step-header">
+        <div class="step-icon gform">📊</div>
+        <div>
+          <h3>Étape 3 — Importer dans Google Forms</h3>
+          <p>Recréer le formulaire dans Google Forms et exporter les réponses</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <p style="font-size:14px; margin-bottom:12px; color:var(--gray-dark);"><em>Google Forms ne permet pas d'importer directement un fichier HTML. Voici le mapping complet de tous les champs :</em></p>
+
+        <div class="gs-columns">
+          <div class="gs-col">
+            <h4>🟢 Champs à créer dans Google Forms</h4>
+            <ul>
+              <li>Titre → <strong>Choix multiples</strong> (Madame / Monsieur)</li>
+              <li>Prénom → <strong>Réponse courte</strong></li>
+              <li>Nom de famille → <strong>Réponse courte</strong></li>
+              <li>Structure / Service → <strong>Réponse courte</strong></li>
+              <li>Fonction → <strong>Réponse courte</strong></li>
+              <li>Email → <strong>Réponse courte</strong> (validation email)</li>
+              <li>Adresse → <strong>Réponse courte</strong></li>
+              <li>Ville → <strong>Réponse courte</strong></li>
+              <li>Pays → <strong>Liste déroulante</strong> (58 pays)</li>
+              <li>Autre pays → <strong>Réponse courte</strong></li>
+              <li>Téléphone → <strong>Réponse courte</strong></li>
+              <li>Formation → <strong>Liste déroulante</strong></li>
+              <li>Autre formation → <strong>Réponse courte</strong></li>
+              <li>Mode de participation → <strong>Choix multiples</strong></li>
+            </ul>
+          </div>
+          <div class="gs-col">
+            <h4>📋 Procédure étape par étape</h4>
+            <ul>
+              <li>Aller sur <strong>forms.google.com</strong></li>
+              <li>Cliquer <strong>"+ Nouveau formulaire"</strong></li>
+              <li>Ajouter le titre : "Inscription Formation ECODEV"</li>
+              <li>Ajouter chaque champ selon le mapping</li>
+              <li>Activer <strong>"Obligatoire"</strong> sur les champs requis</li>
+              <li>Utiliser <strong>"Logique de section"</strong> pour pays=Autre</li>
+              <li>Cliquer <strong>Envoyer → Lien</strong> à partager</li>
+              <li>Ou <strong>Envoyer → Intégrer</strong> pour obtenir l'iFrame</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <span class="code-label">Script Google Apps (automatisation)</span>
+          <pre>// Coller dans Extensions → Apps Script du Google Form
+// Pour envoyer une confirmation email à chaque inscription
+
+function onFormSubmit(e) {
+  var reponses = e.response.getItemResponses();
+  var email = "";
+  var nom = "";
+  var formation = "";
+  
+  reponses.forEach(function(r) {
+    if (r.getItem().getTitle() === "Email") email = r.getResponse();
+    if (r.getItem().getTitle() === "Nom de famille") nom = r.getResponse();
+    if (r.getItem().getTitle() === "Formation") formation = r.getResponse();
+  });
+  
+  if (email) {
+    MailApp.sendEmail({
+      to: email,
+      subject: "✅ Confirmation d'inscription — ECODEV",
+      body: "Bonjour " + nom + ",\n\n" +
+            "Votre inscription à la formation « " + formation + " » " +
+            "a bien été reçue.\n\n" +
+            "L'équipe ECODEV vous contactera prochainement.\n\n" +
+            "Cordialement,\nECODEV Centre de Formation"
+    });
+  }
+}
+
+// Lier ce script au déclencheur "À l'envoi du formulaire"</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 4 — Export Excel -->
+    <div class="guide-step">
+      <div class="guide-step-header">
+        <div class="step-icon excel">📥</div>
+        <div>
+          <h3>Étape 4 — Télécharger les données sous Excel</h3>
+          <p>3 méthodes pour exporter les inscriptions en fichier .xlsx</p>
+        </div>
+      </div>
+      <div class="step-body">
+
+        <p style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--green-deep);">✅ Méthode 1 — Via Google Forms (la plus simple)</p>
+        <ul class="step-list">
+          <li><span class="num">1</span> Ouvrez votre Google Form → onglet <strong>Réponses</strong></li>
+          <li><span class="num">2</span> Cliquez le bouton <strong>Google Sheets</strong> (icône tableau) pour créer une feuille liée</li>
+          <li><span class="num">3</span> Dans la Google Sheet → <strong>Fichier → Télécharger → Microsoft Excel (.xlsx)</strong></li>
+          <li><span class="num">4</span> Le fichier contient toutes les inscriptions avec date et heure automatiques</li>
+        </ul>
+
+        <div class="warning-box" style="margin: 12px 0;">
+          <span class="icon">⚡</span>
+          <span>La Google Sheet se met à jour automatiquement à chaque nouvelle inscription. Il suffit de la télécharger quand vous en avez besoin.</span>
+        </div>
+
+        <p style="font-size:14px; font-weight:600; margin:18px 0 10px; color:var(--green-deep);">✅ Méthode 2 — Via Formspree Dashboard</p>
+        <ul class="step-list">
+          <li><span class="num blue">1</span> Connectez-vous à <strong>formspree.io</strong> → votre formulaire</li>
+          <li><span class="num blue">2</span> Onglet <strong>"Submissions"</strong> → bouton <strong>"Export CSV"</strong></li>
+          <li><span class="num blue">3</span> Ouvrez le CSV dans Excel → <strong>Fichier → Enregistrer sous → Format Excel</strong></li>
+        </ul>
+
+        <p style="font-size:14px; font-weight:600; margin:18px 0 10px; color:var(--green-deep);">✅ Méthode 3 — Script Apps Script automatique (envoi hebdomadaire)</p>
+        <div class="code-block">
+          <pre>// Exporter automatiquement vers Excel chaque lundi
+// Coller dans Extensions → Apps Script de la Google Sheet
+
+function exportWeeklyExcel() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  
+  // Créer un fichier Excel temporaire
+  var blob = ss.getBlob().setContentType(
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  );
+  
+  // Envoyer par email
+  MailApp.sendEmail({
+    to: "votre-email@domaine.com",
+    subject: "📊 Export Inscriptions ECODEV — " + new Date().toLocaleDateString('fr-FR'),
+    body: "Veuillez trouver en pièce jointe l'export des inscriptions.",
+    attachments: [blob]
+  });
+}
+
+// Créer un déclencheur temporel :
+// Extensions → Apps Script → Déclencheurs → Ajouter
+// Choisir : exportWeeklyExcel / Hebdomadaire / Lundi / 8h-9h</pre>
+        </div>
+
+        <div class="info-box" style="margin-top:16px;">
+          <span class="icon">🎯</span>
+          <div>
+            <strong>Recommandation ECODEV :</strong> Utilisez <strong>Google Forms + Google Sheets</strong> pour la collecte, puis téléchargez en Excel à la demande. C'est gratuit, sans configuration serveur, et les données sont sécurisées dans votre compte Google.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /guide-wrapper -->
+</div><!-- /guide-tab -->
+
+
+<script>
+// ── TAB SWITCHING ──
+function showTab(tabId, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── MODE PARTICIPATION DATA ──
+const modeOptions = {
+  excel_avance: [
+    {v:'presentiel_ea', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_ea', l:'Individuel en ligne'},
+    {v:'en_ligne_ea', l:'Participation en ligne'},
+    {v:'a_domicile_ea', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_ea', l:'En entreprise'}
+  ],
+  excel_debutant: [
+    {v:'presentiel_ed', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_ed', l:'Individuel en ligne'},
+    {v:'en_ligne_ed', l:'Participation en ligne'},
+    {v:'a_domicile_ed', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_ed', l:'En entreprise'}
+  ],
+  power_bi: [
+    {v:'presentiel_pbi', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_pbi', l:'Individuel en ligne'},
+    {v:'en_ligne_pbi', l:'Participation en ligne'},
+    {v:'a_domicile_pbi', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_pbi', l:'En entreprise'}
+  ],
+  power_query: [
+    {v:'presentiel_pq', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_pq', l:'Individuel en ligne'},
+    {v:'en_ligne_pq', l:'Participation en ligne'},
+    {v:'a_domicile_pq', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_pq', l:'En entreprise'}
+  ],
+  kobotoolbox: [
+    {v:'presentiel_kobo', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_kobo', l:'Individuel en ligne'},
+    {v:'en_ligne_kobo', l:'Participation en ligne'},
+    {v:'a_domicile_kobo', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_kobo', l:'En entreprise'}
+  ],
+  ms_project: [
+    {v:'presentiel_msp', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_msp', l:'Individuel en ligne'},
+    {v:'en_ligne_msp', l:'Participation en ligne'},
+    {v:'a_domicile_msp', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_msp', l:'En entreprise'}
+  ],
+  pssegar: [
+    {v:'presentiel_se', l:'Participation en présentiel'},
+    {v:'en_ligne_se', l:'Participation en ligne'},
+    {v:'en_entreprise_se', l:'En entreprise'}
+  ],
+  smiler: [
+    {v:'presentiel_sml', l:'Participation en présentiel'},
+    {v:'en_entreprise_sml', l:'En entreprise'}
+  ],
+  autre: [
+    {v:'presentiel_autre', l:'Participation en présentiel'},
+    {v:'indiv_en_ligne_autre', l:'Individuel en ligne'},
+    {v:'en_ligne_autre', l:'Participation en ligne'},
+    {v:'a_domicile_autre', l:'À domicile (Seulement à Dakar)'},
+    {v:'en_entreprise_autre', l:'En entreprise'}
+  ]
+};
+
+// ── CONDITIONAL LOGIC ──
+function toggleAutrePays() {
+  var pays = document.getElementById('pays').value;
+  var wrap = document.getElementById('autre-pays-wrap');
+  var input = document.getElementById('autre_pays');
+  if (pays === '59') {
+    wrap.classList.add('visible');
+    input.required = true;
+  } else {
+    wrap.classList.remove('visible');
+    input.required = false;
+    input.value = '';
+  }
+}
+
+function updateModeParticipation() {
+  var formation = document.getElementById('formation').value;
+  var modeWrap = document.getElementById('mode-wrap');
+  var modeSelect = document.getElementById('mode_participation');
+  var autreFormWrap = document.getElementById('autre-formation-wrap');
+  var autreFormInput = document.getElementById('autre_formation');
+
+  // Autre formation
+  if (formation === 'autre') {
+    autreFormWrap.classList.add('visible');
+    autreFormInput.required = true;
+  } else {
+    autreFormWrap.classList.remove('visible');
+    autreFormInput.required = false;
+    autreFormInput.value = '';
+  }
+
+  // Mode participation
+  if (!formation) {
+    modeWrap.style.display = 'none';
+    return;
+  }
+  modeWrap.style.display = '';
+  modeSelect.innerHTML = '<option value="">— Sélectionner le mode —</option>';
+  var opts = modeOptions[formation] || [];
+  opts.forEach(function(o) {
+    var el = document.createElement('option');
+    el.value = o.v;
+    el.textContent = o.l;
+    modeSelect.appendChild(el);
+  });
+}
+
+// ── FORM VALIDATION & SUBMISSION ──
+document.getElementById('ecodevForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var valid = true;
+
+  // Titre
+  var titreChecked = document.querySelector('input[name="titre"]:checked');
+  if (!titreChecked) {
+    valid = false;
+    // visual feedback
+  }
+
+  // Required text/email/tel fields
+  ['prenom','nom','email','ville','telephone'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.classList.add('error');
+      valid = false;
+    } else {
+      el.classList.remove('error');
+    }
+  });
+
+  // Pays
+  var pays = document.getElementById('pays');
+  if (!pays.value) { pays.classList.add('error'); valid = false; }
+  else pays.classList.remove('error');
+
+  // Autre pays
+  if (pays.value === '59') {
+    var ap = document.getElementById('autre_pays');
+    if (!ap.value.trim()) { ap.classList.add('error'); valid = false; }
+    else ap.classList.remove('error');
+  }
+
+  // Formation
+  var formation = document.getElementById('formation');
+  if (!formation.value) { formation.classList.add('error'); valid = false; }
+  else formation.classList.remove('error');
+
+  // Mode
+  var modeWrap = document.getElementById('mode-wrap');
+  if (modeWrap.style.display !== 'none') {
+    var mode = document.getElementById('mode_participation');
+    if (!mode.value) { mode.classList.add('error'); valid = false; }
+    else mode.classList.remove('error');
+  }
+
+  if (!valid) {
+    // Scroll to first error
+    var firstErr = document.querySelector('.error');
+    if (firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  // Collect data
+  var fd = new FormData(this);
+  var data = {};
+  fd.forEach(function(v,k){ data[k]=v; });
+  console.log('Données soumises:', data);
+
+  // Show success
+  this.style.display = 'none';
+  var msg = document.getElementById('successMsg');
+  msg.style.display = 'block';
+  msg.scrollIntoView({behavior:'smooth'});
+});
+
+// Remove error on input
+document.querySelectorAll('input, select').forEach(function(el) {
+  el.addEventListener('input', function(){ this.classList.remove('error'); });
+  el.addEventListener('change', function(){ this.classList.remove('error'); });
+});
+</script>
+
+</body>
+</html>
