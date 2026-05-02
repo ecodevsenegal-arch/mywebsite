@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="Enseigne_ECODEV_FINALE_0022.png">
 </head>
 <link rel="stylesheet" href="vue mobile.css">
+<link rel="stylesheet" href="defilement images.css">
     <style>
         html{
             scroll-behavior:smooth;
@@ -41,27 +42,61 @@
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
-        footer{
+        .pied-accueil{
             font-weight: bold;
             display: flex;
             margin: 0 0 0 0; 
             font-size: 15px;
-            align-items: center;
-            gap:500px; 
-            justify-content: center;
             padding: 0 0 0 0;
             background-color: #97e0f4;
             border-radius: 0 0 10px 10px;
-            height: 150px;
+            height: 160px;
+            gap: 100px;
+        }
+        .contacts-body{
+        border-radius: 0 0 10px 10px;
+        border: solid #0056cc;
+        padding: 0.2rem 0.5rem ;
+        height: 108px;
+        margin-top: 0;
+        margin-bottom: 5px;
+        background: transparent; 
+        color: #0056cc; 
+        padding: 0.2rem 0.5rem ;
+        }
+        .contacts-body h4{
+        font-size: 14px;
+        margin-top: 0px;
+        }
+       
+    .contacts-header { 
+        background: #0056cc; 
+        color: white; 
+        padding: 0.60rem 0.75rem; 
+        border-radius: 10px 10px 0 0; 
+        margin-top: 2px;
+        overflow: hidden;
+    }
+        .social-media{
+            Display: flex; 
+            gap: 50px;
+            align-items: center;
+        }
+        .social-media :hover{
+            Display: flex; 
+            gap: 50px;
+            align-items: center;
+            scale: 1.15;
         }
     
     </style>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
-
+<head>
 <div>
+ <div style="display: flex;">
     <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
-</div>
-
+    <h2 style="color: #0056cc"><em>L'ingénierie au service de l'environnement et du développement durable</em></h2>
+ </div>
 <nav>
     <a href="index.html" class="active">Accueil</a>
     <a href="a propos.html">À propos</a>
@@ -69,51 +104,75 @@
     <a href="Formations.html">Formations</a>
     <a href="contacts.html">Contact</a>
 </nav>
-
-
+</div>
 <hr style="border: solid blue; margin: 0 0 10px 0;">
-<h1 style="border: solid blue; margin:0 1000px 0 10px;border-radius: 10px;background-color:aqua;">Titre 1</h1>
-<h2>Titre 2</h2>
-<h3>Titre 2</h3>
-<h6>Titre 6</h6>
-<p>Bonjour <strong>ECODEV.</strong>Je suis <em>Mamadou SARR</em></p>
-<div>
-<ul>
-     <li>Macon</li>
-     <li>Plombier</li>
-     <li>Carroleur</li>
-     <li>Electricien</li>
-</ul>
-<ol type="a">
-    <li>Batiment</li>
-    <li>Plomberie</li>
-    <li>Carreauterie</li>
-    <li>Electricité</li>
-    <ol>
-        <li>Cable</li>
-        <li>Tyyeau</li>
-    </ol>
-</ol>
+</head>
+
+<div class="carousel" id="carousel">
+  <div class="track" id="track">
+    <div class="slide"><img src="Formation Power BI 1.jpg" style="margin: 0 5px; width:650px;" alt="formation PBI"></div>
+    <div class="slide"><img src="Formation Excel ECODEV 1.png" style="margin: 0 5px; width:650px;" alt="formation excel"></div>
+    <div class="slide"><img src="Formation Power Query ECODEV 1.jpg" style="margin: 0 5px; width:650px;" alt="formation PQ"></div>
+    <div class="slide"><img src="Images & icones/pub formations/Pack formation Excel.png" style="margin: 0 5px; width:650px;" alt="formation PQ"></div>
+  </div>
+  <button class="btn prev" onclick="move(-1)">&#8592;</button>
+  <button class="btn next" onclick="move(1)">&#8594;</button>
 </div>
-<div style="float: left;">
-<a href="https://www.ecodev-senegal.com" target="_blank">Visitez notre site</a>
-</div>
-<div style="float: right;">
-<a href="contacts.html">Contact</a>
-</div>
-<div>
-    <img src="Formation TDB Power BI V2.jpg" alt="Enseigne ECODEV" height="500" style="margin: 0 200px;border-style: solid red;">
-</div>
+
+<div class="dots" id="dots"></div>
+
 <div>
     <hr style="border: solid blue; margin: 0 0 0 0;">
-<footer>
-    <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
-    <div>
-    <h4>Téléphone: +221 77 272 13 24 | +221 77 214 58 74</h4>
-    <h4>Email: ecodev.senegal@gmail.com</h4>
-    <h3>@ECODEV SENEGAL-2026</h3>
+<footer class="pied-accueil">
+     
+    <!--BANNIERE-->
+    <img src="Banniere ECODEV 02.jpg" height="160" style="border-radius: 0 0 0 10px">
+    
+    <!--Reseaux sociaux-->
+<div style="display: grid;align-items: center;">
+    <div class="social-media">
+      <a href="https://www.facebook.com/ecodevconsulting/"><img src="Images & icones/social media/facebook-svgrepo-com (1).svg" style="width: 40px;border-right: 20px;"></a>
+       <a href=""><img src="Images & icones/social media/linkedin-svgrepo-com (1).svg" style="width: 90px;border-right: 20px;"></a>  
+        <a href="https://wa.me/qr/RLS3AOPKGUOGK1" target="_blank"><img src="Images & icones/social media/whatsapp-logo-svgrepo-com.svg" style=" width: 100px; border-right: 20px;"></a>  
     </div>
+   <h3>@ECODEV SENEGAL-2026</h3>
+</div>
+    <!--CONTACTS-->
+<div class="contacts-card">
+ <div class="contacts-header">CONTACTS</div>
+   <div class="contacts-body">
+     <h4><img src="Images & icones/telephone/telephone-svgrepo-com (1).svg" alt="telephone" style="width: 20px;"> +221 77 272 13 24 | +221 77 214 58 74</h4>
+     <h4><img src="Images & icones/Email/email-part-2-svgrepo-com.svg" alt="email" style="width: 20px;margin-right: 10px;">ecodev.senegal@gmail.com</h4>
+     <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 20px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
+</div>
+</div>
 </footer>
 </div>
+<script>
+  let current = 0;
+  const total = 3;
+  const track = document.getElementById('track');
+  const dotsEl = document.getElementById('dots');
+
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    current = (n + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current)
+    );
+  }
+
+  function move(dir) { goTo(current + dir); }
+
+  // Défilement automatique (optionnel)
+  setInterval(() => move(1), 3000);
+</script>
 </body>
 </html>

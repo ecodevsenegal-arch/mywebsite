@@ -117,6 +117,55 @@ footer{
       margin: Opx;
       padding: Opx;
     }
+    .programme-powerbi button{
+      height: 50px;
+      font-family:Georgia;
+      padding: 15px 10px 15px 10px;
+      background-color:  #f2c75a;
+      font-style: italic;
+      border-radius: 5px;
+      color: #51473c;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    .programme-powerbi :hover {
+      padding: 10px 15px;
+      border-radius: 5px;
+      background-color: vert #f2c75a;
+      scale: 1.1;
+    }
+    .programme-powerbi button img{
+        width: 30px;
+        height:35px;
+        margin-right: 10px;
+    }
+    .form-powerbi{
+        display: flex;
+        margin: 0  0 50px 0;
+        padding: 0 50px 0 50px;
+        gap: 100px;
+        align-items: center;
+    }
+    .formulaire-powerbi a {
+      height: 25px;
+      font-family:Georgia;
+      padding: 15px 10px 10px 15px;
+      background-color: #f2c75a;
+      font-style: italic;
+      color:#51473c;
+      font-weight: bold;
+      border:solid #51473c;
+      border-width: 2px;
+    }
+    .formulaire-powerbi a:hover{
+      font-family:Georgia;
+      padding: 20px 20px 20px 20px;
+      background-color: #f2c75a;
+      font-style: italic;
+      color:#51473c;
+      scale: 1.5;
+    }
 </style>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
@@ -135,11 +184,12 @@ footer{
 <hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"><h2
 class="titre1">Transformez votre avenir professionnel avec une maîtrise des outils de la Business intelligence, incontournable dans la prise de décision.</h2></hr>
 <nav1 style="background-color:transparent;" >
+  <a href="formation_excel.html">Formation Excel</a>
     <a href="formation_power_bi.html" class="active">Power BI</a>
     <a href="formation_power_query.html">Power Query</a>
-    <a href="services.html">Analyses de données</a>
-    <a href="formation_excel.html">Formation Excel</a>
+    <a href="formation_ms_project.html">MS Project</a>
     <a href="formation_kobo.html">KoboToolbox</a>
+    <a href="formation_data_analyse.html">Analyses de données</a>
     <a href="contacts.html">Suivi-évaluation</a>
 </nav>
 <p class="texte1"> 
@@ -183,10 +233,14 @@ Cette formation constitue un véritable tremplin professionnel, car elle permet 
   <div>
 <div>
  <p class="texte1">Vous souhaitez impressionner avec les fonctionnalités avancées de Microsoft Excel ? Vous apprendrez plein d'astuces de ce genre !</p>
- <div style="display: flex;margin: 0  0 50px 0;padding: 0 50px 0 50px;gap: 20px;">
+ <div class="form-powerbi">
   <a href="contacts.html">Contact</a>
+  <div class="programme-powerbi">
+<button onclick="downloadFile()"><img src="Images & icones/download pictures/download-inbox-svgrepo-com.svg" alt="download">Télécharger le programme</button>
+  </div>
+  <div class="formulaire-powerbi" >
   <a href="formulaire_inscription.html" target="_blank">Inscription</a>
-</div>
+  </div>
 </div>
 <hr style="border: solid blue; margin: 0 0 0 0;">
 <footer>
@@ -197,6 +251,19 @@ Cette formation constitue un véritable tremplin professionnel, car elle permet 
     <h3>@ECODEV SENEGAL-2026</h3>
     </div>
 </footer>
+<script>
+    function downloadFile() {
+    const fileId = "1FeFw0HIHciWbnM-SfAEfsPW4vI4ICA90";
+    const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "presentation cours.pdf"; // nom souhaité
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+</script>
 </body>
 
 </html>

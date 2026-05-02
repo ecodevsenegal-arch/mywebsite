@@ -1,0 +1,429 @@
+﻿<style>
+    :root {
+        --vert-fonce:  #003223;
+        --vert-foret:  #007F3B;
+        --vert-clair:  #7AC741;
+        --jaune:       #FEC700;
+        --blanc-lin:   #F9FAF5;
+        --border:      #D8E8D0;
+        --text:        #1A1A1A;
+        --muted:       #5A6B62;
+         }
+
+    .rpl-page {
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--blanc-lin);
+        background-image:
+            linear-gradient(rgba(0,127,59,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,127,59,0.04) 1px, transparent 1px);
+        background-size: 40px 40px;
+        
+    }
+
+    /* ── BANDEAU URGENCE ── */
+    .urgency-bar {
+        background: var(--jaune);
+        padding: 14px 20px;
+        text-align: center;
+    }
+    .urgency-bar .ub-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--vert-fonce);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 8px;
+    }
+    .urgency-timer {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--vert-fonce);
+        border-radius: 10px;
+        padding: 8px 16px;
+    }
+    .ut-unit { text-align: center; min-width: 42px; }
+    .ut-num {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--jaune);
+        display: block;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+    }
+    .ut-lbl {
+        font-size: 9px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        display: block;
+        margin-top: 2px;
+    }
+    .ut-sep {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--jaune);
+        opacity: 0.5;
+        padding-bottom: 10px;
+        flex-shrink: 0;
+    }
+
+    /* ── HERO ── */
+    .rpl-hero {
+        background: var(--vert-fonce);
+        background-image:
+            linear-gradient(rgba(122,199,65,0.07) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(122,199,65,0.07) 1px, transparent 1px);
+        background-size: 28px 28px;
+        padding: 28px 24px 36px;
+        text-align: center;
+    }
+    .rpl-logo { margin-bottom: 18px; }
+    .rpl-logo img { height: 48px; width: auto; }
+    .rpl-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--jaune);
+        color: var(--vert-fonce);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 5px 16px;
+        border-radius: 100px;
+        margin-bottom: 20px;
+    }
+    .rpl-hero h1 {
+        font-size: clamp(24px, 4vw, 40px);
+        font-weight: 800;
+        color: #FFFFFF;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .rpl-hero h1 .jaune { color: var(--jaune); }
+    .rpl-hero .hero-sub {
+        font-size: 16px;
+        color: rgba(255,255,255,0.75);
+        line-height: 1.65;
+        max-width: 580px;
+        margin: 0 auto 32px;
+    }
+    .rpl-hero .hero-sub strong { color: #FFFFFF; font-weight: 700; }
+
+    /* ── BOUTON CTA ── */
+    .btn-campus {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px 44px;
+        background: var(--jaune);
+        color: var(--vert-fonce);
+        font-family: 'Montserrat', -apple-system, sans-serif;
+        font-size: 17px;
+        font-weight: 800;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 6px 24px rgba(254,199,0,0.45);
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-campus:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(254,199,0,0.5); }
+    .btn-campus svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .btn-campus-note {
+        font-size: 12px;
+        color: rgba(255,255,255,0.55);
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    /* ── SÉPARATEUR VIDÉO ── */
+    .video-sep {
+        text-align: center;
+        padding: 24px 20px 14px;
+        border-top: 1px solid var(--border);
+    }
+    .video-sep .vs-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--vert-fonce);
+        color: #FFFFFF;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 6px 16px;
+        border-radius: 100px;
+        margin-bottom: 8px;
+    }
+    .video-sep .vs-sub {
+        font-size: 13px;
+        color: var(--muted);
+        font-style: italic;
+    }
+
+    /* ── VIDÉO ── */
+    .video-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 24px 8px;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 12px 48px rgba(0,50,35,0.18);
+        background: #000;
+    }
+    .video-container video {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+    }
+    /* ── SECTION BONUS ── */
+    .bonus-outer {
+        background: #FFFBEA;
+        border-top: 1px solid #FDE68A;
+        border-bottom: 1px solid #FDE68A;
+        padding: 44px 0;
+    }
+    .bonus-wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+    .bonus-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #92640A;
+        text-align: center;
+        margin-bottom: 6px;
+    }
+    .bonus-title {
+        font-size: clamp(18px, 2.8vw, 26px);
+        font-weight: 800;
+        color: var(--vert-fonce);
+        text-align: center;
+        margin-bottom: 28px;
+        line-height: 1.25;
+    }
+    .bonus-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+    }
+    .bonus-card {
+        background: #FFFFFF;
+        border: 1px solid #FDE68A;
+        border-top: 3px solid var(--jaune);
+        border-radius: 12px;
+        padding: 20px 16px;
+        text-align: center;
+    }
+    .bonus-card .bc-icon { font-size: 26px; margin-bottom: 10px; }
+    .bonus-card .bc-title {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--vert-fonce);
+        margin-bottom: 7px;
+        line-height: 1.3;
+    }
+    .bonus-card .bc-desc {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.55;
+    }
+    .bonus-card .bc-tag {
+        display: inline-block;
+        margin-top: 10px;
+        background: var(--jaune);
+        color: var(--vert-fonce);
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 3px 8px;
+        border-radius: 100px;
+    }
+    /* ── BÉNÉFICES ── */
+    .benefits-wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 48px 24px 36px;
+    }
+    .section-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--vert-foret);
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    .section-title {
+        font-size: clamp(20px, 3vw, 28px);
+        font-weight: 800;
+        color: var(--vert-fonce);
+        text-align: center;
+        margin-bottom: 32px;
+        line-height: 1.25;
+    }
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+    .benefit-card {
+        background: #FFFFFF;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 24px 20px;
+        text-align: center;
+    }
+    .benefit-card .b-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+    .benefit-card .b-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--vert-fonce);
+        margin-bottom: 8px;
+        line-height: 1.3;
+    }
+    .benefit-card .b-desc {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.6;
+    }
+    /* ── TÉMOIGNAGES ── */
+    .testi-outer {
+        background: var(--vert-fonce);
+        background-size: 28px 28px;
+        padding: 48px 0;
+        background-image: url(image\ background.jpg); 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        
+    }
+    .testi-wrap {
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+    .testi-grid {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        align-items: center;
+    }
+    .testi-card {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 14px;
+        padding: 22px;
+        background: var(--vert-fonce);
+        height: 180px;
+    }
+    .testi-stars { 
+        color: var(--jaune); 
+        font-size: 14px; 
+        margin-bottom: 5px; 
+        letter-spacing: 2px; }
+    .testi-text {
+        font-size: 13px;
+        color: rgba(255,255,255,0.88);
+        line-height: 1.65;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        font-style: italic;
+    }
+    .testi-author { display: flex; align-items: center; gap: 10px; }
+    .testi-avatar {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 13px; font-weight: 700;
+        color: #FFFFFF; flex-shrink: 0;
+    }
+    .av-g { background: var(--vert-foret); }
+    .av-b { background: #2563eb; }
+    .av-o { background: #ea580c; }
+    .av-p { background: #7c3aed; }
+    .testi-name { font-size: 13px; font-weight: 700; color: #FFFFFF; }
+    .testi-job { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+    .testi-eyebrow { 
+        color: var(--jaune) !important; 
+        font-size: 15px;
+        font-weight: bold;
+        margin: 0 0 0 0;
+    }
+    .testi-section-title { 
+        color: var(--vert-fonce);
+        }
+</style>
+
+<!-- TÉMOIGNAGES -->
+<div class="testi-outer">
+    <div class="testi-wrap">
+        <p class="section-eyebrow testi-eyebrow">Ce qu'ils en disent</p>
+        <h2 class="section-title testi-section-title">Ils ont rejoint Le Campus</h2>
+        <div class="testi-grid">
+            <div class="testi-card">
+                <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testi-text">"J'avais essayé de me former sur Power BI avec YouTube pendant des mois. En deux semaines avec Le Campus, j'ai créé mon premier vrai tableau de bord en production. La progression est vraiment bien pensée."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar av-b">C</div>
+                    <div>
+                        <div class="testi-name">Christophe V.</div>
+                        <div class="testi-job">Analyste financier</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testi-text">"Mon patron m'avait demandé un rapport mensuel automatique depuis longtemps. Une semaine après avoir rejoint Le Campus, c'était fait. Jean-Baptiste explique vraiment simplement des choses qui semblent compliquées."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar av-g">M</div>
+                    <div>
+                        <div class="testi-name">Marine T.</div>
+                        <div class="testi-job">Contrôleur de gestion</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testi-text">"La partie sur DAX m'avait toujours bloqué. Maintenant je comprends la logique et je peux écrire mes propres mesures. Le rapport qualité-prix est imbattable par rapport à d'autres formations que j'ai vues."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar av-o">A</div>
+                    <div>
+                        <div class="testi-name">Alexandre D.</div>
+                        <div class="testi-job">Chef de projet SI</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testi-text">"Je suis RH, pas du tout technique. J'ai quand même réussi à créer un tableau de bord RH complet pour notre CODIR. Mes collègues n'en revenaient pas. La communauté m'a beaucoup aidée aussi."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar av-p">S</div>
+                    <div>
+                        <div class="testi-name">Sophie L.</div>
+                        <div class="testi-job">Responsable RH</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

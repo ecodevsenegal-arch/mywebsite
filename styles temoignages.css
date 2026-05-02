@@ -1,0 +1,83 @@
+ :root {
+        --vert-fonce:  #003223;
+        --vert-foret:  #007F3B;
+        --vert-clair:  #7AC741;
+        --jaune:       #FEC700;
+        --blanc-lin:   #F9FAF5;
+        --border:      #D8E8D0;
+        --text:        #1A1A1A;
+        --muted:       #5A6B62;
+         }
+ /* ── TÉMOIGNAGES ── */
+    .testi-outer {
+        background-size: 28px 28px;
+        padding: 0 0 20px 0
+    }
+    .testi-grid {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        align-items: center;
+    }
+    .testi-card {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 14px;
+        padding: 22px;
+        background: var(--vert-fonce);
+        height: 180px;
+    }
+    .testi-stars { 
+        color: var(--jaune); 
+        font-size: 14px; 
+        margin-bottom: 5px; 
+        letter-spacing: 2px; }
+    .testi-text {
+        font-size: 13px;
+        color: rgba(255,255,255,0.88);
+        line-height: 1.65;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        font-style: italic;
+    }
+    .testi-author { display: flex; align-items: center; gap: 10px; }
+    .testi-avatar {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 13px; font-weight: 700;
+        color: #FFFFFF; flex-shrink: 0;
+    }
+    .av-g { background: var(--vert-foret); }
+    .av-b { background: #2563eb; }
+    .av-o { background: #ea580c; }
+    .av-p { background: #7c3aed; }
+    .testi-name { font-size: 13px; font-weight: 700; color: #FFFFFF; }
+    .testi-job { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+    .testi-eyebrow { 
+        color: var(--jaune) !important; 
+        font-size: 15px;
+        font-weight: bold;
+        margin: 0 0 0 0;
+    }
+    .testi-section-title { 
+        color: var(--vert-fonce);
+        }
+        .section-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--vert-foret);
+        text-align: center;
+        margin-bottom: 8px;
+        margin-top: 30px;
+    }
+    .section-title {
+        font-size: clamp(20px, 3vw, 28px);
+        font-weight: 800;
+        color: var(--vert-fonce);
+        text-align: center;
+        margin-bottom: 32px;
+        line-height: 1.25;
+    }

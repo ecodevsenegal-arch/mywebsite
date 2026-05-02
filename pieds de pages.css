@@ -5,10 +5,56 @@ footer{
             margin: 0 0 0 0; 
             font-size: 15px;
             align-items: center;
-            gap:500px; 
+            gap:50px; 
             justify-content: center;
             padding: 0 0 0 0;
             background-color: #97e0f4;
             border-radius: 0 0 10px 10px;
             height: 150px;
+        }
+.pied-page{
+            font-weight: bold;
+            display: flex;
+            margin: 0 0 0 0; 
+            font-size: 15px;
+            padding: 0 0 0 0;
+            background-color: #97e0f4;
+            border-radius: 0 0 10px 10px;
+            height: 160px;
+            gap: 100px
+        }
+       .contacts-body{
+        border-radius: 0 0 10px 10px;
+        border: solid #0056cc;
+        padding: 0.2rem 0.5rem ;
+        height: 108px;
+        margin-top: 0;
+        margin-bottom: 5px;
+        background: transparent; 
+        color: #0056cc; 
+        padding: 0.2rem 0.5rem ;
+        }
+        .contacts-body h4{
+        font-size: 14px;
+        margin-top: 0px;
+        }
+       
+    .contacts-header { 
+        background: #0056cc; 
+        color: white; 
+        padding: 0.60rem 0.75rem; 
+        border-radius: 10px 10px 0 0; 
+        margin-top: 6px;
+        overflow: hidden;
+    }
+        .social-media{
+            Display: flex; 
+            gap: 50px;
+            align-items: center;
+        }
+        .social-media :hover{
+            Display: flex; 
+            gap: 50px;
+            align-items: center;
+            scale: 1.15;
         }

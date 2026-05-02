@@ -5,9 +5,10 @@
     <title>Formations - ECODEV</title>
     <link rel="icon" type="image/png" href="Enseigne_ECODEV_FINALE_0022.png">
 </head>
-<link rel="stylesheet" href="pieds de pages.css">
 <link rel="stylesheet" href="vue mobile.css">
 <link rel="stylesheet" href="Styles formations.CSS">
+<link rel="stylesheet" href="styles temoignages.css">
+<link rel="stylesheet" href="pieds de pages.css">
 
 <style>
     .texte1 {
@@ -51,11 +52,14 @@
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
-        nav1 {
-            gap: 5px;
+        .formations {
+            gap: 10px;
             padding: 0px 0px;
+            background-color: transparent; 
+            display: flex;
+            margin-top:10px;
         }
-        nav1 a {
+        .formations a {
             color: #444;
             text-decoration: none;
             padding: 10px 20px;
@@ -64,12 +68,12 @@
             background-color: #AAA;
             transition: background-color 0.5s;
         }
-        nav1 a:hover {
+        .formations a:hover {
             background-color:#aaf3c1;
             color: #0056cc;
             font-weight: bold;
         }
-         nav1 a.active {
+         .formations a.active {
             background-color: #02932f;
             color: white;
             font-weight: bold;
@@ -92,65 +96,136 @@
 <div>
     <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
 </div>
-<div class="nav-dropdown">
-<nav>
+<div class="Nav-accueil">
+<nav style="display: flex;align-items: center;">
     <a href="index.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/images/refs/heads/main/icons8-page-d%E2%80%99accueil-96.png" height="25" ;style="margin: 0 30px 0 0;padding-right: 10px;">Accueil</a>
     <a href="a propos.html ">À propos</a>
     <a href="services.html">Services</a>
+<div class="dropdown">
     <a href="Formations.html" class="active">Formations</a>
+    <!-- Sous-menu qui apparaît au survol -->
+<div class="menu">
+    <a href="formation_excel.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 10px 0 0;"> Excel</a>
+    <a href="formation_power_bi.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="25" style="margin: 0 10px 0 0;"> Power BI</a>
+    <a href="formation_power_query.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="25" style="margin: 0 10px 0 0;"> Power Query</a>
+    <a href="formation_ms_project.html"><img src="Images & icones/ms project/ms project 5.png" height="30" style="margin: 0 10px 0 0;"> MS Project</a>
+    <a href="formation_kobo.html"><img src="Images & icones/kobo.png" height="30" style="margin: 0 10px 0 0;"> KoboToolbox</a>
+    <a href="formation_data_analyse.html">📊 Analyse de données</a>
+    <a href="formation_suivi.html">🔴 Suivi-Évaluation</a>
+  </div>
+</div>
     <a href="contacts.html">Contact</a>
     <a href="login_acces_formation.html">Espace campus</a>
 </nav>
-<!-- Sous-menu qui apparaît au survol -->
-<div class="dropdown-menu">
-    <a href="formation_excel.html">🟩 Excel</a>
-    <a href="formation_power_bi.html">🟨 Power BI</a>
-    <a href="formation_power_query.html">🟩 Power Query</a>
-    <a href="formation_kobo.html">🔵 KoboToolbox</a>
-    <a href="formation_kobo.html">📊 Analyse de données</a>
-    <a href="formation_suivi.html">🔴 Suivi-Évaluation</a>
-  </div>
-
 </div>
-
 <hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"><h1
 class="titre">ESPACE FORMATION</h1></hr>
 <p class="texte1"> ECODEV est un cabinet d’expertise pluridisciplinaire, spécialisé dans l'ingénierie et le conseil dans les domaines de l’aménagement du territoire, le système d’information géographique (SIG) et la cartographie, l’agroforesterie, la gestion des organisations, le management et le suivi évaluation de projets et programmes. L’équipe est composée de plusieurs associés / collaborateurs, d’experts et spécialistes de l’environnement et du développement durable.</p>
 </div>
 <div>
 <h2 class="titre">Nos formations</h2>
-<nav1 style="background-color: transparent; display: flex;
-            gap: 10px;padding: 20px 25px;">
+
+<!--FORMATIONS-->
+<nav class="formations">
     <a href="formation_excel.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 10px 0 0;"> Excel</a>
     <a href="formation_power_bi.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="20" style="margin: 0 10px 0 0;"> Power BI</a>
     <a href="formation_kobo.html"><img src="Images & icones/kobo.png" height="20" style="margin: 0 10px 0 0;"> KoboToolbox</a>
     <a href="formation_power_query.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="20" style="margin: 0 10px 0 0;"> Power Query</a>
-    <a href="Formations.html"><img src="Images & icones/data-analytic 2.svg" style="margin: 0 5px 0 0;height:20px;"> Analyse de données</a>
+    <a href="formation_ms_project.html"><img src="Images & icones/ms project/ms project 5.png" height="30" style="margin: 0 10px 0 0;"> MS Project</a>
+    <a href="formation_data_analyse.html"><img src="Images & icones/data-analytic 2.svg" style="margin: 0 5px 0 0;height:20px;"> Analyse de données</a>
     <a href="formation_psse_gar.html"><img src="Images & icones/data-analytic 1.svg" style="margin: 0 5px 0 0;height:20px;"> Suivi-évaluation</a>
-</nav1>
-<div>
+</nav>
+ <div>
     <h2>Consultez les programmes</h2>
+
+<!--PROGRAMMES-->
 <nav2> 
 <img src="Formation Excel ECODEV 1.png" height="150" style="margin: 0 5px 0 5px;">
 <img src="Formation Power BI 1.jpg" height="150" style="margin: 0 5px 0 5px;">
 <img src="Formation Power Query ECODEV 1.jpg" height="150" style="margin: 0 5px 0 5px;">
 </nav2>
-</div>
+ </div>
 </div>
 <div>
-<a href="https://www.ecodev-senegal.com" target="_blank">Visitez notre site</a>
-<p>
-    <a href="contacts.html">Contact</a>
-</p>
-</div>
-<footer>
-    <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
-    <div>
-    <h4>Téléphone: +221 77 272 13 24 | +221 77 214 58 74</h4>
-    <h4>Email: ecodev.senegal@gmail.com</h4>
-    <h3>@ECODEV SENEGAL-2026</h3>
+
+<!-- TÉMOIGNAGES -->
+<div class="testi-outer">
+    <div class="testi-wrap">
+        <p class="section-eyebrow testi-eyebrow">Ce qu'ils en pensent</p>
+        <h2 class="section-title testi-section-title">Ils ont participé à nos formations</h2>
+        <div class="testi-grid">
+            <div class="testi-card">
+                <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testi-text">"J'avais essayé de me former sur Power BI avec YouTube pendant des mois. En deux semaines avec Le Campus, j'ai créé mon premier vrai tableau de bord en production. La progression est vraiment bien pensée."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar av-b">C</div>
+                    <div>
+                        <div class="testi-name">Christophe V.</div>
+                        <div class="testi-job">Analyste financier</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testi-text">"Mon patron m'avait demandé un rapport mensuel automatique depuis longtemps. Une semaine après avoir rejoint Le Campus, c'était fait. Jean-Baptiste explique vraiment simplement des choses qui semblent compliquées."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar av-g">M</div>
+                    <div>
+                        <div class="testi-name">Marine T.</div>
+                        <div class="testi-job">Contrôleur de gestion</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testi-text">"La partie sur DAX m'avait toujours bloqué. Maintenant je comprends la logique et je peux écrire mes propres mesures. Le rapport qualité-prix est imbattable par rapport à d'autres formations que j'ai vues."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar av-o">A</div>
+                    <div>
+                        <div class="testi-name">Alexandre D.</div>
+                        <div class="testi-job">Chef de projet SI</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testi-text">"Je suis RH, pas du tout technique. J'ai quand même réussi à créer un tableau de bord RH complet pour notre CODIR. Mes collègues n'en revenaient pas. La communauté m'a beaucoup aidée aussi."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar av-p">S</div>
+                    <div>
+                        <div class="testi-name">Sophie L.</div>
+                        <div class="testi-job">Responsable RH</div>
+                        </div>
+                </div>
+            </div>
+        </div>
     </div>
-</footer>
+</div>
+</div>
+<hr style="border: solid blue; margin: 0 0 0 0;">
+<footer class="pied-page">
+  
+    <!--BANNIERE-->
+    <img src="Banniere ECODEV 02.jpg" height="160" style="border-radius: 0 0 0 10px">
+    
+    <!--Reseaux sociaux-->
+<div style="display: grid;align-items: center;">
+    <div class="social-media">
+      <a href="https://www.facebook.com/ecodevconsulting/"><img src="Images & icones/social media/facebook-svgrepo-com (1).svg" style="width: 40px;border-right: 20px;"></a>
+       <a href=""><img src="Images & icones/social media/linkedin-svgrepo-com (1).svg" style="width: 90px;border-right: 20px;"></a>  
+        <a href="https://wa.me/qr/RLS3AOPKGUOGK1" target="_blank"><img src="Images & icones/social media/whatsapp-logo-svgrepo-com.svg" style=" width: 100px; border-right: 20px;"></a>  
+    </div>
+   <h3>@ECODEV SENEGAL-2026</h3>
+</div>
+      <!--CONTACTS-->
+<div class="contacts-card">
+ <div class="contacts-header">CONTACTS</div>
+   <div class="contacts-body">
+     <h4><img src="Images & icones/telephone/telephone-svgrepo-com (1).svg" alt="telephone" style="width: 20px;"> +221 77 272 13 24 | +221 77 214 58 74</h4>
+     <h4><img src="Images & icones/Email/email-part-2-svgrepo-com.svg" alt="email" style="width: 20px;margin-right: 10px;">ecodev.senegal@gmail.com</h4>
+     <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 20px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
+</div>
+</div>
 </body>
 
 </html>

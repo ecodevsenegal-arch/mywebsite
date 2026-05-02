@@ -34,6 +34,52 @@
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
+        .contacts1{
+        display: flex;
+        gap:30px;
+        }
+        .contacts-card1{
+        max-width: 650px;
+        }
+       .contacts-body1{
+        border-radius: 0 0 10px 10px;
+        border: solid #0056cc;
+        padding: 0.2rem 0.5rem ;
+        height: 250px;
+        margin-top: 0;
+        margin-bottom: 5px;
+        background: transparent; 
+        color: #0056cc; 
+        }
+        .contacts-body1 h4{
+        font-size: 16px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+
+        }
+       
+    .contacts-header1 { 
+        background: #0056cc; 
+        color: white; 
+        padding: 0.60rem 0.75rem; 
+        border-radius: 10px 10px 0 0; 
+        margin-top: 2px;
+        overflow: hidden;
+        font-size: 20px;
+    }
+     .social-media{
+            Display: flex; 
+            gap: 51px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0;
+        }
+        .social-media :hover{
+            Display: flex; 
+            gap: 15px;
+            align-items: center;
+            scale: 1.15;
+        }
 </style>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
@@ -50,33 +96,51 @@
 </nav>
 
 <hr style="border: 1.5px solid blue; margin: 0 0 5px 0;margin: 0 0 10px 0;">
-<h1 style="border: solid blue; margin:0 1000px 0 10px;border-radius: 10px;background-color:aqua;">Titre 1</h1>
-<h2>Titre 2</h2>
-<h3>Titre 2</h3>
-<h6>Titre 6</h6>
-<p>Bonjour <strong>ECODEV.</strong>Je suis <em>Mamadou SARR</em></p>
-
-<div>
-<a href="https://www.ecodev-senegal.com" target="_blank">Visitez notre site</a>
-<p>
-    <a href="contacts.html">Contact</a>
-</p>
-</div>
-<div>
-<p>
-    <a href="inscription.html">Inscrivez vous</a>
-</p>
-</div>
-<a href="index.html">Contactez nous<a>
- </h2>
-<hr style="border: solid blue; margin: 0 0 0 0;">
-<footer>
-    <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
+<!--CONTACTS-->
+<div class="contacts-card1">
+ <div class="contacts-header1">CONTACTS</div>
+   <div class="contacts-body1">
+    <div class="contacts1">
     <div>
-    <h4>Téléphone: +221 77 272 13 24 | +221 77 214 58 74</h4>
-    <h4>Email: ecodev.senegal@gmail.com</h4>
-    <h3>@ECODEV SENEGAL-2026</h3>
+     <h4><img src="Images & icones/telephone/telephone-svgrepo-com (1).svg" alt="telephone" style="width: 30px;"> +221 77 272 13 24 | +221 77 214 58 74</h4>
+     <h4><img src="Images & icones/Email/email-part-2-svgrepo-com.svg" alt="email" style="width: 20px;margin-right: 20px;">ecodev.senegal@gmail.com</h4>
+     <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 30px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
+     </div>
+     <img src="Images & icones/QR_code_whatsApp.png" alt="WhatsApp" width="155px" style="margin-top: 0px;">
+     </div>
+     <div class="social-media">
+      <a href="https://www.facebook.com/ecodevconsulting/"><img src="Images & icones/social media/facebook-svgrepo-com (1).svg" style="width: 40px;border-right: 20px;"></a>
+       <a href=""><img src="Images & icones/social media/linkedin-svgrepo-com (1).svg" style="width: 90px;border-right: 20px;"></a>
+       <a href="https://vm.tiktok.com/ZS9N7PhX5nQwu-zp8lg/" target="_blank"><img src="Images & icones/social media/tiktok-logo-logo-svgrepo-com.svg" alt="TikTok" style=" width: 40px; border-right: 20px;"></a>    
+        <a href="https://wa.me/qr/RLS3AOPKGUOGK1" target="_blank"><img src="Images & icones/social media/whatsapp-logo-svgrepo-com.svg" style=" width: 100px; border-right: 20px;"></a>  
     </div>
+</div>
+</div>
+
+<hr style="border: solid blue; margin: 0 0 0 0;">
+<footer class="pied-page">
+  
+    <!--BANNIERE-->
+    <img src="Banniere ECODEV 02.jpg" height="160" style="border-radius: 0 0 0 10px">
+    
+    <!--Reseaux sociaux-->
+<div style="display: grid;align-items: center;">
+    <div class="social-media">
+      <a href="https://www.facebook.com/ecodevconsulting/"><img src="Images & icones/social media/facebook-svgrepo-com (1).svg" style="width: 40px;border-right: 20px;"></a>
+       <a href=""><img src="Images & icones/social media/linkedin-svgrepo-com (1).svg" style="width: 90px;border-right: 20px;"></a>  
+        <a href="https://wa.me/qr/RLS3AOPKGUOGK1" target="_blank"><img src="Images & icones/social media/whatsapp-logo-svgrepo-com.svg" style=" width: 100px; border-right: 20px;"></a>  
+    </div>
+   <h3>@ECODEV SENEGAL-2026</h3>
+</div>
+      <!--CONTACTS-->
+<div class="contacts-card">
+ <div class="contacts-header">CONTACTS</div>
+   <div class="contacts-body">
+     <h4><img src="Images & icones/telephone/telephone-svgrepo-com (1).svg" alt="telephone" style="width: 20px;"> +221 77 272 13 24 | +221 77 214 58 74</h4>
+     <h4><img src="Images & icones/Email/email-part-2-svgrepo-com.svg" alt="email" style="width: 20px;margin-right: 10px;">ecodev.senegal@gmail.com</h4>
+     <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 20px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
+</div>
+</div>
 </footer>
 </body>
  <h2>
