@@ -10,17 +10,31 @@
         font-family: Arial, sans-serif;
         padding-right: 0px;
     }
+.texte-card{
+border: solid #00e5d4;
+margin-top: 15px;
+border-radius: 10px;
+}
 .titre{
-        margin:0 50px 0 5px;border-radius: 5px;background-color:aqua;font-family: Arial, sans-serif;padding: 3px 15px;
+        margin:0;
+        border-radius: 10px 10px 0 0;
+        background-color:#00e5d4;
+        font-family: Arial, sans-serif;
+        padding: 3px 15px;
+        overflow: hidden;
     }
 .titre2{
-        margin:0 10px 0 5px;border-radius: 5px;background-color:aqua;font-family: Arial, sans-serif;padding: 5px 10px;
+        margin:0 10px 0 5px;
+        border-radius: 5px;
+        background-color:#00e5d4;
+        font-family: Arial, sans-serif;
+        padding: 5px 10px;
     }
 nav {
             display: flex;
             gap: 10px;
             padding: 10px 20px;
-            background-color: #97e0f4;
+            background-color: #00e5d4;
             border-radius: 10px 10px 0 0;
         }
 nav a {
@@ -43,11 +57,12 @@ nav a.active {
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
+
 /* PIEDS DE PAGES */
 footer{
             font-weight: bold;
             display: flex;
-            margin: 0 0 0 0; 
+            margin: 0 0 O 0; 
             font-size: 15px;
             align-items: center;
             gap:500px; 

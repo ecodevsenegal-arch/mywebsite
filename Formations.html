@@ -21,13 +21,25 @@
         margin-right: 150px; margin-left: 30px;font-family: Arial, sans-serif;
     }
     .titre{
-        margin:0 600px 0 5px;border-radius: 5px;background-color:aqua;font-family: Arial, sans-serif;padding: 3px 15px;
+        margin:0 600px 0 0;
+        border-radius: 5px;
+        background-color:#00e5d4;
+        font-family: Arial, sans-serif;
+        padding: 3px 15px;
+        border-radius: 15px 0;
+        overflow: hidden;
+        box-shadow: #0056cc 0 5px 0 0;
     }
+    .titre-card{
+            border: solid  #0056cc;
+            border-radius: 15px;
+            margin-top: 25px;
+        }
     nav {
             display: flex;
             gap: 10px;
             padding: 10px 20px;
-            background-color: #97e0f4;
+            background-color: #00e5d4;
             border-radius: 10px 10px 0 0;
             margin-left: 10px;
             padding-left: 10px;
@@ -90,6 +102,22 @@
             font-weight: bold;
             scale:1.25;
         }
+        .programmes-card{
+            border: solid  #0056cc;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+        .programmes-header{
+            background-color: #00e5d4;
+            border-radius: 15px 15px 0 0;
+            overflow: hidden;
+            padding-left: 0 0 10px 10px;
+            margin:0 600px 0 0;
+            border-radius: 15px 0;
+            box-shadow: #0056cc 0 5px 0 0;
+            padding-left: 20px;
+
+        }
 </style>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat; background-size: cover;">
 
@@ -103,6 +131,7 @@
     <a href="services.html">Services</a>
 <div class="dropdown">
     <a href="Formations.html" class="active">Formations</a>
+
     <!-- Sous-menu qui apparaît au survol -->
 <div class="menu">
     <a href="formation_excel.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 10px 0 0;"> Excel</a>
@@ -111,18 +140,20 @@
     <a href="formation_ms_project.html"><img src="Images & icones/ms project/ms project 5.png" height="30" style="margin: 0 10px 0 0;"> MS Project</a>
     <a href="formation_kobo.html"><img src="Images & icones/kobo.png" height="30" style="margin: 0 10px 0 0;"> KoboToolbox</a>
     <a href="formation_data_analyse.html">📊 Analyse de données</a>
-    <a href="formation_suivi.html">🔴 Suivi-Évaluation</a>
+    <a href="formation_suivi_evaluation.html">🔴 Suivi-Évaluation</a>
   </div>
 </div>
     <a href="contacts.html">Contact</a>
     <a href="plateforme_formation v2.html">Espace campus</a>
 </nav>
 </div>
-<hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"><h1
-class="titre">ESPACE FORMATION</h1></hr>
-<p class="texte1"> ECODEV est un cabinet d’expertise pluridisciplinaire, spécialisé dans l'ingénierie et le conseil dans les domaines de l’aménagement du territoire, le système d’information géographique (SIG) et la cartographie, l’agroforesterie, la gestion des organisations, le management et le suivi évaluation de projets et programmes. L’équipe est composée de plusieurs associés / collaborateurs, d’experts et spécialistes de l’environnement et du développement durable.</p>
+<hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"></hr>
+<div class="titre-card">
+<h1 class="titre">ESPACE FORMATION</h1>
+<p class="texte1"> ECODEV est un cabinet d’expertise pluridisciplinaire, spécialisé dans l'ingénierie et le conseil dans les domaines de l’aménagement du territoire, le système d’information géographique (SIG) et la cartographie, l’agroforesterie, la gestion des organisations, le management et le suivi évaluation de projets et programmes.<p>
+<p class="texte1"> L’équipe est composée de plusieurs associés / collaborateurs, d’experts et spécialistes de l’environnement et du développement durable.</p>
 </div>
-<div>
+<div class="titre-card">
 <h2 class="titre">Nos formations</h2>
 
 <!--FORMATIONS-->
@@ -135,8 +166,11 @@ class="titre">ESPACE FORMATION</h1></hr>
     <a href="formation_data_analyse.html"><img src="Images & icones/data-analytic 2.svg" style="margin: 0 5px 0 0;height:20px;"> Analyse de données</a>
     <a href="formation_psse_gar.html"><img src="Images & icones/data-analytic 1.svg" style="margin: 0 5px 0 0;height:20px;"> Suivi-évaluation</a>
 </nav>
- <div>
-    <h2>Consultez les programmes</h2>
+</div>
+ <div class="programmes-card">
+     <h2 class="programmes-header">Consultez les programmes</h2>
+
+    
 
 <!--PROGRAMMES-->
 <nav2> 
@@ -144,9 +178,8 @@ class="titre">ESPACE FORMATION</h1></hr>
 <img src="Formation Power BI 1.jpg" height="150" style="margin: 0 5px 0 5px;">
 <img src="Formation Power Query ECODEV 1.jpg" height="150" style="margin: 0 5px 0 5px;">
 </nav2>
- </div>
 </div>
-<div>
+
 
 <!-- TÉMOIGNAGES -->
 <div class="testi-outer">

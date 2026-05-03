@@ -1,0 +1,35 @@
+
+
+
+<script src="https://www.paiementpro.net/webservice/onlinepayment/js/paiementpro.v1.0.2.js"></script>
+
+    <script>
+
+        let paiementPro = new PaiementPro('ID MARCHAND');
+        paiementPro.amount = 1000;
+        paiementPro.channel = 'CARD';
+        paiementPro.referenceNumber = '0123456789';
+        paiementPro.customerEmail = 'test@gmail.com';
+        paiementPro.customerFirstName = 'Ishola';
+        paiementPro.customerLastname = 'Lamine';
+        paiementPro.customerPhoneNumber = '0102030405';
+        paiementPro.description = 'Api JS';
+
+        const Paiement_Pro = async() => {
+       
+            await paiementPro.getUrlPayment();
+            if (paiementPro.success) {
+            // console.log(paiementPro.success); /* true si l'initialisation c'est bien passer */
+            // console.log(paiementPro.url); /* URL de paiement */
+            // window.location = paiementPro.url; /*Rédirection vers la passerelle de paiement */
+              console.log('success');
+            } else {
+            // console.log(paiementPro.success);
+            // console.log(paiementPro.error);
+              console.log('error');
+            }
+        };
+
+        Paiement_Pro();
+
+    </script>

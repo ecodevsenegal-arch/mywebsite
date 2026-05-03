@@ -205,6 +205,17 @@ body {
     background: linear-gradient(90deg,var(--accent),#00e5ff);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   }
+  .hero-h2 {
+    font-family:'Sora',sans-serif;
+    font-size: clamp(1rem,2vw,1.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .hero-h2 .highlight {
+    background: linear-gradient(90deg,var(--accent),#00e5ff);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
   .hero-desc { color:var(--text-muted); font-size:1.05rem; line-height:1.75; margin-bottom:36px; }
 
   .courses-pills { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px; }
@@ -743,9 +754,9 @@ body {
   <main class="landing-hero">
     <div class="hero-left fade-up">
       <div class="hero-badge"><i class="fas fa-bolt"></i> Formations certifiantes • 100% en ligne</div>
-      <h1 class="hero-h1">
+      <h1 class="hero-h2">
         Maîtrisez les outils<br>
-        de <span class="highlight">données & gestion</span><br>
+        de <span class="highlight">l'analyse de données, de la Business Intelligence (BI) & gestion</span><br>
         de projets
       </h1>
       <p class="hero-desc">

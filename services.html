@@ -6,8 +6,12 @@
     <link rel="icon" type="image/png" href="Enseigne_ECODEV_FINALE_0022.png">
     <link rel="stylesheet" href="vue mobile.css">
     <link rel="stylesheet" href="pieds de pages.css">
+    <link rel="stylesheet" href="styles offres services.css">
 </head>
 <style>
+    .header-nav{
+        margin-top: 0;
+    }
     .texte1 {
         font-family: Arial, sans-serif;
             gap: 10px;
@@ -18,13 +22,17 @@
         margin-right: 150px; margin-left: 30px;font-family: Arial, sans-serif;
     }
     .titre{
-        margin:0 900px 0 5px;border-radius: 5px;background-color:aqua;font-family: Arial, sans-serif;padding: 3px 15px;
+        margin:0;
+        border-radius: 5px;
+        background-color:#00e5d4;
+        font-family: Arial, sans-serif;
+        padding: 3px 15px; 
     }
     nav {
             display: flex;
             gap: 10px;
             padding: 10px 20px;
-            background-color: #97e0f4;
+            background-color: #00e5d4;
             border-radius: 10px 10px 0 0;
         }
     nav a {
@@ -48,37 +56,203 @@
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
 </style>
+
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
-
-<div>
+<div class="header-nav">
     <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
-</div>
 
-<nav>
+  <nav>
     <a href="index.html">Accueil</a>
     <a href="a propos.html ">À propos</a>
     <a href="services.html" class="active">Services</a>
     <a href="Formations.html">Formations</a>
     <a href="contacts.html">Contact</a>
-</nav>
+  </nav>
 
-<hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"><h1
-class="titre">Services</h1></hr>
+  <hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"></hr>
+</div>
+
+<div class="container-services">
+<h1 class="titre">Services</h1>
 <p class="texte1"> Le cabinet ECODEV intervient dans plusieurs domaines, notamment: la formation et le renforcement de capacités, les enquêtes et études socio-économiques, la conception et l'études de projets.</p>
-<h2 class="titre">Nos offres</h2>
 
-<ul>
-​<li class="texte2"><a href="Formations.html" target="_blank">Formation et renforcement de capacités​</a></ul></ul>
-<ul><li class="texte2"><a href="https://www.ecodev-senegal.com/services" target="_blank">Enquêtes et études socio-économiques​</a></li></ul>
-<ul><li class="texte2"><a href="https://www.ecodev-senegal.com/services" target="_blank">Conception et étude de projets​​</a></li></ul>
-<ul><li class="texte2"><a href="https://www.ecodev-senegal.com/services" target="_blank">Analyse et visualisation de données​​</a></li></ul>
 </div>
-<div>
-<a href="https://www.ecodev-senegal.com" target="_blank">Visitez notre site</a>
-<p>
-    <a href="contacts.html">Contact</a>
-</p>
+<div class="card-offres">
+
+  <!-- Header -->
+  <div class="header-offres">
+    <div class="header-dot"></div>
+    <h2>Nos offres</h2>
+  </div>
+
+  <!-- Body -->
+  <div class="body-offres">
+
+    <!-- Left: offer list -->
+    <div class="offres-services">
+      <a class="offer-item" data-offer="formation" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Formation et renforcement de capacités</span>
+      </a>
+      <a class="offer-item" data-offer="enquetes" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Enquêtes et études socio-économiques</span>
+      </a>
+      <a class="offer-item" data-offer="conception" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Conception et étude de projets</span>
+      </a>
+      <a class="offer-item" data-offer="analyse" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Analyse et visualisation de données</span>
+      </a>
+      <a class="offer-item" data-offer="businessintel" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Formation sur les outils de la Business Intelligence</span>
+      </a>
+    </div>
+
+    <!-- Right: detail panel -->
+    <div class="detail-panel">
+
+      <!-- Auto-scroll (no selection) -->
+      <div class="scroll-carousel" id="carousel">
+        <div class="scroll-track" id="scrollTrack"></div>
+      </div>
+
+      <!-- Static details per offer -->
+      <div class="detail-content" id="d-formation">
+        <h3>Formation et renforcement de capacités</h3>
+        <p>Nous concevons et animons des programmes de formation sur mesure pour renforcer les compétences de vos équipes et partenaires à travers :</p>
+        <ul>
+          <li>Ateliers et formations en présentiel ou distanciel</li>
+          <li>Élaboration de supports pédagogiques adaptés</li>
+          <li>Accompagnement post-formation et suivi des acquis</li>
+          <li>Certification et évaluation des compétences</li>
+        </ul>
+        <p>Grace à ses experts et collaborateurs, ECODEV dispense des formations dans les domaines suivants :</p>
+    <ul>
+        <li>Décentralisation et développement local</li>
+         <li>Gestion axée sur les résultats</li>
+         <li>Planification stratégique</li>
+        <li>Suivi évaluation de projets et programmes</li>
+        <li>Environnement et développement durable</li>
+        <li>SIG et cartographie</li>
+        <li>Agroforesterie et agriculture durable</li>
+        <li>Finances publiques</li>
+         <li>Gestion administrative, finance et comptabilité des organisations (GPF, GIE, ONG, entreprises privées et publiques, etc.)</li>
+         <li>Management et gestion des organisations et projets</li>
+        <p>Ainsi que divers modules aidant les entreprises et collectivités à devenir plus durables et résilientes.</p>
+        </ul>
+      </div>
+
+      <div class="detail-content" id="d-enquetes">
+        <h3>Enquêtes et études socio-économiques</h3>
+        <p>Nous réalisons des enquêtes quantitatives et qualitatives rigoureuses pour mieux comprendre les dynamiques sociales et économiques.</p>
+        <ul>
+          <li>Conception de questionnaires et protocoles d'enquête</li>
+          <li>Collecte de données terrain avec supervision</li>
+          <li>Analyse statistique et interprétation des résultats</li>
+          <li>Rédaction de rapports et recommandations stratégiques</li>
+        </ul>
+      </div>
+
+      <div class="detail-content" id="d-conception">
+        <h3>Conception et étude de projets</h3>
+        <p>Nous vous accompagnons à toutes les étapes de la conception de vos projets, de l'idée initiale à la mise en œuvre opérationnelle.</p>
+        <ul>
+          <li>Analyse de faisabilité et étude d'impact</li>
+          <li>Élaboration de cadres logiques et théories du changement</li>
+          <li>Montage de dossiers techniques et financiers</li>
+          <li>Suivi-évaluation et capitalisation des expériences</li>
+        </ul>
+      </div>
+
+      <div class="detail-content" id="d-analyse">
+        <h3>Analyse et visualisation de données</h3>
+        <p>Nous transformons vos données brutes en insights clairs et actionnables grâce à des outils d'analyse et de visualisation avancés.</p>
+        <ul>
+          <li>Nettoyage, structuration et traitement de bases de données</li>
+          <li>Tableaux de bord interactifs (Power BI, Tableau, etc.)</li>
+          <li>Cartographie et analyses géospatiales</li>
+          <li>Reporting automatisé et storytelling par les données</li>
+        </ul>
+      </div>
+      <div class="detail-content" id="d-businessintel">
+        <h3>Formation sur les outils de la Business Intelligence (BI)</h3>
+        <p>Notre cabinet forme vos équipes à la maîtrise des outils BI (Power Query, Power BI, Tableau, Qlik Sense) pour transformer vos données en leviers de décision concrets.</p>
+        <ul>
+          <li>préparation des données, modélisation.</li>
+          <li>conception de tableaux de bord et automatisation des rapports</li>
+          <li>exercices basés sur vos cas réels</li>
+          <li>Reporting automatisé et storytelling par les données</li>
+        </ul>
+      </div>
+
+      <button class="close-btn" id="closeBtn" title="Fermer">✕</button>
+    </div>
+  </div>
 </div>
+<script>
+  // --- Scroll carousel data ---
+  const offresData = [
+    { id: 'formation', title: 'Formation et renforcement de capacités',
+      desc: 'Programmes sur mesure pour développer les compétences de vos équipes, en présentiel ou à distance.' },
+    { id: 'enquetes', title: 'Enquêtes et études socio-économiques',
+      desc: 'Enquêtes quantitatives et qualitatives rigoureuses pour comprendre les dynamiques sociales et économiques.' },
+    { id: 'conception', title: 'Conception et étude de projets',
+      desc: 'Accompagnement de A à Z dans la conception, la mise en œuvre et l\'évaluation de vos projets.' },
+    { id: 'analyse', title: 'Analyse et visualisation de données',
+      desc: 'Transformez vos données en insights clairs grâce à des tableaux de bord interactifs et des analyses avancées.' },
+       { id: 'businessintel', title: 'Formation sur les outils de la Business Intelligence (BI)',
+      desc: 'Maîtrisez les outils de la Business Intelligence.Accompagnement expert conçu pour transformer vos équipes en acteurs autonomes de la donnée à la prise de décision stratégique.' },
+  ];
+
+  // Build scroll track (duplicate for seamless loop)
+  const track = document.getElementById('scrollTrack');
+  [...offresData, ...offresData].forEach(o => {
+    const item = document.createElement('div');
+    item.className = 'scroll-item';
+    item.innerHTML = `<h4>${o.title}</h4><p>${o.desc}</p>`;
+    track.appendChild(item);
+  });
+
+  // --- Interaction ---
+  const carousel  = document.getElementById('carousel');
+  const closeBtn  = document.getElementById('closeBtn');
+  const allItems  = document.querySelectorAll('.offer-item');
+  const allDetail = document.querySelectorAll('.detail-content');
+  let active = null;
+
+  allItems.forEach(item => {
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      const id = item.dataset.offer;
+      if (active === id) { deselect(); return; }
+      active = id;
+
+      allItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+
+      allDetail.forEach(d => d.classList.remove('visible'));
+      document.getElementById('d-' + id).classList.add('visible');
+
+      carousel.classList.add('hidden');
+      closeBtn.classList.add('visible');
+    });
+  });
+
+  function deselect() {
+    active = null;
+    allItems.forEach(i => i.classList.remove('active'));
+    allDetail.forEach(d => d.classList.remove('visible'));
+    carousel.classList.remove('hidden');
+    closeBtn.classList.remove('visible');
+  }
+
+  closeBtn.addEventListener('click', deselect);
+</script>
+
 <footer>
     <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
     <div>
@@ -88,6 +262,7 @@ class="titre">Services</h1></hr>
     </div>
 </footer>
 </body>
+
 
 </html>
 

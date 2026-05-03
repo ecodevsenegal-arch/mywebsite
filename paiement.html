@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paiement PaiementPro</title>
+  <style>
+    .paiement-card{
+        border: solid green;
+        border-radius: 10px;
+        width: 220px;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+    }
+    .paiement-head{
+        overflow: hidden;
+        border: solid green;
+        border-radius: 10px 10px 0 0;
+        margin-top: 0;
+        width: 220px;
+    }
+    a{
+        width: 160px;
+        border-radius: 10px;
+        margin: 25px;
+        align-items: center;
+    }
+  </style>
+</head>
+<body>
+    <div class="paiement-card">
+    <h2 class="paiement-head">Passer au paiement</h2>
+    <a href="https://formulaire-pro.xpaye.africa/formulaire/7437" target="_blank"><h4>Payer maintenant votre pack</h4></a>
+</Div>
+  <!-- Chargement du SDK -->
+  <script src="https://www.paiementpro.net/webservice/onlinepayment/js/paiementpro.v1.0.1.js"></script>
+
+  <script>
+    function lancerPaiement() {
+
+      // Variables GLOBALES (sans const/let/var) comme attendu par le SDK
+      amount              = 5000;
+      description         = 'Achat produit XYZ';
+      channel             = 'MOBILE_MONEY';
+      countryCurrencyCode = '952';
+      referenceNumber     = 'REF-' + Date.now();
+      customerEmail       = 'client@email.com';
+      customerFirstName   = 'Dupont';
+      customerLastname    = 'Jean';
+      customerPhoneNumber = '+22500000000';
+      notificationURL     = 'https://votresite.com/notification';
+      returnURL           = 'https://votresite.com/retour';
+      returnContext       = JSON.stringify({ utilisateur_id: 1, data: true });
+
+      // Essayer les noms de fonctions courants du SDK
+      // Décommentez celui qui fonctionne :
+
+      if (typeof processPayment === 'function') {
+        processPayment();
+      } else if (typeof paiementPro === 'function') {
+        paiementPro();
+      } else if (typeof initPayment === 'function') {
+        initPayment();
+      } else if (typeof PaiementPro !== 'undefined') {
+        PaiementPro.pay();
+      } else {
+        // Affiche toutes les fonctions disponibles dans la console
+        console.log("Fonctions disponibles :", Object.keys(window).filter(k =>
+          typeof window[k] === 'function' &&
+          (k.toLowerCase().includes('pay') || k.toLowerCase().includes('paie'))
+        ));
+        alert("SDK non reconnu. Vérifiez la console (F12) pour trouver la bonne fonction.");
+      }
+    }
+  </script>
+
+</body>
+</html>

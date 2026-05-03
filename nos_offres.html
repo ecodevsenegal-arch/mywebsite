@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nos Offres</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan:   #00e5d4;
+      --teal:   #0d9e95;
+      --deep:   #0a6a78;
+      --text:   #0e3d46;
+      --muted:  #3a7a85;
+      --white:  #f0fdfc;
+      --glass:  rgba(255,255,255,0.18);
+      --glass-border: rgba(255,255,255,0.35);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #b2e8e4;
+    }
+
+    /* ── Ocean background ── */
+    .ocean-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: linear-gradient(160deg, #a8e6e0 0%, #68c9c5 40%, #3aafa8 70%, #1c8a87 100%);
+    }
+    .wave {
+      position: absolute; width: 200%; height: 200%;
+      background: radial-gradient(ellipse 80% 50% at 60% 70%, rgba(0,229,212,0.18) 0%, transparent 70%);
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+    .wave:nth-child(2) {
+      background: radial-gradient(ellipse 60% 40% at 30% 30%, rgba(255,255,255,0.12) 0%, transparent 60%);
+      animation-duration: 11s; animation-direction: alternate-reverse;
+    }
+    @keyframes drift { from { transform: translate(-5%,-5%) rotate(-2deg); } to { transform: translate(5%,5%) rotate(2deg); } }
+
+    /* ── Card wrapper ── */
+    .card-offres {
+      position: relative; z-index: 1;
+      width: min(92vw, 860px);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1.5px solid var(--glass-border);
+      box-shadow: 0 24px 60px rgba(10,106,120,0.25), inset 0 1px 0 rgba(255,255,255,0.4);
+      overflow: hidden;
+    }
+
+    /* ── Header ── */
+    .header-offres {
+      background: var(--cyan);
+      padding: 14px 28px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--deep);
+      letter-spacing: .02em;
+    }
+    .header-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--deep); opacity: .5; }
+
+    /* ── Body-offres: two columns ── */
+    .body-offres { display: flex; min-height: 280px; }
+
+    /* ── Left: offres de services ── */
+    .offres-services {
+      width: 42%;
+      padding: 28px 24px;
+      border-right: 1px solid rgba(255,255,255,0.3);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .offer-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .25s, transform .2s;
+      text-decoration: none;
+    }
+    .offer-item:hover { background: rgba(255,255,255,0.25); transform: translateX(4px); }
+    .offer-item.active {
+      background: rgba(0,229,212,0.30);
+      border-left: 3px solid var(--cyan);
+      padding-left: 11px;
+    }
+    .offer-bullet {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--deep); flex-shrink: 0;
+      transition: background .25s, transform .25s;
+    }
+    .offer-item.active .offer-bullet { background: var(--cyan); transform: scale(1.4); }
+    .offer-label {
+      font-size: .92rem; font-weight: 500;
+      color: var(--deep);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--teal);
+    }
+    .offer-item.active .offer-label { text-decoration: none; color: var(--deep); font-weight: 600; }
+
+    /* ── Right: detail panel ── */
+    .detail-panel {
+      flex: 1;
+      padding: 30px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Static detail (when offer selected) */
+    .detail-content {
+      display: none;
+      animation: fadeSlideIn .38s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .detail-content.visible { display: block; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .detail-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--deep);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--cyan);
+      display: inline-block;
+    }
+    .detail-content p {
+      font-size: .88rem;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .detail-content ul {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .detail-content ul li {
+      font-size: .85rem;
+      color: var(--muted);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .detail-content ul li::before {
+      content: '›'; color: var(--cyan); font-size: 1.1rem; line-height: 1.2; flex-shrink: 0;
+    }
+
+    /* ── Auto-scroll carousel (no selection) ── */
+    .scroll-carousel {
+      position: absolute; inset: 0;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .scroll-carousel.hidden { display: none; }
+    .scroll-track {
+      display: flex; flex-direction: column;
+      animation: scrollUp 14s linear infinite;
+    }
+    .scroll-track:hover { animation-play-state: paused; }
+    @keyframes scrollUp {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .scroll-item {
+      padding: 18px 4px;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+    .scroll-item h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--deep);
+      margin-bottom: 6px;
+    }
+    .scroll-item p {
+      font-size: .82rem; color: var(--muted); line-height: 1.6;
+    }
+
+    /* fade edges */
+    .detail-panel::before, .detail-panel::after {
+      content: ''; position: absolute; left: 0; right: 0; z-index: 2;
+      pointer-events: none; height: 36px;
+    }
+    .detail-panel::before { top: 0; background: linear-gradient(to bottom, rgba(200,240,238,0.5), transparent); }
+    .detail-panel::after  { bottom: 0; background: linear-gradient(to top,   rgba(180,230,228,0.5), transparent); }
+
+    /* close button */
+    .close-btn {
+      display: none;
+      position: absolute; top: 12px; right: 14px;
+      background: none; border: none; cursor: pointer;
+      font-size: 1rem; color: var(--muted);
+      transition: color .2s;
+    }
+    .close-btn:hover { color: var(--deep); }
+    .close-btn.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="ocean-bg">
+  <div class="wave"></div>
+  <div class="wave"></div>
+</div>
+
+<div class="card-offres">
+
+  <!-- Header -->
+  <div class="header-offres">
+    <div class="header-dot"></div>
+    <h2>Nos offres</h2>
+  </div>
+
+  <!-- Body -->
+  <div class="body-offres">
+
+    <!-- Left: offer list -->
+    <div class="offres-services">
+      <a class="offer-item" data-offer="formation" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Formation et renforcement de capacités</span>
+      </a>
+      <a class="offer-item" data-offer="enquetes" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Enquêtes et études socio-économiques</span>
+      </a>
+      <a class="offer-item" data-offer="conception" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Conception et étude de projets</span>
+      </a>
+      <a class="offer-item" data-offer="analyse" href="#">
+        <div class="offer-bullet"></div>
+        <span class="offer-label">Analyse et visualisation de données</span>
+      </a>
+    </div>
+
+    <!-- Right: detail panel -->
+    <div class="detail-panel">
+
+      <!-- Auto-scroll (no selection) -->
+      <div class="scroll-carousel" id="carousel">
+        <div class="scroll-track" id="scrollTrack"></div>
+      </div>
+
+      <!-- Static details per offer -->
+      <div class="detail-content" id="d-formation">
+        <h3>Formation et renforcement de capacités</h3>
+        <p>Nous concevons et animons des programmes de formation sur mesure pour renforcer les compétences de vos équipes et partenaires.</p>
+        <ul>
+          <li>Ateliers et formations en présentiel ou distanciel</li>
+          <li>Élaboration de supports pédagogiques adaptés</li>
+          <li>Accompagnement post-formation et suivi des acquis</li>
+          <li>Certification et évaluation des compétences</li>
+        </ul>
+      </div>
+
+      <div class="detail-content" id="d-enquetes">
+        <h3>Enquêtes et études socio-économiques</h3>
+        <p>Nous réalisons des enquêtes quantitatives et qualitatives rigoureuses pour mieux comprendre les dynamiques sociales et économiques.</p>
+        <ul>
+          <li>Conception de questionnaires et protocoles d'enquête</li>
+          <li>Collecte de données terrain avec supervision</li>
+          <li>Analyse statistique et interprétation des résultats</li>
+          <li>Rédaction de rapports et recommandations stratégiques</li>
+        </ul>
+      </div>
+
+      <div class="detail-content" id="d-conception">
+        <h3>Conception et étude de projets</h3>
+        <p>Nous vous accompagnons à toutes les étapes de la conception de vos projets, de l'idée initiale à la mise en œuvre opérationnelle.</p>
+        <ul>
+          <li>Analyse de faisabilité et étude d'impact</li>
+          <li>Élaboration de cadres logiques et théories du changement</li>
+          <li>Montage de dossiers techniques et financiers</li>
+          <li>Suivi-évaluation et capitalisation des expériences</li>
+        </ul>
+      </div>
+
+      <div class="detail-content" id="d-analyse">
+        <h3>Analyse et visualisation de données</h3>
+        <p>Nous transformons vos données brutes en insights clairs et actionnables grâce à des outils d'analyse et de visualisation avancés.</p>
+        <ul>
+          <li>Nettoyage, structuration et traitement de bases de données</li>
+          <li>Tableaux de bord interactifs (Power BI, Tableau, etc.)</li>
+          <li>Cartographie et analyses géospatiales</li>
+          <li>Reporting automatisé et storytelling par les données</li>
+        </ul>
+      </div>
+
+      <button class="close-btn" id="closeBtn" title="Fermer">✕</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // --- Scroll carousel data ---
+  const offresData = [
+    { id: 'formation', title: 'Formation et renforcement de capacités',
+      desc: 'Programmes sur mesure pour développer les compétences de vos équipes, en présentiel ou à distance.' },
+    { id: 'enquetes', title: 'Enquêtes et études socio-économiques',
+      desc: 'Enquêtes quantitatives et qualitatives rigoureuses pour comprendre les dynamiques sociales et économiques.' },
+    { id: 'conception', title: 'Conception et étude de projets',
+      desc: 'Accompagnement de A à Z dans la conception, la mise en œuvre et l\'évaluation de vos projets.' },
+    { id: 'analyse', title: 'Analyse et visualisation de données',
+      desc: 'Transformez vos données en insights clairs grâce à des tableaux de bord interactifs et des analyses avancées.' },
+  ];
+
+  // Build scroll track (duplicate for seamless loop)
+  const track = document.getElementById('scrollTrack');
+  [...offresData, ...offresData].forEach(o => {
+    const item = document.createElement('div');
+    item.className = 'scroll-item';
+    item.innerHTML = `<h4>${o.title}</h4><p>${o.desc}</p>`;
+    track.appendChild(item);
+  });
+
+  // --- Interaction ---
+  const carousel  = document.getElementById('carousel');
+  const closeBtn  = document.getElementById('closeBtn');
+  const allItems  = document.querySelectorAll('.offer-item');
+  const allDetail = document.querySelectorAll('.detail-content');
+  let active = null;
+
+  allItems.forEach(item => {
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      const id = item.dataset.offer;
+      if (active === id) { deselect(); return; }
+      active = id;
+
+      allItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+
+      allDetail.forEach(d => d.classList.remove('visible'));
+      document.getElementById('d-' + id).classList.add('visible');
+
+      carousel.classList.add('hidden');
+      closeBtn.classList.add('visible');
+    });
+  });
+
+  function deselect() {
+    active = null;
+    allItems.forEach(i => i.classList.remove('active'));
+    allDetail.forEach(d => d.classList.remove('visible'));
+    carousel.classList.remove('hidden');
+    closeBtn.classList.remove('visible');
+  }
+
+  closeBtn.addEventListener('click', deselect);
+</script>
+</body>
+</html>
