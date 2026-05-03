@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formation Vidéo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sidebar-w: 300px;
+      --accent: #E85D26;
+      --accent-light: #FDF0EB;
+      --dark: #141210;
+      --sidebar-bg: #1A1714;
+      --text-light: #F5F2EE;
+      --text-muted: #9A9087;
+      --border: rgba(255,255,255,0.07);
+      --main-bg: #F8F5F1;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--main-bg);
+      display: flex;
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ── SIDEBAR ── */
+    aside {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--sidebar-bg);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 2rem 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-header .label {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-light);
+      line-height: 1.3;
+    }
+
+    .sidebar-header p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    .progress-bar-wrap {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      width: 20%;
+      transition: width 0.5s ease;
+    }
+
+    nav { flex: 1; padding: 0.75rem 0; }
+
+    .module-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      border-left: 3px solid transparent;
+      position: relative;
+    }
+
+    .module-item:hover { background: rgba(255,255,255,0.04); }
+
+    .module-item.active {
+      background: rgba(232,93,38,0.1);
+      border-left-color: var(--accent);
+    }
+
+    .module-num {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.07);
+      color: var(--text-muted);
+      transition: all 0.3s;
+    }
+
+    .module-item.active .module-num {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .module-item.done .module-num {
+      background: rgba(255,255,255,0.12);
+      color: var(--text-light);
+    }
+
+    .module-info { flex: 1; }
+
+    .module-info .part {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .module-item.active .module-info .part { color: var(--accent); }
+
+    .module-info .title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-light);
+      line-height: 1.35;
+      opacity: 0.7;
+    }
+
+    .module-item.active .module-info .title { opacity: 1; }
+
+    .module-info .duration {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .check-icon {
+      width: 14px;
+      height: 14px;
+      opacity: 0;
+      color: var(--accent);
+      align-self: center;
+    }
+    .module-item.done .check-icon { opacity: 1; }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .top-bar {
+      background: #fff;
+      border-bottom: 1px solid #EAE6E0;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .breadcrumb span { color: var(--dark); font-weight: 500; }
+
+    .btn-next {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-next:hover { opacity: 0.9; }
+    .btn-next:active { transform: scale(0.98); }
+
+    .video-section {
+      padding: 2rem;
+      flex: 1;
+    }
+
+    .video-wrapper {
+      background: #000;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 56.25%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--sidebar-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      border-radius: 16px;
+      transition: opacity 0.4s;
+    }
+
+    .video-overlay.hidden { opacity: 0; pointer-events: none; }
+
+    .play-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+      border: none;
+    }
+
+    .play-btn:hover { transform: scale(1.08); }
+
+    .play-btn svg { margin-left: 4px; }
+
+    .overlay-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-light);
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .overlay-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Info section below video */
+    .info-section {
+      padding: 0 2rem 2rem;
+    }
+
+    .info-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.5rem;
+      border: 1px solid #EAE6E0;
+    }
+
+    .info-card h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .info-card p {
+      font-size: 14px;
+      color: #6B6560;
+      line-height: 1.7;
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 99px;
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* Scrollbar */
+    aside::-webkit-scrollbar { width: 4px; }
+    aside::-webkit-scrollbar-track { background: transparent; }
+    aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      body { flex-direction: column; }
+      aside { width: 100%; min-width: unset; height: auto; position: static; }
+      .video-section, .info-section { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════ SIDEBAR ════════════ -->
+<aside>
+  <div class="sidebar-header">
+    <div class="label">Programme complet</div>
+    <h1>Formation Vidéo</h1>
+    <p>5 modules · 2h30 de contenu</p>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span>Progression</span>
+      <span id="progress-pct">20%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <nav id="module-list">
+
+    <div class="module-item active" data-index="0" onclick="selectModule(0)">
+      <div class="module-num">1</div>
+      <div class="module-info">
+        <div class="part">Partie 1</div>
+        <div class="title">Introduction & Présentation du cours</div>
+        <div class="duration">⏱ 18 min</div>
+      </div>
+      <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <div class="module-item" data-index="1" onclick="selectModule(1)">
+      <div class="module-num">2</div>
+      <div class="module-info">
+        <div class="part">Partie 2</div>
+        <div class="title">Concepts fondamentaux & Théorie</div>
+        <div class="duration">⏱ 32 min</div>
+      </div>
+      <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <div class="module-item" data-index="2" onclick="selectModule(2)">
+      <div class="module-num">3</div>
+      <div class="module-info">
+        <div class="part">Partie 3</div>
+        <div class="title">Mise en pratique & Exercices guidés</div>
+        <div class="duration">⏱ 28 min</div>
+      </div>
+      <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <div class="module-item" data-index="3" onclick="selectModule(3)">
+      <div class="module-num">4</div>
+      <div class="module-info">
+        <div class="part">Partie 4</div>
+        <div class="title">Cas d'usage avancés & Études de cas</div>
+        <div class="duration">⏱ 40 min</div>
+      </div>
+      <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <div class="module-item" data-index="4" onclick="selectModule(4)">
+      <div class="module-num">5</div>
+      <div class="module-info">
+        <div class="part">Partie 5</div>
+        <div class="title">Synthèse finale & Prochaines étapes</div>
+        <div class="duration">⏱ 22 min</div>
+      </div>
+      <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+  </nav>
+</aside>
+
+<!-- ════════════ MAIN ════════════ -->
+<main>
+  <div class="top-bar">
+    <div class="breadcrumb">Formation · <span id="current-label">Partie 1 — Introduction</span></div>
+    <button class="btn-next" onclick="nextModule()">
+      Partie suivante
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="video-section">
+    <div class="video-wrapper">
+      <!-- Overlay click-to-play initial -->
+      <div class="video-overlay" id="video-overlay">
+        <button class="play-btn" onclick="startVideo()">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+        </button>
+        <div class="overlay-title" id="overlay-title">Introduction & Présentation du cours</div>
+        <div class="overlay-sub" id="overlay-sub">Cliquer pour lancer la vidéo · 18 min</div>
+      </div>
+
+      <iframe
+        id="vimeo-player"
+        src=""
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-card">
+      <h2 id="info-title">Introduction & Présentation du cours</h2>
+      <p id="info-desc">Dans cette première partie, vous découvrirez les objectifs du cours, la structure de la formation et les outils nécessaires pour bien démarrer. Un aperçu complet de ce que vous allez apprendre tout au long des modules suivants.</p>
+      <div class="tags" id="info-tags">
+        <span class="tag">Introduction</span>
+        <span class="tag">Débutant</span>
+        <span class="tag">18 min</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const modules = [
+    {
+      title: "Introduction & Présentation du cours",
+      part: "Partie 1",
+      duration: "18 min",
+      videoId: "1188550214",   // ← Remplacer par l'ID Vimeo de la partie 1
+      desc: "Dans cette première partie, vous découvrirez les objectifs du cours, la structure de la formation et les outils nécessaires pour bien démarrer. Un aperçu complet de ce que vous allez apprendre tout au long des modules suivants.",
+      tags: ["Introduction", "Débutant", "18 min"]
+    },
+    {
+      title: "Concepts fondamentaux & Théorie",
+      part: "Partie 2",
+      duration: "32 min",
+      videoId: "1188550214",   // ← Remplacer par l'ID Vimeo de la partie 2
+      desc: "Plongez dans les bases théoriques indispensables. Cette partie couvre les concepts clés que vous devez maîtriser pour progresser efficacement dans la suite du cours.",
+      tags: ["Théorie", "Intermédiaire", "32 min"]
+    },
+    {
+      title: "Mise en pratique & Exercices guidés",
+      part: "Partie 3",
+      duration: "28 min",
+      videoId: "1188550214",   // ← Remplacer par l'ID Vimeo de la partie 3
+      desc: "Passez de la théorie à la pratique avec des exercices concrets et guidés. Vous appliquerez les notions vues précédemment à travers des cas réels et progressifs.",
+      tags: ["Pratique", "Exercices", "28 min"]
+    },
+    {
+      title: "Cas d'usage avancés & Études de cas",
+      part: "Partie 4",
+      duration: "40 min",
+      videoId: "1188550214",   // ← Remplacer par l'ID Vimeo de la partie 4
+      desc: "Explorez des cas d'usage avancés et des études de cas tirés du monde professionnel. Cette partie vous prépare à affronter des situations complexes avec confiance.",
+      tags: ["Avancé", "Études de cas", "40 min"]
+    },
+    {
+      title: "Synthèse finale & Prochaines étapes",
+      part: "Partie 5",
+      duration: "22 min",
+      videoId: "1188550214",   // ← Remplacer par l'ID Vimeo de la partie 5
+      desc: "Récapitulatif de l'ensemble du cours, consolidation des acquis et conseils pour aller plus loin. Vous repartirez avec un plan d'action clair pour continuer à progresser.",
+      tags: ["Synthèse", "Bilan", "22 min"]
+    }
+  ];
+
+  let current = 0;
+  let playing = false;
+
+  function selectModule(index) {
+    current = index;
+    playing = false;
+
+    // Update sidebar active state
+    document.querySelectorAll('.module-item').forEach((el, i) => {
+      el.classList.toggle('active', i === index);
+    });
+
+    const m = modules[index];
+
+    // Reset player — show overlay
+    document.getElementById('vimeo-player').src = '';
+    document.getElementById('video-overlay').classList.remove('hidden');
+    document.getElementById('overlay-title').textContent = m.title;
+    document.getElementById('overlay-sub').textContent = `Cliquer pour lancer la vidéo · ${m.duration}`;
+
+    // Update top bar
+    document.getElementById('current-label').textContent = `${m.part} — ${m.title}`;
+
+    // Update info card
+    document.getElementById('info-title').textContent = m.title;
+    document.getElementById('info-desc').textContent = m.desc;
+
+    const tagsEl = document.getElementById('info-tags');
+    tagsEl.innerHTML = m.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+    // Update progress
+    const pct = Math.round(((index + 1) / modules.length) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+
+    // Scroll into view on mobile
+    document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function startVideo() {
+    const m = modules[current];
+    playing = true;
+    document.getElementById('vimeo-player').src =
+      `https://player.vimeo.com/video/${m.videoId}?autoplay=1&title=0&byline=0&portrait=0`;
+    document.getElementById('video-overlay').classList.add('hidden');
+
+    // Mark as done in sidebar
+    document.querySelectorAll('.module-item')[current].classList.add('done');
+  }
+
+  function nextModule() {
+    if (current < modules.length - 1) {
+      selectModule(current + 1);
+    } else {
+      // All done
+      document.getElementById('current-label').textContent = '🎉 Formation terminée !';
+    }
+  }
+
+  // Init
+  selectModule(0);
+</script>
+</body>
+</html>

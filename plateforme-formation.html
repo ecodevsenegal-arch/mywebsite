@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataSkills Academy — Plateforme de Formation</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080F;
+    --bg2: #0D0F1C;
+    --bg3: #131628;
+    --surface: #181B2E;
+    --surface2: #1F2340;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --gold: #F5C842;
+    --gold2: #E8A800;
+    --teal: #00C9A7;
+    --teal2: #009E84;
+    --coral: #FF6B6B;
+    --blue: #4D9EFF;
+    --purple: #A855F7;
+    --text: #F0F2FF;
+    --text2: #9DA8CC;
+    --text3: #5A6490;
+    --radius: 16px;
+    --radius-sm: 8px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 99px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 72px;
+    background: rgba(7, 8, 15, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--gold), var(--teal));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--bg);
+    font-family: 'Syne', sans-serif;
+  }
+
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .logo-text span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: var(--transition);
+  }
+
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+
+  .nav-cta {
+    background: var(--gold) !important;
+    color: var(--bg) !important;
+    font-weight: 600 !important;
+    padding: 8px 20px !important;
+  }
+  .nav-cta:hover { background: var(--gold2) !important; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-glow-1 {
+    background: radial-gradient(circle, rgba(245,200,66,0.12) 0%, transparent 70%);
+    top: -200px; left: -200px;
+    animation: float1 8s ease-in-out infinite;
+  }
+  .hero-glow-2 {
+    background: radial-gradient(circle, rgba(0,201,167,0.1) 0%, transparent 70%);
+    bottom: -300px; right: -200px;
+    animation: float2 10s ease-in-out infinite;
+  }
+  .hero-glow-3 {
+    background: radial-gradient(circle, rgba(77,158,255,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  @keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,30px)} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,-40px)} }
+  @keyframes pulse { 0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)} }
+
+  /* Grid lines */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 900px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    animation: heroIn 0.8s ease-out both;
+  }
+
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(245,200,66,0.1);
+    border: 1px solid rgba(245,200,66,0.3);
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 .line1 { color: var(--text); }
+  .hero h1 .line2 {
+    background: linear-gradient(90deg, var(--gold), var(--teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text2);
+    max-width: 580px;
+    margin: 0 auto 48px;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    background: var(--gold);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(245,200,66,0.3); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    background: transparent;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-secondary:hover { background: var(--surface); border-color: var(--text3); }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-top: 80px;
+    padding: 0 48px;
+  }
+
+  .stat-item {
+    flex: 1;
+    max-width: 220px;
+    text-align: center;
+    padding: 32px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    position: relative;
+  }
+  .stat-item:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+  .stat-item:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+  .stat-item + .stat-item { border-left: none; }
+  .stat-item:hover { background: var(--surface2); z-index: 2; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text3);
+    font-weight: 400;
+  }
+
+  /* ─── SECTION ─── */
+  section {
+    padding: 100px 48px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--teal);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 560px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  /* ─── COURSES GRID ─── */
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+  }
+
+  .course-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .course-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+
+  .card-accent {
+    height: 4px;
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .card-body {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .card-level {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .level-debutant { background: rgba(0,201,167,0.15); color: var(--teal); }
+  .level-intermediaire { background: rgba(77,158,255,0.15); color: var(--blue); }
+  .level-avance { background: rgba(168,85,247,0.15); color: var(--purple); }
+  .level-tous { background: rgba(245,200,66,0.15); color: var(--gold); }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+    flex: 1;
+    font-weight: 300;
+  }
+
+  .card-modules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .module-tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text3);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .card-footer {
+    padding: 16px 28px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text3);
+  }
+
+  .meta-item svg { opacity: 0.6; }
+
+  .card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+    transition: var(--transition);
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .card-btn:hover { gap: 10px; }
+
+  /* ─── FEATURED CARD ─── */
+  .course-card.featured {
+    grid-column: span 2;
+    flex-direction: row;
+  }
+  .course-card.featured .card-accent {
+    width: 4px;
+    height: auto;
+  }
+  .course-card.featured .card-body {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .course-card.featured .card-main {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .course-card.featured .card-side {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gold);
+    background: rgba(245,200,66,0.1);
+    border: 1px solid rgba(245,200,66,0.25);
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── PARCOURS ─── */
+  .parcours-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 0;
+    padding: 100px 0;
+  }
+
+  .parcours-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .parcours-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .parcours-visual {
+    position: relative;
+  }
+
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 24px;
+    position: relative;
+  }
+
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .step-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text2);
+    flex-shrink: 0;
+    transition: var(--transition);
+  }
+
+  .step-item:nth-child(1) .step-num { border-color: var(--gold); color: var(--gold); background: rgba(245,200,66,0.1); }
+  .step-item:nth-child(2) .step-num { border-color: var(--teal); color: var(--teal); background: rgba(0,201,167,0.1); }
+  .step-item:nth-child(3) .step-num { border-color: var(--blue); color: var(--blue); background: rgba(77,158,255,0.1); }
+  .step-item:nth-child(4) .step-num { border-color: var(--purple); color: var(--purple); background: rgba(168,85,247,0.1); }
+
+  .step-line {
+    width: 2px;
+    flex: 1;
+    min-height: 40px;
+    background: linear-gradient(to bottom, var(--border2), transparent);
+    margin: 4px 0;
+  }
+
+  .step-item:last-child .step-line { display: none; }
+
+  .step-content {
+    padding-bottom: 40px;
+    flex: 1;
+  }
+  .step-item:last-child .step-content { padding-bottom: 0; }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* Parcours infographic */
+  .parcours-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: var(--transition);
+  }
+  .info-card:hover { border-color: var(--border2); background: var(--surface2); }
+  .info-card:first-child { grid-column: span 2; }
+
+  .info-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .info-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .info-text {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ─── FORMATEURS ─── */
+  .formateurs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .formateur-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: var(--transition);
+    text-align: center;
+  }
+  .formateur-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+
+  .formateur-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .formateur-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
+
+  .formateur-role {
+    font-size: 13px;
+    color: var(--teal);
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .formateur-bio {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: var(--transition);
+    position: relative;
+  }
+  .testimonial-card:hover { border-color: var(--border2); }
+
+  .testimonial-quote {
+    font-size: 48px;
+    color: var(--gold);
+    font-family: 'Syne', sans-serif;
+    line-height: 1;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.7;
+    font-style: italic;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .author-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .author-org {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  /* ─── PRICING ─── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .pricing-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    transition: var(--transition);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(0,0,0,0.3); }
+  .pricing-card.popular {
+    background: linear-gradient(135deg, rgba(245,200,66,0.08), rgba(0,201,167,0.05));
+    border-color: rgba(245,200,66,0.4);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 99px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .pricing-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .pricing-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .pricing-price span {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text3);
+    letter-spacing: 0;
+  }
+
+  .pricing-period {
+    font-size: 13px;
+    color: var(--text3);
+    margin-bottom: 32px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    margin-bottom: 32px;
+  }
+
+  .pricing-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text2);
+  }
+
+  .check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(0,201,167,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--teal);
+    font-size: 10px;
+  }
+
+  /* ─── FAQ ─── */
+  .faq-list {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 28px;
+    cursor: pointer;
+    transition: var(--transition);
+    gap: 16px;
+    user-select: none;
+  }
+  .faq-question:hover { background: var(--surface2); }
+
+  .faq-question h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .faq-icon {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    flex-shrink: 0;
+    font-size: 14px;
+    color: var(--text3);
+  }
+
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--surface2); }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .faq-answer-inner {
+    padding: 0 28px 24px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+    font-weight: 300;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--bg2) 0%, var(--surface) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 80px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,200,66,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    color: var(--text2);
+    margin-bottom: 40px;
+    font-weight: 300;
+    position: relative;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 48px 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--text3);
+    line-height: 1.65;
+    margin-top: 16px;
+    font-weight: 300;
+    max-width: 280px;
+  }
+
+  .footer-col h5 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text);
+    letter-spacing: -0.2px;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-col li a {
+    font-size: 14px;
+    color: var(--text3);
+    text-decoration: none;
+    transition: var(--transition);
+    font-weight: 300;
+  }
+  .footer-col li a:hover { color: var(--text2); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .footer-bottom p {
+    font-size: 13px;
+    color: var(--text3);
+    font-weight: 300;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 8px;
+  }
+
+  .social-btn {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text3);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  .social-btn:hover { background: var(--surface2); color: var(--text2); border-color: var(--border2); }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 8, 15, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    padding: 0;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s ease;
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+  .modal-header {
+    padding: 32px 32px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    border-radius: 20px 20px 0 0;
+    z-index: 2;
+  }
+
+  .modal-close {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--surface2);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    flex-shrink: 0;
+  }
+  .modal-close:hover { background: var(--bg3); }
+
+  .modal-body { padding: 28px 32px 32px; }
+
+  .modal-modules {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .modal-module {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--bg3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+
+  .module-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .module-info h5 {
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    margin-bottom: 4px;
+  }
+
+  .module-info p {
+    font-size: 13px;
+    color: var(--text3);
+    font-weight: 300;
+  }
+
+  /* ─── REGISTER FORM ─── */
+  .register-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 100px 0;
+  }
+
+  .register-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .register-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+  }
+
+  .form-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .form-subtitle {
+    font-size: 14px;
+    color: var(--text3);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    transition: var(--transition);
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(245,200,66,0.1);
+  }
+
+  .form-group select option { background: var(--bg3); }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .form-submit:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,200,66,0.25); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    section { padding: 60px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .stats-bar { padding: 0 24px; flex-wrap: wrap; }
+    .stat-item { min-width: calc(50% - 12px); border-radius: var(--radius-sm) !important; }
+    .courses-grid { grid-template-columns: 1fr; }
+    .course-card.featured { grid-column: span 1; flex-direction: column; }
+    .course-card.featured .card-accent { width: 100%; height: 4px; }
+    .course-card.featured .card-body { flex-direction: column; }
+    .course-card.featured .card-side { width: 100%; }
+    .parcours-grid { grid-template-columns: 1fr; gap: 48px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .register-grid { grid-template-columns: 1fr; gap: 48px; }
+    .form-row { grid-template-columns: 1fr; }
+    .parcours-inner, .register-inner { padding: 0 24px; }
+    footer { padding: 60px 24px 40px; }
+    .cta-section { padding: 60px 32px; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.0s; }
+  .stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+  .stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.16s; }
+  .stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.24s; }
+  .stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.32s; }
+  .stagger.visible > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.40s; }
+  .stagger.visible > *:nth-child(7) { opacity: 1; transform: translateY(0); transition-delay: 0.48s; }
+  .stagger.visible > *:nth-child(8) { opacity: 1; transform: translateY(0); transition-delay: 0.56s; }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--teal));
+    z-index: 200;
+    transition: width 0.1s linear;
+    width: 0%;
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">DS</div>
+    <span class="logo-text">Data<span>Skills</span> Academy</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#formations">Formations</a></li>
+    <li><a href="#parcours">Parcours</a></li>
+    <li><a href="#formateurs">Formateurs</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#inscription" class="nav-cta">S'inscrire</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-glow hero-glow-3"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Plateforme de Formation · Dakar, Sénégal</div>
+    <h1>
+      <div class="line1">Maîtrisez les outils</div>
+      <div class="line2">de la donnée & du pilotage</div>
+    </h1>
+    <p>Des formations certifiantes en Excel, Power BI, Power Query, MS Project, Kobotoolbox et Suivi-Évaluation — conçues pour les professionnels africains.</p>
+    <div class="hero-actions">
+      <a href="#formations" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
+        Découvrir les formations
+      </a>
+      <a href="#inscription" class="btn-secondary">
+        S'inscrire gratuitement →
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">8</div>
+    <div class="stat-label">Domaines de formation</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">40+</div>
+    <div class="stat-label">Modules de cours</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">500+</div>
+    <div class="stat-label">Apprenants formés</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">92%</div>
+    <div class="stat-label">Taux de satisfaction</div>
+  </div>
+</div>
+
+<!-- FORMATIONS -->
+<section id="formations">
+  <div class="section-header fade-in">
+    <div>
+      <div class="section-label">Catalogue</div>
+      <h2 class="section-title">Nos formations</h2>
+      <p class="section-sub">De la maîtrise des outils bureautiques avancés à l'analyse de données professionnelle — progressez à votre rythme.</p>
+    </div>
+    <a href="#inscription" class="btn-secondary">Voir tout →</a>
+  </div>
+
+  <div class="courses-grid stagger">
+
+    <!-- EXCEL -->
+    <div class="course-card" onclick="openModal('excel')">
+      <div class="card-accent" style="background: linear-gradient(90deg, #1D6F42, #21A366)"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon" style="background: rgba(29,111,66,0.15);">📊</div>
+          <span class="card-level level-tous">Tous niveaux</span>
+        </div>
+        <h3 class="card-title">Excel — De Zéro à Expert</h3>
+        <p class="card-desc">Formules avancées, tableaux croisés dynamiques, automatisation avec VBA, et visualisation de données. La formation la plus complète du marché.</p>
+        <div class="card-modules">
+          <span class="module-tag">Formules & Fonctions</span>
+          <span class="module-tag">TCD</span>
+          <span class="module-tag">VBA & Macros</span>
+          <span class="module-tag">Dashboards</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            32h de contenu
+          </span>
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            12 modules
+          </span>
+        </div>
+        <button class="card-btn">Explorer →</button>
+      </div>
+    </div>
+
+    <!-- POWER BI -->
+    <div class="course-card" onclick="openModal('powerbi')">
+      <div class="card-accent" style="background: linear-gradient(90deg, #F2C94C, #F2994A)"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon" style="background: rgba(242,201,76,0.12);">📈</div>
+          <span class="card-level level-intermediaire">Intermédiaire</span>
+        </div>
+        <h3 class="card-title">Power BI — Business Intelligence</h3>
+        <p class="card-desc">Connectez vos données, créez des rapports dynamiques et des tableaux de bord interactifs professionnels avec DAX et Power BI Service.</p>
+        <div class="card-modules">
+          <span class="module-tag">DAX</span>
+          <span class="module-tag">Modélisation</span>
+          <span class="module-tag">Rapports</span>
+          <span class="module-tag">Power BI Service</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            28h de contenu
+          </span>
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            10 modules
+          </span>
+        </div>
+        <button class="card-btn">Explorer →</button>
+      </div>
+    </div>
+
+    <!-- POWER QUERY -->
+    <div class="course-card" onclick="openModal('powerquery')">
+      <div class="card-accent" style="background: linear-gradient(90deg, #4D9EFF, #A855F7)"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon" style="background: rgba(77,158,255,0.12);">🔄</div>
+          <span class="card-level level-intermediaire">Intermédiaire</span>
+        </div>
+        <h3 class="card-title">Power Query — ETL & Données</h3>
+        <p class="card-desc">Transformez, nettoyez et consolidez vos sources de données. Maîtrisez le langage M pour automatiser tous vos traitements de données.</p>
+        <div class="card-modules">
+          <span class="module-tag">Langage M</span>
+          <span class="module-tag">ETL</span>
+          <span class="module-tag">Consolidation</span>
+          <span class="module-tag">Automatisation</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            20h de contenu
+          </span>
+          <span class="meta-item">8 modules</span>
+        </div>
+        <button class="card-btn">Explorer →</button>
+      </div>
+    </div>
+
+    <!-- MS PROJECT - FEATURED -->
+    <div class="course-card featured" onclick="openModal('msproject')">
+      <div class="card-accent" style="background: linear-gradient(180deg, #00C9A7, #009E84)"></div>
+      <div class="card-body">
+        <div class="card-main">
+          <div class="card-top">
+            <div class="card-icon" style="background: rgba(0,201,167,0.12);">📅</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <span class="card-level level-tous">Tous niveaux</span>
+              <span class="featured-badge">⭐ Populaire</span>
+            </div>
+          </div>
+          <h3 class="card-title">MS Project — Gestion de Projet</h3>
+          <p class="card-desc">Planifiez, suivez et gérez vos projets avec Microsoft Project. Diagrammes de Gantt, gestion des ressources, suivi des délais et budgets.</p>
+          <div class="card-modules">
+            <span class="module-tag">Gantt</span>
+            <span class="module-tag">Ressources</span>
+            <span class="module-tag">Jalons</span>
+            <span class="module-tag">Reporting</span>
+            <span class="module-tag">Budget</span>
+          </div>
+        </div>
+        <div class="card-side">
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;width:100%;">
+            <div style="font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;margin-bottom:8px;">DURÉE</div>
+            <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--teal)">24h</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px;">9 modules</div>
+          </div>
+          <button class="card-btn" style="font-size:14px;">Explorer le cours →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KOBOTOOLBOX -->
+    <div class="course-card" onclick="openModal('kobo')">
+      <div class="card-accent" style="background: linear-gradient(90deg, #FF6B6B, #FF8E8E)"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon" style="background: rgba(255,107,107,0.12);">📋</div>
+          <span class="card-level level-debutant">Débutant</span>
+        </div>
+        <h3 class="card-title">Kobotoolbox — Collecte Terrain</h3>
+        <p class="card-desc">Concevez des formulaires avancés, déployez des enquêtes sur le terrain et analysez vos données de collecte en temps réel.</p>
+        <div class="card-modules">
+          <span class="module-tag">Formulaires XLS</span>
+          <span class="module-tag">Logique conditionnelle</span>
+          <span class="module-tag">Déploiement</span>
+          <span class="module-tag">Export données</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            18h de contenu
+          </span>
+          <span class="meta-item">7 modules</span>
+        </div>
+        <button class="card-btn">Explorer →</button>
+      </div>
+    </div>
+
+    <!-- ANALYSE DE DONNÉES -->
+    <div class="course-card" onclick="openModal('analyse')">
+      <div class="card-accent" style="background: linear-gradient(90deg, #A855F7, #EC4899)"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon" style="background: rgba(168,85,247,0.12);">🔬</div>
+          <span class="card-level level-avance">Avancé</span>
+        </div>
+        <h3 class="card-title">Analyse & Visualisation de Données</h3>
+        <p class="card-desc">Méthodes statistiques, exploration de données, et création de visualisations percutantes. Combinez Excel, Power BI et Python pour l'analyse data.</p>
+        <div class="card-modules">
+          <span class="module-tag">Statistiques</span>
+          <span class="module-tag">Python basics</span>
+          <span class="module-tag">Chartjs</span>
+          <span class="module-tag">Storytelling</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            36h de contenu
+          </span>
+          <span class="meta-item">14 modules</span>
+        </div>
+        <button class="card-btn">Explorer →</button>
+      </div>
+    </div>
+
+    <!-- SUIVI-ÉVALUATION -->
+    <div class="course-card" onclick="openModal('se')">
+      <div class="card-accent" style="background: linear-gradient(90deg, #00C9A7, #4D9EFF)"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon" style="background: rgba(0,201,167,0.12);">🎯</div>
+          <span class="card-level level-intermediaire">Intermédiaire</span>
+        </div>
+        <h3 class="card-title">Suivi-Évaluation de Projets</h3>
+        <p class="card-desc">Cadres logiques, indicateurs de performance (SMART), plans S&E, rapports de résultats et gestion axée sur les résultats pour projets de développement.</p>
+        <div class="card-modules">
+          <span class="module-tag">Cadre logique</span>
+          <span class="module-tag">Indicateurs SMART</span>
+          <span class="module-tag">Plan S&E</span>
+          <span class="module-tag">GAR</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            24h de contenu
+          </span>
+          <span class="meta-item">9 modules</span>
+        </div>
+        <button class="card-btn">Explorer →</button>
+      </div>
+    </div>
+
+    <!-- CARTE BIENTÔT -->
+    <div class="course-card" style="opacity:0.6;cursor:default;">
+      <div class="card-accent" style="background: var(--border2)"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon" style="background: var(--bg3);">🚀</div>
+          <span class="card-level" style="background:var(--surface2);color:var(--text3);">Bientôt</span>
+        </div>
+        <h3 class="card-title" style="color:var(--text3);">Prochaine Formation</h3>
+        <p class="card-desc">Rejoignez notre liste d'attente pour être informé des prochaines formations — Tableau, R, SQL et plus encore.</p>
+        <div class="card-modules">
+          <span class="module-tag">Tableau</span>
+          <span class="module-tag">SQL</span>
+          <span class="module-tag">R / Stata</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="meta-item" style="font-style:italic;">À venir</span>
+        </div>
+        <a href="#inscription" class="card-btn">Rejoindre →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PARCOURS -->
+<div class="parcours-section" id="parcours">
+  <div class="parcours-inner">
+    <div class="parcours-grid">
+      <div class="fade-in">
+        <div class="section-label">Méthodologie</div>
+        <h2 class="section-title">Un apprentissage structuré & efficace</h2>
+        <p class="section-sub" style="margin-bottom:48px;">Notre pédagogie est centrée sur la pratique immédiate. Chaque concept est illustré avec des cas réels du contexte africain.</p>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-left">
+              <div class="step-num">01</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-content">
+              <h4 class="step-title">Évaluation de votre niveau</h4>
+              <p class="step-desc">Un test diagnostique adaptatif pour identifier vos forces et vos lacunes. Votre parcours est ensuite personnalisé.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-left">
+              <div class="step-num">02</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-content">
+              <h4 class="step-title">Apprentissage par modules</h4>
+              <p class="step-desc">Des vidéos courtes, des exercices pratiques et des quiz de validation après chaque concept clé.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-left">
+              <div class="step-num">03</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-content">
+              <h4 class="step-title">Projets pratiques réels</h4>
+              <p class="step-desc">Appliquez vos compétences sur des projets concrets : données sanitaires, budgets NGO, rapports de projet, etc.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-left">
+              <div class="step-num">04</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-content">
+              <h4 class="step-title">Certification & Suivi</h4>
+              <p class="step-desc">Obtenez votre certificat de complétion et bénéficiez d'un suivi post-formation pour ancrer vos acquis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="parcours-info fade-in">
+        <div class="info-card" style="background: linear-gradient(135deg, rgba(245,200,66,0.08), rgba(0,201,167,0.05)); border-color: rgba(245,200,66,0.2);">
+          <div class="info-icon">🏆</div>
+          <h4 class="info-title">Certifications reconnues</h4>
+          <p class="info-text">Nos certificats sont reconnus par les employeurs, ONG et institutions de développement en Afrique de l'Ouest et au-delà.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📱</div>
+          <h4 class="info-title">100% en ligne</h4>
+          <p class="info-text">Apprenez depuis Dakar, Abidjan ou Bamako — à votre rythme, sur mobile ou PC.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🤝</div>
+          <h4 class="info-title">Mentorat inclus</h4>
+          <p class="info-text">Sessions de questions-réponses hebdomadaires avec un formateur expert pour débloquer vos blocages.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📂</div>
+          <h4 class="info-title">Ressources téléchargeables</h4>
+          <p class="info-text">Fiches pratiques, templates, fichiers d'exercices. Accès à vie à tout votre matériel de cours.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🌍</div>
+          <h4 class="info-title">Contexte local</h4>
+          <p class="info-text">Cas pratiques adaptés : données humanitaires, gestion de projets ONG, rapports institutionnels.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMATEURS -->
+<section id="formateurs">
+  <div class="section-header fade-in">
+    <div>
+      <div class="section-label">Équipe</div>
+      <h2 class="section-title">Nos formateurs experts</h2>
+      <p class="section-sub">Des professionnels avec des années d'expérience terrain en gestion de projets et analyse de données.</p>
+    </div>
+  </div>
+  <div class="formateurs-grid stagger">
+    <div class="formateur-card">
+      <div class="formateur-avatar" style="background: linear-gradient(135deg, rgba(245,200,66,0.2), rgba(245,200,66,0.05)); color: var(--gold);">AM</div>
+      <div class="formateur-name">Aminata Mbaye</div>
+      <div class="formateur-role">Excel & Power BI Expert</div>
+      <p class="formateur-bio">10 ans d'expérience en analyse de données pour des ONG internationales. Ex-consultante chez PwC Sénégal.</p>
+    </div>
+    <div class="formateur-card">
+      <div class="formateur-avatar" style="background: linear-gradient(135deg, rgba(0,201,167,0.2), rgba(0,201,167,0.05)); color: var(--teal);">DS</div>
+      <div class="formateur-name">Djibril Sarr</div>
+      <div class="formateur-role">Suivi-Évaluation & MS Project</div>
+      <p class="formateur-bio">Spécialiste S&E avec 12 ans d'expérience. A travaillé pour USAID, GIZ et Banque Mondiale en Afrique subsaharienne.</p>
+    </div>
+    <div class="formateur-card">
+      <div class="formateur-avatar" style="background: linear-gradient(135deg, rgba(77,158,255,0.2), rgba(77,158,255,0.05)); color: var(--blue);">FK</div>
+      <div class="formateur-name">Fatoumata Kouyaté</div>
+      <div class="formateur-role">Data Analysis & Kobotoolbox</div>
+      <p class="formateur-bio">Experte en collecte de données terrain et visualisation. Formatrice agréée pour plusieurs agences des Nations Unies.</p>
+    </div>
+    <div class="formateur-card">
+      <div class="formateur-avatar" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05)); color: var(--purple);">OD</div>
+      <div class="formateur-name">Oumar Diallo</div>
+      <div class="formateur-role">Power Query & Automatisation</div>
+      <p class="formateur-bio">Développeur data et formateur. Maîtrise Power Query, M language et l'écosystème Power Platform Microsoft.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="parcours-section">
+  <div class="parcours-inner">
+    <div class="fade-in" style="margin-bottom:56px;">
+      <div class="section-label">Témoignages</div>
+      <h2 class="section-title">Ce qu'en disent nos apprenants</h2>
+    </div>
+    <div class="testimonials-grid stagger">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">La formation Power BI a complètement transformé ma façon de présenter les données à mes bailleurs. Mes rapports sont maintenant des tableaux de bord interactifs que tout le monde comprend.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:rgba(245,200,66,0.15);color:var(--gold);">SN</div>
+          <div>
+            <div class="author-name">Saliou Ndiaye</div>
+            <div class="author-org">Coordinateur M&E — World Vision Sénégal</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Kobotoolbox m'a permis de numériser toute notre chaîne de collecte. La formation était pratique et directement applicable au terrain. Je recommande à 100%.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:rgba(0,201,167,0.15);color:var(--teal);">MT</div>
+          <div>
+            <div class="author-name">Mariam Touré</div>
+            <div class="author-org">Chargée de programme — Oxfam Mali</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Le cours sur le Suivi-Évaluation était exactement ce dont j'avais besoin. Cadre logique, indicateurs, plan S&E — tout est expliqué clairement avec des exemples africains.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:rgba(77,158,255,0.15);color:var(--blue);">BB</div>
+          <div>
+            <div class="author-name">Boubacar Barry</div>
+            <div class="author-org">Responsable Suivi — PNUD Guinée</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TARIFS -->
+<section id="tarifs">
+  <div class="section-header fade-in">
+    <div>
+      <div class="section-label">Tarification</div>
+      <h2 class="section-title">Des tarifs adaptés</h2>
+      <p class="section-sub">Des offres flexibles pour les professionnels, les organisations et les équipes. Paiement en FCFA disponible.</p>
+    </div>
+  </div>
+  <div class="pricing-grid stagger">
+    <div class="pricing-card">
+      <div class="pricing-name">Essentiel</div>
+      <div class="pricing-price">75 000 <span>FCFA</span></div>
+      <div class="pricing-period">par formation · accès 6 mois</div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span> 1 formation au choix</li>
+        <li><span class="check">✓</span> Vidéos & exercices</li>
+        <li><span class="check">✓</span> Forum de la communauté</li>
+        <li><span class="check">✓</span> Certificat de complétion</li>
+        <li><span class="check">✓</span> Fichiers téléchargeables</li>
+      </ul>
+      <a href="#inscription" class="btn-secondary" style="text-align:center;justify-content:center;">Commencer</a>
+    </div>
+    <div class="pricing-card popular">
+      <div class="popular-badge">⭐ Le plus populaire</div>
+      <div class="pricing-name" style="color:var(--gold)">Pro Complet</div>
+      <div class="pricing-price" style="color:var(--gold)">250 000 <span>FCFA</span></div>
+      <div class="pricing-period">toutes les formations · accès 12 mois</div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span> Toutes les formations</li>
+        <li><span class="check">✓</span> Sessions live mensuelles</li>
+        <li><span class="check">✓</span> Mentorat individuel (2h)</li>
+        <li><span class="check">✓</span> Projets corrigés par un expert</li>
+        <li><span class="check">✓</span> Certificats officiels</li>
+        <li><span class="check">✓</span> Mises à jour à vie</li>
+      </ul>
+      <a href="#inscription" class="btn-primary" style="text-align:center;justify-content:center;">Choisir Pro</a>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-name">Organisation / Équipe</div>
+      <div class="pricing-price">Sur <span>devis</span></div>
+      <div class="pricing-period">à partir de 5 personnes</div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span> Toutes les formations</li>
+        <li><span class="check">✓</span> Tableau de bord RH & suivi</li>
+        <li><span class="check">✓</span> Formateur dédié</li>
+        <li><span class="check">✓</span> Sessions in-house possibles</li>
+        <li><span class="check">✓</span> Contenu personnalisé</li>
+        <li><span class="check">✓</span> Facturation institutionnelle</li>
+      </ul>
+      <a href="#inscription" class="btn-secondary" style="text-align:center;justify-content:center;">Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<div class="parcours-section" id="faq">
+  <div class="parcours-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:56px;">
+      <div class="section-label" style="justify-content:center;">FAQ</div>
+      <h2 class="section-title">Questions fréquentes</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Faut-il des prérequis pour s'inscrire ?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Chaque formation indique son niveau (débutant, intermédiaire, avancé). Pour les formations débutant comme Kobotoolbox ou Excel niveau 1, aucun prérequis n'est nécessaire. Pour Power BI ou l'Analyse de données, une connaissance de base d'Excel est recommandée.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Les formations sont-elles disponibles en présentiel ?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">La plateforme est 100% en ligne, accessible 24h/24. Des sessions in-house peuvent être organisées pour les organisations à Dakar et dans d'autres villes selon disponibilité. Contactez-nous pour organiser une formation sur site pour votre équipe.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Comment s'effectue le paiement ?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Nous acceptons Orange Money, Wave, virement bancaire en FCFA, ainsi que les cartes bancaires (Visa, Mastercard). Les organisations peuvent nous adresser un bon de commande pour une facturation institutionnelle. Des facilités de paiement en 2 ou 3 tranches sont disponibles sur demande.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Les certificats sont-ils reconnus ?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Nos certificats de complétion sont reconnus par de nombreux employeurs, ONG et agences de développement en Afrique de l'Ouest. Ils sont générés en PDF et portent un code de vérification unique. Certaines formations préparent également aux certifications Microsoft officielles.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Puis-je accéder aux cours depuis mon téléphone ?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Oui, la plateforme est entièrement responsive et accessible sur mobile, tablette et ordinateur. Les vidéos peuvent être téléchargées pour un visionnage hors connexion, ce qui est pratique dans les zones à faible débit internet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INSCRIPTION -->
+<div class="register-section" id="inscription">
+  <div class="register-inner">
+    <div class="register-grid">
+      <div class="fade-in">
+        <div class="section-label">Inscription</div>
+        <h2 class="section-title">Commencez votre parcours aujourd'hui</h2>
+        <p class="section-sub" style="margin-bottom:48px;">Rejoignez des centaines de professionnels qui ont déjà transformé leur façon de travailler avec les données.</p>
+
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;flex-shrink:0;">✓</div>
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:600;margin-bottom:2px;">Accès immédiat après paiement</div>
+              <div style="font-size:13px;color:var(--text3);font-weight:300;">Commencez à apprendre dans les minutes qui suivent votre inscription</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(0,201,167,0.1);border:1px solid rgba(0,201,167,0.3);display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:16px;flex-shrink:0;">✓</div>
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:600;margin-bottom:2px;">Garantie satisfait ou remboursé 7 jours</div>
+              <div style="font-size:13px;color:var(--text3);font-weight:300;">Pas convaincu ? On vous rembourse sans poser de questions</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(77,158,255,0.1);border:1px solid rgba(77,158,255,0.3);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:16px;flex-shrink:0;">✓</div>
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:600;margin-bottom:2px;">Support en français & Wolof</div>
+              <div style="font-size:13px;color:var(--text3);font-weight:300;">Notre équipe vous répond dans les 24h ouvrables</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card fade-in">
+        <div class="form-title">Créer un compte</div>
+        <div class="form-subtitle">C'est gratuit pour commencer</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom *</label>
+            <input type="text" placeholder="Amadou">
+          </div>
+          <div class="form-group">
+            <label>Nom *</label>
+            <input type="text" placeholder="Diallo">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Adresse email *</label>
+          <input type="email" placeholder="amadou@example.com">
+        </div>
+
+        <div class="form-group">
+          <label>Téléphone (WhatsApp)</label>
+          <input type="tel" placeholder="+221 77 000 00 00">
+        </div>
+
+        <div class="form-group">
+          <label>Organisation / Employeur</label>
+          <input type="text" placeholder="ONG, Entreprise, Institution...">
+        </div>
+
+        <div class="form-group">
+          <label>Formation qui vous intéresse *</label>
+          <select>
+            <option value="">Sélectionnez une formation</option>
+            <option>Excel — De Zéro à Expert</option>
+            <option>Power BI — Business Intelligence</option>
+            <option>Power Query — ETL & Données</option>
+            <option>MS Project — Gestion de Projet</option>
+            <option>Kobotoolbox — Collecte Terrain</option>
+            <option>Analyse & Visualisation de Données</option>
+            <option>Suivi-Évaluation de Projets</option>
+            <option>Pack Pro Complet (Toutes les formations)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Niveau actuel</label>
+          <select>
+            <option value="">Votre niveau</option>
+            <option>Débutant — je commence</option>
+            <option>Intermédiaire — j'ai les bases</option>
+            <option>Avancé — je veux approfondir</option>
+          </select>
+        </div>
+
+        <button class="form-submit" onclick="handleSubmit()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Créer mon compte gratuitement
+        </button>
+        <p style="font-size:12px;color:var(--text3);margin-top:12px;text-align:center;font-weight:300;">En vous inscrivant, vous acceptez nos Conditions d'utilisation</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section>
+  <div class="cta-section fade-in">
+    <h2>Prêt à booster vos compétences data ?</h2>
+    <p>Rejoignez plus de 500 professionnels africains qui ont déjà transformé leur carrière grâce à DataSkills Academy.</p>
+    <div class="hero-actions">
+      <a href="#inscription" class="btn-primary">Commencer gratuitement →</a>
+      <a href="#formations" class="btn-secondary">Voir les formations</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="margin-bottom:4px;">
+        <div class="logo-icon">DS</div>
+        <span class="logo-text">Data<span>Skills</span> Academy</span>
+      </a>
+      <p>La première plateforme de formation aux outils data et pilotage de projets, pensée pour les professionnels d'Afrique de l'Ouest.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Formations</h5>
+      <ul>
+        <li><a href="#">Excel</a></li>
+        <li><a href="#">Power BI</a></li>
+        <li><a href="#">Power Query</a></li>
+        <li><a href="#">MS Project</a></li>
+        <li><a href="#">Kobotoolbox</a></li>
+        <li><a href="#">Analyse de données</a></li>
+        <li><a href="#">Suivi-Évaluation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Plateforme</h5>
+      <ul>
+        <li><a href="#">À propos</a></li>
+        <li><a href="#">Nos formateurs</a></li>
+        <li><a href="#">Tarifs</a></li>
+        <li><a href="#">Partenariats</a></li>
+        <li><a href="#">Blog data</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="#">📍 Dakar, Sénégal</a></li>
+        <li><a href="#">📧 contact@dataskills.sn</a></li>
+        <li><a href="#">📱 +221 77 000 00 00</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 DataSkills Academy — Tous droits réservés</p>
+    <div class="footer-socials">
+      <a class="social-btn" href="#">𝕏</a>
+      <a class="social-btn" href="#">in</a>
+      <a class="social-btn" href="#">📘</a>
+      <a class="social-btn" href="#">▶</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div id="modalBadge" style="margin-bottom:8px;"></div>
+        <h2 id="modalTitle" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px;"></h2>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="modalDesc" style="font-size:14px;color:var(--text2);line-height:1.7;font-weight:300;margin-bottom:24px;"></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px;">
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+          <div id="modalDuration" style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--gold);"></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;">de contenu</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+          <div id="modalModCount" style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--teal);"></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;">modules</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+          <div id="modalLevel" style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--blue);"></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;">niveau</div>
+        </div>
+      </div>
+      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;letter-spacing:-0.2px;">Programme du cours</div>
+      <div class="modal-modules" id="modalModules"></div>
+      <a href="#inscription" class="btn-primary" style="width:100%;justify-content:center;margin-top:8px;" onclick="closeModal()">
+        S'inscrire à cette formation →
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS TOAST -->
+<div id="toast" style="
+  position:fixed;bottom:32px;right:32px;
+  background:var(--teal);color:var(--bg);
+  padding:14px 24px;border-radius:12px;
+  font-weight:600;font-size:14px;
+  font-family:'Syne',sans-serif;
+  transform:translateY(100px);opacity:0;
+  transition:all 0.4s ease;z-index:9000;
+  display:flex;align-items:center;gap:10px;
+">
+  ✓ Inscription envoyée ! On vous contacte sous 24h.
+</div>
+
+<script>
+// ─── SCROLL PROGRESS ───
+window.addEventListener('scroll', () => {
+  const progress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+
+// ─── INTERSECTION OBSERVER ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in, .stagger').forEach(el => observer.observe(el));
+
+// ─── FAQ TOGGLE ───
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-answer').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+// ─── MODAL DATA ───
+const courses = {
+  excel: {
+    title: 'Excel — De Zéro à Expert',
+    badge: '📊 Bureautique & Analyse',
+    badgeColor: '#1D6F42',
+    desc: 'La formation la plus complète sur Microsoft Excel. Partez de zéro et maîtrisez les fonctionnalités avancées : formules complexes, tableaux croisés dynamiques, automatisation VBA et création de tableaux de bord professionnels.',
+    duration: '32h', modules: '12', level: 'Tous niveaux',
+    mods: [
+      { title: 'Fondamentaux & Interface', desc: 'Navigation, raccourcis clavier, gestion des classeurs' },
+      { title: 'Formules & Fonctions avancées', desc: 'RECHERCHEV, INDEX-EQUIV, SOMME.SI, ARRAYFORMULA' },
+      { title: 'Tableaux croisés dynamiques', desc: 'Création, mise en forme, segments, champs calculés' },
+      { title: 'Graphiques & Visualisation', desc: 'Types de graphiques, mise en forme avancée, graphiques dynamiques' },
+      { title: 'Automatisation avec VBA', desc: 'Enregistreur de macros, VBA basique, formulaires' },
+      { title: 'Tableaux de bord professionnels', desc: 'Design de dashboards, KPI, mise en forme conditionnelle' },
+    ],
+    color: 'var(--teal)'
+  },
+  powerbi: {
+    title: 'Power BI — Business Intelligence',
+    badge: '📈 Business Intelligence',
+    badgeColor: '#F2C94C',
+    desc: "Transformez vos données brutes en insights visuels percutants. Apprenez à connecter des sources multiples, modéliser vos données, écrire des mesures DAX et publier vos rapports sur Power BI Service.",
+    duration: '28h', modules: '10', level: 'Intermédiaire',
+    mods: [
+      { title: 'Interface & Connexions de données', desc: 'Importation depuis Excel, CSV, bases de données, SharePoint' },
+      { title: 'Modélisation & Relations', desc: 'Schéma en étoile, tables de faits et de dimensions' },
+      { title: 'Langage DAX', desc: 'Mesures, colonnes calculées, fonctions Time Intelligence' },
+      { title: 'Création de rapports visuels', desc: 'Visuels natifs, custom visuals, mise en page responsive' },
+      { title: 'Power BI Service & Partage', desc: 'Publication, workspaces, accès mobile, actualisation' },
+    ],
+    color: 'var(--gold)'
+  },
+  powerquery: {
+    title: 'Power Query — ETL & Transformation',
+    badge: '🔄 Transformation de données',
+    badgeColor: '#4D9EFF',
+    desc: "Maîtrisez l'extraction, la transformation et le chargement de données (ETL) avec Power Query dans Excel et Power BI. Automatisez le nettoyage et la consolidation de vos données avec le langage M.",
+    duration: '20h', modules: '8', level: 'Intermédiaire',
+    mods: [
+      { title: 'Interface Power Query', desc: 'Éditeur avancé, requêtes de base, connexions' },
+      { title: 'Transformation de données', desc: 'Pivoter, dépivoter, fractionner, remplacer, filtrer' },
+      { title: 'Consolidation de sources', desc: 'Fusionner, ajouter, combiner des fichiers d\'un dossier' },
+      { title: 'Langage M avancé', desc: 'Syntaxe M, fonctions personnalisées, paramètres dynamiques' },
+    ],
+    color: 'var(--blue)'
+  },
+  msproject: {
+    title: 'MS Project — Gestion de Projet',
+    badge: '📅 Gestion de Projet',
+    badgeColor: '#00C9A7',
+    desc: "Maîtrisez Microsoft Project pour planifier, suivre et piloter vos projets de A à Z. Diagrammes de Gantt, gestion des ressources humaines et matérielles, suivi de l'avancement et reporting.",
+    duration: '24h', modules: '9', level: 'Tous niveaux',
+    mods: [
+      { title: 'Initiation à MS Project', desc: 'Interface, création d\'un premier projet, types de vues' },
+      { title: 'Structure du Projet (WBS)', desc: 'Tâches, jalons, niveaux hiérarchiques, dépendances' },
+      { title: 'Gestion des Ressources', desc: 'Humaines, matérielles, budgétaires, affectation, surlocalisation' },
+      { title: 'Suivi de l\'avancement', desc: 'Ligne de base, saisie des avancements, courbes S' },
+      { title: 'Rapports & Tableaux de bord', desc: 'Rapports natifs, exportation, partage avec les parties prenantes' },
+    ],
+    color: 'var(--teal)'
+  },
+  kobo: {
+    title: 'Kobotoolbox — Collecte de Données Terrain',
+    badge: '📋 Collecte de Données',
+    badgeColor: '#FF6B6B',
+    desc: "Conception de formulaires numériques avancés, déploiement d'enquêtes sur le terrain (avec ou sans internet), et analyse des données collectées. Idéal pour les professionnels du secteur humanitaire et du développement.",
+    duration: '18h', modules: '7', level: 'Débutant',
+    mods: [
+      { title: 'Prise en main de KoBoToolbox', desc: 'Création de compte, interface, premier formulaire simple' },
+      { title: 'Conception avancée de formulaires', desc: 'Types de questions, groupes, répétitions, apparences' },
+      { title: 'Logique conditionnelle (Skip Logic)', desc: 'Conditions, calculs, validations, expressions XLSForm' },
+      { title: 'Déploiement & Collecte', desc: 'Déploiement, KoBoCollect sur Android, mode hors ligne' },
+      { title: 'Analyse & Export des données', desc: 'Tableau de bord intégré, export Excel/CSV, API' },
+    ],
+    color: 'var(--coral)'
+  },
+  analyse: {
+    title: 'Analyse & Visualisation de Données',
+    badge: '🔬 Data Analysis',
+    badgeColor: '#A855F7',
+    desc: "Maîtrisez le cycle complet de l'analyse de données : exploration, nettoyage, analyse statistique et création de visualisations percutantes qui racontent une histoire. Formation qui combine Excel, Power BI et introduction à Python.",
+    duration: '36h', modules: '14', level: 'Avancé',
+    mods: [
+      { title: 'Fondamentaux de la statistique', desc: 'Statistiques descriptives, distributions, corrélations' },
+      { title: 'Exploration & Nettoyage', desc: 'Audit de données, valeurs manquantes, outliers, standardisation' },
+      { title: 'Visualisation efficace', desc: 'Choix du bon graphique, couleurs, perception visuelle' },
+      { title: 'Storytelling avec les données', desc: 'Narratives data, présentation aux décideurs, storyboarding' },
+      { title: 'Introduction à Python Data', desc: 'Pandas, Matplotlib — analyse exploratoire de données' },
+    ],
+    color: 'var(--purple)'
+  },
+  se: {
+    title: 'Suivi-Évaluation de Projets',
+    badge: '🎯 Suivi & Évaluation',
+    badgeColor: '#00C9A7',
+    desc: "Formation complète sur les systèmes de Suivi-Évaluation (S&E) pour les projets de développement. Cadres logiques, théories du changement, sélection d'indicateurs SMART, plans S&E et rapports de résultats.",
+    duration: '24h', modules: '9', level: 'Intermédiaire',
+    mods: [
+      { title: 'Fondamentaux du S&E', desc: 'Cycle de projet, niveaux de résultats, terminologie' },
+      { title: 'Cadre Logique & Théorie du Changement', desc: 'Construction, lecture et analyse de la matrice logique' },
+      { title: 'Indicateurs SMART & MEAL', desc: 'Définition, sélection, fiches indicateurs, moyens de vérification' },
+      { title: 'Plan de Suivi-Évaluation', desc: 'Structure, responsabilités, calendrier, budgétisation S&E' },
+      { title: 'Collecte & Gestion des données', desc: 'Outils de collecte, bases de données, contrôle qualité' },
+      { title: 'Rapports de résultats', desc: 'Rédaction de rapports d\'avancement, rapport final, leçons apprises' },
+    ],
+    color: 'var(--teal)'
+  }
+};
+
+function openModal(id) {
+  const c = courses[id];
+  if (!c) return;
+  document.getElementById('modalTitle').textContent = c.title;
+  document.getElementById('modalBadge').innerHTML = `<span style="font-size:12px;font-family:'JetBrains Mono',monospace;color:${c.color};letter-spacing:0.5px;">${c.badge}</span>`;
+  document.getElementById('modalDesc').textContent = c.desc;
+  document.getElementById('modalDuration').textContent = c.duration;
+  document.getElementById('modalModCount').textContent = c.modules;
+  document.getElementById('modalLevel').textContent = c.level;
+  const modsEl = document.getElementById('modalModules');
+  modsEl.innerHTML = c.mods.map((m, i) => `
+    <div class="modal-module">
+      <div class="module-dot" style="background:${c.color};margin-top:5px;"></div>
+      <div class="module-info">
+        <h5>${String(i+1).padStart(2,'0')}. ${m.title}</h5>
+        <p>${m.desc}</p>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modalOverlay') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow = ''; }});
+
+function handleSubmit() {
+  const toast = document.getElementById('toast');
+  toast.style.transform = 'translateY(0)';
+  toast.style.opacity = '1';
+  setTimeout(() => {
+    toast.style.transform = 'translateY(100px)';
+    toast.style.opacity = '0';
+  }, 4000);
+}
+</script>
+</body>
+</html>

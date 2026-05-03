@@ -11,6 +11,9 @@ footer{
             background-color: #97e0f4;
             border-radius: 0 0 10px 10px;
             height: 150px;
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
         }
 .pied-page{
             font-weight: bold;
