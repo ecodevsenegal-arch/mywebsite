@@ -8,6 +8,7 @@
 </head>
 <link rel="stylesheet" href="vue mobile.css">
 <link rel="stylesheet" href="defilement images.css">
+<link rel="stylesheet" href="style annonce formation.css">
     <style>
         html{
             scroll-behavior:smooth;
@@ -88,9 +89,17 @@
             align-items: center;
             scale: 1.15;
         }
+        .Section-SlidePhoto{
+          margin-left: 0;
+        }
+        .All-Section{
+            display: flex;
+            margin-left: 0;
+            gap: 20px;
+        }
     
     </style>
-<body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;margin: 0;">
 <head>
 <div>
  <div style="display: flex;">
@@ -107,7 +116,8 @@
 </div>
 <hr style="border: solid blue; margin: 0 0 10px 0;">
 </head>
-
+<section class="All-Section">
+<section class="Section-SlidePhoto">
 <div class="carousel" id="carousel">
   <div class="track" id="track">
     <div class="slide"><img src="Formation Power BI 1.jpg" style="margin: 0 5px; width:650px;" alt="formation PBI"></div>
@@ -120,7 +130,161 @@
 </div>
 
 <div class="dots" id="dots"></div>
+</section>
 
+<section class="hero-AnnonceExcel">
+
+  <!-- Background canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- Overlays -->
+  <div class="overlay-gradient"></div>
+  <div class="overlay-grid"></div>
+
+  <!-- Deco rings -->
+  <div class="deco-ring"></div>
+  <div class="deco-ring"></div>
+  <div class="deco-ring"></div>
+
+  <!-- Floating cells 
+  <div class="cell-float">=VLOOKUP(A2,Data!$A:$D,3,0)</div>
+  <div class="cell-float">=SUMIFS(C2:C100,B2:B100,"Q4")</div>
+  <div class="cell-float">Revenu Total: 4 820 000 FCFA</div>
+  <div class="cell-float">=IFERROR(INDEX(MATCH(...)))</div>
+  <div class="cell-float">⚡ Dashboard Automatisé</div>
+  -->
+
+  <!-- Corner brand -->
+  <div class="corner-badge">
+  
+  </div>
+
+  <!-- Main content -->
+  <div class="content">
+
+    <!-- LEFT -->
+    <div class="left">
+
+      <div class="eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span>Inscription Ouverte · Prochaine Session</span>
+      </div>
+
+      <h1 class="title">
+         Formation<br>
+        <span class="accent">Excel Avancé</span>
+        Boostez<br>votre Carrière !
+      </h1>
+
+      <p class="subtitle">
+        Maîtrisez Excel comme un professionnel&nbsp;:
+        <span class="kw">Tableaux Croisés Dynamiques</span> •
+        <span class="kw">Power Query</span> •
+        <span class="kw">Dashboard</span> •
+        <span class="kw">Formules Avancées</span> •
+        <span class="kw">Automatisation</span> •
+        <span class="kw">Analyse de Données</span>
+      </p>
+
+      <div class="badges">
+        <div class="badge"><span class="badge-icon">✅</span> 100% Pratique</div>
+        <div class="badge"><span class="badge-icon">🏆</span> Certificat inclus</div>
+        <div class="badge"><span class="badge-icon">👨‍💼</span> Formateur Expert</div>
+        <div class="badge"><span class="badge-icon">🎓</span> Places limitées</div>
+        <div class="badge"><span class="badge-icon">💻</span> Présentiel & En ligne</div>
+      </div>
+
+      <div class="cta-group">
+        <a href="formulaire_inscription.html" class="btn-cta" target="_blank">
+          🔘 &nbsp;Je réserve ma place maintenant
+        </a>
+        <div class="urgency">
+          <strong>⚠ Attention !</strong>&nbsp;Places limitées
+        </div>
+      </div>
+
+      <div class="info-pills">
+        <div class="pill">
+          <div class="pill-icon">📅</div>
+          Début prochainement
+        </div>
+        <div class="pill">
+          <div class="pill-icon">📍</div>
+          En présentiel à Dakar / En ligne sur Zoom
+        </div>
+        <div class="pill">
+          <div class="pill-icon">📞</div>
+          +221 77272 13 24
+        </div>
+        <div class="pill">
+          <div class="pill-icon">🌐</div>
+          Inscription ouverte
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+      <!-- Bar chart -->
+      <div class="dash-card">
+        <div class="dash-title">Progression des apprenants · Session 2024</div>
+        <div class="chart-bars">
+          <div class="bar" style="--h:45%;height:45%"></div>
+          <div class="bar" style="height:62%"></div>
+          <div class="bar" style="height:55%"></div>
+          <div class="bar" style="height:78%"></div>
+          <div class="bar" style="height:68%"></div>
+          <div class="bar" style="height:85%"></div>
+          <div class="bar" style="height:100%"></div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">100+</div>
+          <div class="stat-lbl">Participants formés</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">98%</div>
+          <div class="stat-lbl">Satisfaction</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">12</div>
+          <div class="stat-lbl">Modules</div>
+        </div>
+      </div>
+
+      <!-- Modules -->
+      <div class="dash-card">
+        <div class="dash-title">Programme · Modules clés</div>
+        <div class="module-list">
+          <div class="module-item"><div class="module-dot"></div>Tableaux Croisés Dynamiques</div>
+          <div class="module-item"><div class="module-dot"></div>Power Query & Power Pivot</div>
+          <div class="module-item"><div class="module-dot"></div>Dashboard & Data Viz</div>
+          <div class="module-item"><div class="module-dot"></div>Formules & Fonctions Avancées</div>
+          <div class="module-item"><div class="module-dot"></div>Macros & Automatisation VBA</div>
+        </div>
+      </div>
+
+      <!-- Seat counter -->
+      <div class="seat-box">
+        <div class="seat-icon">🔥</div>
+        <div class="seat-text">
+          <strong>Nombre de places limité !</strong>
+          <span>La prochaine session affiche complet rapidement</span>
+        </div>
+      </div>
+      <div class="seat-bar-wrap" style="height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:0;">
+        <div class="seat-bar" style="height:3%;"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</section>
 <div>
     <hr style="border: solid blue; margin: 0 0 0 0;">
 <footer class="pied-accueil">
@@ -174,6 +338,109 @@
 
   // Défilement automatique (optionnel)
   setInterval(() => move(1), 3000);
+
+  /* ── CANVAS BACKGROUND : animated spreadsheet + glow ── */
+const canvas = document.getElementById('bgCanvas');
+const ctx    = canvas.getContext('2d');
+
+function resize(){
+  canvas.width  = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const COLS = 22, ROWS = 18;
+let cellW, cellH, t = 0;
+
+const dataLabels = [
+  'Revenu','Coûts','Marge','Q1','Q2','Q3','Q4',
+  'Total','Profit','CA','Budget','Réel','Écart',
+  '2 450 000','78%','+ 12%','FCFA','SUMIFS','INDEX','VLOOKUP'
+];
+
+function randomLabel(){ return dataLabels[Math.floor(Math.random()*dataLabels.length)]; }
+
+const cells = [];
+for(let r=0;r<ROWS;r++){
+  for(let c=0;c<COLS;c++){
+    cells.push({
+      r,c,
+      label: Math.random()<.35 ? randomLabel() : '',
+      opacity: Math.random()*.4,
+      baseOpacity: Math.random()*.4,
+      speed: .002 + Math.random()*.006,
+      phase: Math.random()*Math.PI*2,
+      isValue: Math.random()<.4,
+    });
+  }
+}
+
+/* particles */
+const particles = Array.from({length:30},()=>({
+  x:Math.random(),y:Math.random(),
+  vx:(Math.random()-.5)*.0002,vy:(Math.random()-.5)*.0002,
+  r: 1+Math.random()*2,
+  opacity: .1+Math.random()*.3,
+  color: Math.random()<.6 ? '#21A366' : '#C9A84C',
+}));
+
+function draw(){
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  cellW = W/COLS; cellH = H/ROWS;
+  t += 0.012;
+
+  /* draw spreadsheet cells */
+  cells.forEach(cell=>{
+    const osc = Math.sin(t*cell.speed*60 + cell.phase);
+    const op  = cell.baseOpacity + osc*.15;
+    const x   = cell.c*cellW, y = cell.r*cellH;
+
+    /* cell background */
+    if(Math.random()<.001) cell.label = randomLabel();
+    if(op > 0.08){
+      ctx.fillStyle = cell.isValue
+        ? `rgba(33,163,102,${op*.18})`
+        : `rgba(11,61,110,${op*.14})`;
+      ctx.fillRect(x+.5, y+.5, cellW-1, cellH-1);
+    }
+
+    /* cell border */
+    ctx.strokeStyle = `rgba(33,163,102,${op*.22})`;
+    ctx.lineWidth = .5;
+    ctx.strokeRect(x, y, cellW, cellH);
+
+    /* cell label */
+    if(cell.label && op > .12){
+      ctx.fillStyle = cell.isValue
+        ? `rgba(33,220,130,${op*.9})`
+        : `rgba(100,181,246,${op*.8})`;
+      ctx.font = `${Math.min(cellW*.28, 10)}px JetBrains Mono, monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(cell.label, x+cellW/2, y+cellH/2);
+    }
+  });
+
+  /* glowing particles */
+  particles.forEach(p=>{
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0) p.x=1; if(p.x>1) p.x=0;
+    if(p.y<0) p.y=1; if(p.y>1) p.y=0;
+    const grd = ctx.createRadialGradient(p.x*W,p.y*H,0,p.x*W,p.y*H,p.r*6);
+    grd.addColorStop(0, p.color.replace(')',`,${p.opacity})`).replace('rgb','rgba'));
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();
+    ctx.arc(p.x*W,p.y*H,p.r*6,0,Math.PI*2);
+    ctx.fillStyle = grd;
+    ctx.fill();
+  });
+
+  requestAnimationFrame(draw);
+}
+draw();
 </script>
 </body>
 </html>
