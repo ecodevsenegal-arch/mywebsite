@@ -65,25 +65,29 @@
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
         .formations {
-            gap: 10px;
+            gap: 5px;
             padding: 0px 0px;
             background-color: transparent; 
             display: flex;
             margin-top:10px;
+           
         }
-        .formations a {
+        .formations.section-formation a {
             color: #444;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 5px 5px;
             border-radius: 5px;
             font-family: Arial, sans-serif;
             background-color: #AAA;
             transition: background-color 0.5s;
+            height: 15px;
+            
         }
-        .formations a:hover {
+        .formations.section-formation a:hover {
             background-color:#aaf3c1;
             color: #0056cc;
             font-weight: bold;
+            box-shadow: 0 0 10px rgba(113, 250, 191, 0.7);
         }
          .formations a.active {
             background-color: #02932f;
@@ -93,8 +97,8 @@
         }
         nav2 {
             display: flex;
-            gap: 15px;
-            padding: 10px 10px;
+            gap: 10px;
+            padding: 5px 5px;
             border-radius: 15px;
         }
         nav2 img:hover {
@@ -116,7 +120,9 @@
             border-radius: 15px 0;
             box-shadow: #0056cc 0 5px 0 0;
             padding-left: 20px;
-
+        }
+        .section-formation{
+            display: grid;
         }
 </style>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat; background-size: cover;">
@@ -134,7 +140,7 @@
 
     <!-- Sous-menu qui apparaît au survol -->
 <div class="menu">
-    <a href="formation_excel.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 10px 0 0;"> Excel</a>
+    <a href="formation_excel.html" ><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 10px 0 0;"> Excel</a>
     <a href="formation_power_bi.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="25" style="margin: 0 10px 0 0;"> Power BI</a>
     <a href="formation_power_query.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="25" style="margin: 0 10px 0 0;"> Power Query</a>
     <a href="formation_ms_project.html"><img src="Images & icones/ms project/ms project 5.png" height="30" style="margin: 0 10px 0 0;"> MS Project</a>
@@ -158,13 +164,56 @@
 
 <!--FORMATIONS-->
 <nav class="formations">
-    <a href="formation_excel.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 10px 0 0;"> Excel</a>
-    <a href="formation_power_bi.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="20" style="margin: 0 10px 0 0;"> Power BI</a>
-    <a href="formation_kobo.html"><img src="Images & icones/kobo.png" height="20" style="margin: 0 10px 0 0;"> KoboToolbox</a>
-    <a href="formation_power_query.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="20" style="margin: 0 10px 0 0;"> Power Query</a>
-    <a href="formation_ms_project.html"><img src="Images & icones/ms project/ms project 5.png" height="30" style="margin: 0 10px 0 0;"> MS Project</a>
+    <div class="section-formation">
+    <a href="formation_excel.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 5px 0 0;"> Excel</a>
+    <ul>
+        <li>Formation Excel pour débutant</li>
+        <li>Formation Excel avancé</li>
+    </ul>
+    </div>
+    <div class="section-formation">
+    <a href="formation_power_bi.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="20" style="margin: 0 5px 0 0;"> Power BI</a>
+    <ul>
+        <li>Modélisation de données avec Power BI</li>
+        <li>Conception de tableaux de bord avec Power BI</li>
+    </ul>
+    </div>
+    <div class="section-formation">
+    <a href="formation_kobo.html"><img src="Images & icones/kobo.png" height="20" style="margin: 0 5px 0 0;"> KoboToolbox</a>
+      <ul>
+        <li>Conception de formulaires avec KoboToolbox</li>
+        <li>Analyse de données avec KoboToolbox</li>
+        <li>Synchronisation de données avec KoboToolbox</li>
+    </ul>
+    </div>
+    <div class="section-formation">
+    <a href="formation_power_query.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="20" style="margin: 0 5px 0 0;"> Power Query</a>
+    <ul>
+        <li>Formation Power Query pour débutant</li>
+        <li>Formation Power Query avancé</li>
+    </ul>
+    </div>
+    <div class="section-formation">
+    <a href="formation_ms_project.html"><img src="Images & icones/ms project/ms project 5.png" height="30" style="margin: 0 5px 0 0;"> MS Project</a>
+    <ul>
+        <li>Formation MS Project pour débutant</li>
+        <li>Formation MS Project avancé</li>
+    </ul>
+    </div>
+    <div class="section-formation">
     <a href="formation_data_analyse.html"><img src="Images & icones/data-analytic 2.svg" style="margin: 0 5px 0 0;height:20px;"> Analyse de données</a>
+    <ul>
+        <li>Formation Analyse de données pour débutant</li>
+        <li>Formation Analyse de données avancé</li>
+    </ul>
+    </div>
+    <div class="section-formation">
     <a href="formation_psse_gar.html"><img src="Images & icones/data-analytic 1.svg" style="margin: 0 5px 0 0;height:20px;"> Suivi-évaluation</a>
+    <ul>
+        <li>Formation Suivi-évaluation pour débutant</li>
+        <li>Formation Suivi-évaluation avancé</li>
+    </ul>
+    </div>
 </nav>
 </div>
  <div class="programmes-card">

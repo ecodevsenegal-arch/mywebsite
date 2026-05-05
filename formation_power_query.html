@@ -3,13 +3,13 @@
 <head>
     <link rel="icon" type="image/png" href="Enseigne_ECODEV_FINALE_0022.png">
     <link rel="stylesheet" href="vue mobile.css">
-    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="styles.css">
  <style> 
     nav {
             display: flex;
             gap: 10px;
             padding: 10px 20px;
-            background-color: #97e0f4;
+            background-color: #00e5d4;
             border-radius: 10px 10px 0 0;
         }
     nav a {
@@ -65,22 +65,49 @@
       margin: Opx;
       padding: Opx;
     }
-    .inscription a {
+    .formulaire-powerquery a {
       height: 25px;
-      position: absolute;
-      left: 550px;
-      right: 550px;
       font-family:Georgia;
-      padding: 15px 10px 10px 15px;
-      background-color: aqua;
+      padding: 15px 15px 15px 15px;
+      background-color: #3ba518;
       font-style: italic;
+      color: white;
+      font-weight: bold;
     }
-    .inscription a :hover {
+    .formulaire-powerquery a :hover {
       padding: 10px 20px;
       border-radius: 5px;
       background-color: #aaa;
       scale: 1.5;
       
+    }
+    .form-powerquery{
+       display: flex;
+       gap: 100px;
+       background-color: turquoise;
+       height: 70px;
+       align-items: center;
+       justify-content: center;
+       border-radius: 10px;
+       width: 500px;
+    }
+    .programme-powerquery button{
+      height: 50px;
+      font-family:Georgia;
+      padding: 15px 15px 15px 15px;
+      background-color: #3ba518;
+      font-style: italic; 
+      justify-content: center;
+      border-radius: 10px;
+      display: flex;
+      color: white;
+      font-weight: bold;
+    }
+    .programme-powerquery button:hover {
+      padding: 10px 20px;
+      border-radius: 10px;
+      background-color: #aaa;
+      scale: 1.05;
     }
 </style>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -118,19 +145,19 @@ class="titre1">Boostez votre avenir professionnel avec la maîtrise de Power Que
  Cette formation permet aux participants de nettoyer, transformer et automatiser des données avec Power Query, en l’utilisant comme ETL (Extract, Transform, Load) aussi bien dans Excel que dans Power BI, afin de gagner du temps, fiabiliser leurs analyses et bâtir des rapports dynamiques.
  </p>
 <h2 class="titre">Objectif de la formation</h2>
-<p class="texte1">L'objectif de cette formation est de vous faire maitriser beaucoup des fonctionnalités avancées de Microsoft Excel.
-Cette formation sur Excel Avancé vous permettra d'apprendre ce logiciel et de maîtriser toutes les fonctionnalités qui vous rendront infiniment plus productif.
-De plus vous aurez acquis des compétences importantes pour votre CV. Cette formation vous permettra d'être en mesure de mettre en place des outils essentiels dans votre vie professionnelle et pour toutes les organisations.
-Avec cette formation Excel, vous allez acquérir les mécanismes qui vous rendront efficace et professionnel dans Excel avec ses fonctionnalités avancées.
-Que vous désiriez découvrir ou approfondir vos connaissances sur les tableurs de Microsoft Excel, cette formation est faite pour vous !</p>
+<p class="texte1">L'objectif de cette formation est de vous faire maîtriser les fonctionnalités avancées de Power Query. Cette formation vous permettra d'apprendre à connecter, nettoyer et transformer des données issues de sources variées (Excel, CSV, bases de données, web, etc.) de manière automatisée et répétable.</p> 
+<p class="texte1">De plus, vous aurez acquis des compétences importantes et très recherchées pour votre CV. Cette formation vous permettra d'être en mesure de mettre en place des pipelines de données robustes dans votre vie professionnelle et pour toutes les organisations. </p> 
+<p class="texte1">Avec cette formation Power Query, vous allez acquérir les mécanismes qui vous rendront efficace et professionnel dans la gestion des données. Que vous désiriez découvrir ou approfondir vos connaissances sur la transformation de données, cette formation est faite pour vous !</p>
 <div style="display: flex;gap: 0px; margin: 0px;">
     <div>
 <h3 class="titre2">De façon pratique : Qu'allez vous apprendre ? </h3>
 <ul class="texte2">
-  ​ <li>Obtenir et collecter des données de différentes sources avec Power Query</li>
-   <li>Nettoyer et transformer les données avec l’éditeur Power Query</li>
-   <li>Combiner plusieurs sources de données pour les relier</li>
-   <li>Exploiter la puissance des tableaux croisés dynamiques pour analyser les données</li>
+  ​ <li>Connecter Power Query à diverses sources de données (Excel, CSV, bases de données, web)</li>
+   <li>Nettoyer et transformer des données brutes efficacement</li>
+   <li>Fusionner et combiner plusieurs tables de données</li>
+   <li>Automatiser le rafraîchissement des données avec des requêtes paramétrées</li>
+   <li>Maîtriser le langage M pour des transformations avancées</li>
+   <li>Créer des flux de données réutilisables et maintenables</li>
 </ul>
 <h3 class="titre2">À qui cette formation s'adresse-t-elle ?</h3>
 
@@ -139,22 +166,28 @@ Que vous désiriez découvrir ou approfondir vos connaissances sur les tableurs 
 <img src="Formation Power Query ECODEV 2.jpg" alt="Formation Excel ECODEV1" style="width: 100%; max-width: 450px; height: 350px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 10px;">
 </div>
 <div>
-<div style="display: flex;align-items: center;">
+<div style="display: flex;gap: 50px;">
 <ul class="texte2">
-  ​ <li>Toute personne qui travaille avec Excel</li>
-   <li>Toute personne utilisant Microsoft Excel</li>
-   <li>Ceux qui veulent se perfectionner sur Excel</li>
+  ​ <li>Toute personne qui travaille régulièrement avec des données</li>
+   <li>Utilisateurs d'Excel souhaitant automatiser leurs traitements</li>
+   <li>Ceux qui veulent se perfectionner en analyse et transformation de données</li>
 </ul>
-   <h3 class="inscription"><a href="formulaire_inscription.html" target="_blank">INSCRIPTION</a></h3>
+   <div class="form-powerquery">
+  <div class="programme-powerquery">
+<button onclick="downloadFile()"><img src="Images & icones/download pictures/download-inbox-svgrepo-com.svg" alt="download" style="width: 20px; margin-right:5px">Télécharger le programme</button>
+  </div>
+  <div class="formulaire-powerquery" >
+  <a href="formulaire_inscription.html" target="_blank">Inscription</a>
+  </div>
+</div>
 </div>
  <p class="texte1">Vous souhaitez impressionner avec les fonctionnalités avancées de Microsoft Excel ? Vous apprendrez plein d'astuces de ce genre !</p>
 
  <div style="display: flex;margin: 0  0 50px 0;padding: 0 50px 0 50px;gap: 20px;">
-   <a href="contacts.html">Contact</a>
 
-  
 </div>
 </div>
+
 <hr style="border: solid blue; margin: 0 0 0 0;">
 <footer>
     <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
@@ -164,6 +197,19 @@ Que vous désiriez découvrir ou approfondir vos connaissances sur les tableurs 
     <h3>@ECODEV SENEGAL-2026</h3>
     </div>
 </footer>
+<script>
+    function downloadFile() {
+    const fileId = "1r3cpK4UGkLH9cNFScSGHb0NTxZVClYA_";
+    const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "presentation cours.pdf"; // nom souhaité
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+</script>
 </body>
 
 </html>
