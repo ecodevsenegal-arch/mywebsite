@@ -1,0 +1,36 @@
+:root{
+    --card-head:#00e5d4;
+    --nav-bg:#33FFFE;
+    --nav-active:rgb(49, 49, 228);
+    --nav-hoverShadow:rgb(49, 49, 228);
+    --footer-bg:#00e5d4;
+    --excel-color:#02932f;
+    --powerbi-color:#f2c811;
+    --powerquery-color:#3ba518;
+}
+.docFormation{
+    display: grid; 
+    gap:5px;
+    justify-content: center;
+    align-items: center;
+    border: solid var(--excel-color);
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 250px;
+}
+.docPowerBI{
+   display: grid; 
+    gap:5px;
+    justify-content: center;
+    align-items: center;
+    border: solid var(--powerbi-color);
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    border-radius: 10px;
+    margin-top: 10px; 
+     width: 250px;
+}

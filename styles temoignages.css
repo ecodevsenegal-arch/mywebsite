@@ -11,7 +11,7 @@
  /* ── TÉMOIGNAGES ── */
     .testi-outer {
         background-size: 28px 28px;
-        padding: 0 0 20px 0
+        padding: 0 0 20px 0;
     }
     .testi-grid {
         display: flex;
@@ -20,18 +20,30 @@
         align-items: center;
     }
     .testi-card {
-        background: rgba(255,255,255,0.06);
         border: 1px solid rgba(255,255,255,0.12);
         border-radius: 14px;
         padding: 22px;
         background: var(--vert-fonce);
-        height: 180px;
+        height: 250px;
+        display: flex;
+    }
+    .testi-container :hover {
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 10px;
+        padding:5px;
+        background: #00e5d4;
+        height: 255px;
+        display: flex;
+        color: var(--vert-fonce);
+        transition: 0.5s;
+        border: 1px solid var(--vert-fonce);
     }
     .testi-stars { 
         color: var(--jaune); 
         font-size: 14px; 
         margin-bottom: 5px; 
-        letter-spacing: 2px; }
+        letter-spacing: 2px; 
+    }
     .testi-text {
         font-size: 13px;
         color: rgba(255,255,255,0.88);
@@ -72,6 +84,10 @@
         text-align: center;
         margin-bottom: 8px;
         margin-top: 30px;
+    }
+    .testi-container{
+        display: flex;
+        flex-direction: column;
     }
     .section-title {
         font-size: clamp(20px, 3vw, 28px);

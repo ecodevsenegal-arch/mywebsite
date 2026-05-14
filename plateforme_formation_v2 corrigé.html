@@ -66,13 +66,13 @@ body {
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
 .dropdown {
-  position: relative; /* ancre le menu */
+  position: relative;
   display: inline-block;
 }
 
 .menu {
   position: absolute;
-  top: calc(100% + 15px); /* juste en dessous du bouton */
+  top: calc(100% + 15px);
   left: 0;
   width: 260px;
   display: grid;
@@ -80,17 +80,12 @@ body {
   border-radius: 10px;
   align-items:  center;
   background-color: #97e0f4;
-
-  /* caché par défaut */
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
-
-  /* animation douce */
   transition: opacity 0.48s, transform 0.48s, visibility 0.48s;
 }
 
-/* au survol → afficher le menu */
 .dropdown:hover .menu{
   opacity: 1;
   visibility: visible;
@@ -533,16 +528,25 @@ body {
   .video-placeholder h3 { font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:600; }
   .video-placeholder p { color:var(--text-muted);font-size:.85rem; }
 
+  /* ✅ CORRIGÉ : wrapper positionné en absolute pour remplir le conteneur */
   .vimeo-wrapper {
-    position:absolute;inset:0;
+    position:absolute;
+    inset:0;
     display:none;
     background:#000;
   }
   .vimeo-wrapper.active { display:block; }
+
+  /* ✅ CORRIGÉ : l'iframe généré par le SDK doit remplir tout l'espace */
   .vimeo-wrapper iframe {
-    width:100%;height:100%;border:0;
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    border:0;
     display:block;
   }
+
   .vimeo-unavailable {
     position:absolute;inset:0;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -581,7 +585,6 @@ body {
   .resource-item span { font-size:.85rem; flex:1; }
   .resource-item .res-size { font-size:.75rem;color:var(--text-muted); }
   
-  /* Message quand aucune ressource */
   .no-resources {
     padding:24px;
     text-align:center;
@@ -706,6 +709,7 @@ body {
   <span id="toast-msg">Message</span>
 </div>
 
+<!-- ══════════════ ÉCRAN LOGIN ══════════════ -->
 <section class="screen active" id="screen-login">
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
@@ -718,32 +722,30 @@ body {
         <div class="nav-tagline">Plateforme de Formation Professionnelle</div>
       </div>
     </div>
-    <!--Navigation pages-->
-    
+
     <div class="Nav-accueil">
-  <div class="Nav-header"></div>
-<nav style="display: flex;align-items: center;">
-      <a href="index.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/images/refs/heads/main/icons8-page-d%E2%80%99accueil-96.png" height="25" ;style="margin: 0 30px 0 0;padding-right: 10px;">Accueil</a>
-    <a href="a propos.html ">À propos</a>
-    <a href="services.html">Services</a>
-<div class="dropdown">
-    <a href="Formations.html">Formations</a>
-  <!-- Sous-menu qui apparaît au survol -->
-<div class="menu">
-    <a href="formation_excel.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 10px 0 0;"> Excel</a>
-    <a href="formation_power_bi.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="25" style="margin: 0 10px 0 0;"> Power BI</a>
-    <a href="formation_power_query.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="25" style="margin: 0 10px 0 0;"> Power Query</a>
-    <a href="formation_ms_project.html"><img src="Images & icones/ms project/ms project 5.png" height="30" style="margin: 0 10px 0 0;"> MS Project</a>
-    <a href="formation_kobo.html"><img src="Images & icones/kobo.png" height="30" style="margin: 0 10px 0 0;"> KoboToolbox</a>
-    <a href="formation_data_analyse.html">📊 Analyse de données</a>
-    <a href="formation_suivi.html">🔴 Suivi-Évaluation</a>
-  </div>
-</div>
-    <a href="contacts.html">Contact</a>
-    <a href="plateforme_formation v2.html" class="active">Espace campus</a>
-</nav>
-</div>
-    <!--Contacts & Email-->
+      <div class="Nav-header"></div>
+      <nav style="display: flex;align-items: center;">
+        <a href="index.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/images/refs/heads/main/icons8-page-d%E2%80%99accueil-96.png" height="25" style="margin: 0 30px 0 0;padding-right: 10px;">Accueil</a>
+        <a href="a propos.html">À propos</a>
+        <a href="services.html">Services</a>
+        <div class="dropdown">
+          <a href="Formations.html">Formations</a>
+          <div class="menu">
+            <a href="formation_excel.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="20" style="margin: 0 10px 0 0;"> Excel</a>
+            <a href="formation_power_bi.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="25" style="margin: 0 10px 0 0;"> Power BI</a>
+            <a href="formation_power_query.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="25" style="margin: 0 10px 0 0;"> Power Query</a>
+            <a href="formation_ms_project.html"><img src="Images & icones/ms project/ms project 5.png" height="30" style="margin: 0 10px 0 0;"> MS Project</a>
+            <a href="formation_kobo.html"><img src="Images & icones/kobo.png" height="30" style="margin: 0 10px 0 0;"> KoboToolbox</a>
+            <a href="formation_data_analyse.html">📊 Analyse de données</a>
+            <a href="formation_suivi.html">🔴 Suivi-Évaluation</a>
+          </div>
+        </div>
+        <a href="contacts.html">Contact</a>
+        <a href="plateforme_formation v2.html" class="active">Espace campus</a>
+      </nav>
+    </div>
+
     <div style="display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text-muted);">
       <i class="fas fa-phone" style="color:var(--accent)"></i> +221 77 272 13 24
       &nbsp;|&nbsp;
@@ -766,42 +768,19 @@ body {
 
       <p style="font-size:.8rem;font-weight:600;color:var(--text-muted);letter-spacing:.05em;margin-bottom:12px;">CHOISISSEZ VOTRE FORMATION :</p>
       <div class="courses-pills" id="coursePills">
-        <div class="pill" data-course="excel" onclick="selectCourse(this)">
-          <i class="fas fa-table"></i> Excel
-        </div>
-        <div class="pill" data-course="powerbi" onclick="selectCourse(this)">
-          <i class="fas fa-chart-bar"></i> Power BI
-        </div>
-        <div class="pill" data-course="powerquery" onclick="selectCourse(this)">
-          <i class="fas fa-database"></i> Power Query
-        </div>
-        <div class="pill" data-course="msproject" onclick="selectCourse(this)">
-          <i class="fas fa-project-diagram"></i> MS Project
-        </div>
-        <div class="pill" data-course="kobo" onclick="selectCourse(this)">
-          <i class="fas fa-mobile-alt"></i> KoboToolbox
-        </div>
-        <div class="pill" data-course="dataviz" onclick="selectCourse(this)">
-          <i class="fas fa-chart-pie"></i> Analyse & Visualisation
-        </div>
-        <div class="pill" data-course="suivi" onclick="selectCourse(this)">
-          <i class="fas fa-tasks"></i> Suivi-Évaluation
-        </div>
+        <div class="pill" data-course="excel" onclick="selectCourse(this)"><i class="fas fa-table"></i> Excel</div>
+        <div class="pill" data-course="powerbi" onclick="selectCourse(this)"><i class="fas fa-chart-bar"></i> Power BI</div>
+        <div class="pill" data-course="powerquery" onclick="selectCourse(this)"><i class="fas fa-database"></i> Power Query</div>
+        <div class="pill" data-course="msproject" onclick="selectCourse(this)"><i class="fas fa-project-diagram"></i> MS Project</div>
+        <div class="pill" data-course="kobo" onclick="selectCourse(this)"><i class="fas fa-mobile-alt"></i> KoboToolbox</div>
+        <div class="pill" data-course="dataviz" onclick="selectCourse(this)"><i class="fas fa-chart-pie"></i> Analyse & Visualisation</div>
+        <div class="pill" data-course="suivi" onclick="selectCourse(this)"><i class="fas fa-tasks"></i> Suivi-Évaluation</div>
       </div>
 
       <div class="stats-row">
-        <div class="stat">
-          <div class="stat-num">7</div>
-          <div class="stat-label">Domaines de formation</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">120+</div>
-          <div class="stat-label">Leçons vidéo</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">500+</div>
-          <div class="stat-label">Apprenants formés</div>
-        </div>
+        <div class="stat"><div class="stat-num">7</div><div class="stat-label">Domaines de formation</div></div>
+        <div class="stat"><div class="stat-num">120+</div><div class="stat-label">Leçons vidéo</div></div>
+        <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Apprenants formés</div></div>
       </div>
     </div>
 
@@ -847,13 +826,14 @@ body {
       <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);text-align:center;">
         <p style="font-size:.78rem;color:var(--text-muted);">
           <i class="fas fa-info-circle" style="color:var(--accent2);"></i>
-          &nbsp;Les accès sont délivrés après paiement. Contactez-nous pour vous inscrire.
+          &nbsp;Les accès sont délivrés après paiement. Contactez-nous au +221 77 272 13 24pour vous inscrire.
         </p>
       </div>
     </div>
   </main>
 </section>
 
+<!-- ══════════════ ÉCRAN DASHBOARD ══════════════ -->
 <section class="screen" id="screen-dashboard">
   <nav class="topnav">
     <div class="logo">
@@ -875,14 +855,12 @@ body {
       <h1>Bonjour, <span id="greetName" style="color:var(--accent)">Mamadou</span> 👋</h1>
       <p>Bienvenue sur votre espace de formation. Sélectionnez un cours pour commencer.</p>
     </div>
-
     <div class="dash-section-title">Vos formations disponibles</div>
-
-    <div class="courses-grid" id="dashCoursesGrid">
-    </div>
+    <div class="courses-grid" id="dashCoursesGrid"></div>
   </div>
 </section>
 
+<!-- ══════════════ ÉCRAN PLAYER ══════════════ -->
 <section class="screen" id="screen-player">
   <nav class="player-nav">
     <div class="player-nav-left">
@@ -909,7 +887,7 @@ body {
     <aside class="curriculum-panel">
       <div class="curriculum-header">
         <h3 id="curriculumTitle">Plan de cours</h3>
-        <p id="curriculumSubtitle">7 modules • 42 leçons</p>
+        <p id="curriculumSubtitle">12 modules • 42 leçons</p>
         <div class="curriculum-progress">
           <div class="progress-bar">
             <div class="progress-fill" id="curriculumProgress" style="width:15%;"></div>
@@ -920,12 +898,12 @@ body {
           </div>
         </div>
       </div>
-      <div id="lessonList">
-      </div>
+      <div id="lessonList"></div>
     </aside>
 
     <main class="video-panel">
       <div class="video-container">
+        <!-- Placeholder (affiché avant le lancement) -->
         <div class="video-placeholder" id="videoPlaceholder">
           <button class="play-btn" onclick="startVideo()">
             <i class="fas fa-play" style="margin-left:4px;"></i>
@@ -934,15 +912,17 @@ body {
           <p id="placeholderSub">Cliquez pour lancer la vidéo</p>
         </div>
 
+        <!-- Spinner de chargement -->
         <div class="vimeo-loading" id="vimeoLoading" style="display:none;">
           <div class="spinner"></div>
         </div>
 
+        <!-- ✅ Wrapper Vimeo — le SDK injectera l'iframe ici -->
         <div class="vimeo-wrapper" id="vimeoWrapper"></div>
       </div>
 
       <div class="video-info">
-        <h2 id="videoTitle">Leçon 1 : Introduction et environnement de travail</h2>
+        <h2 id="videoTitle">Leçon 1 : Définition des concepts de base</h2>
         <div class="video-tags" id="videoTags">
           <span class="tag">Débutant</span>
           <span class="tag">18 min</span>
@@ -956,9 +936,7 @@ body {
 
       <div class="resources-section">
         <h4><i class="fas fa-paperclip" style="color:var(--accent);margin-right:8px;"></i>Ressources de la leçon</h4>
-        <div class="resource-list" id="resourceList">
-          <!-- Rempli dynamiquement par JS -->
-        </div>
+        <div class="resource-list" id="resourceList"></div>
       </div>
 
       <div class="lesson-nav">
@@ -973,15 +951,41 @@ body {
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════ -->
+<footer class="pied-accueil">
+  <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
+  <div style="display: grid;align-items: center;">
+    <div class="social-media">
+      <a href="https://www.facebook.com/ecodevconsulting/" target="_blank"><img src="Images & icones/social media/facebook-svgrepo-com (1).svg" style="width: 40px;border-right: 20px;"></a>
+      <a href="" target="_blank"><img src="Images & icones/social media/linkedin-svgrepo-com (1).svg" style="width: 90px;border-right: 20px;"></a>  
+      <a href="https://wa.me/qr/RLS3AOPKGUOGK1" target="_blank"><img src="Images & icones/social media/whatsapp-logo-svgrepo-com.svg" style="width: 100px; border-right: 20px;"></a>  
+      <a href="https://www.youtube.com/@ECODEVS%C3%A9n%C3%A9gal" target="_blank"><img src="Images & icones/social media/Youtube/youtube-2-logo-svgrepo-com.svg" style="width: 80px; border-right: 20px;"></a>  
+    </div>
+    <h2 style="color: #0056cc;align-items: center;font-weight: bold;">@ECODEV SENEGAL-2026</h2>
+  </div>
+  <div class="contacts-card">
+    <div class="contacts-header">CONTACTS</div>
+    <div class="contacts-body">
+      <h4><img src="Images & icones/telephone/telephone-svgrepo-com (1).svg" alt="telephone" style="width: 20px;"> +221 77 272 13 24 | +221 77 214 58 74</h4>
+      <h4><img src="Images & icones/Email/email-part-2-svgrepo-com.svg" alt="email" style="width: 20px;margin-right: 10px;">ecodev.senegal@gmail.com</h4>
+      <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 20px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════ -->
 <script>
 /* ══ DATA ══════════════════════════════════════════ */
 const USERS = {
-  "m.sarr":       { pass:"ecodev@2026", name:"MAMADOU SARR", initials:"MS" },
-  "mamadou.sarr": { pass:"ecodev@2025", name:"MAMADOU SARR", initials:"MS" },
-  "abdoulaye.diop": { pass:"ecodev@2025", name:"ABDOULAYE DIOP", initials:"AD" }
+  "m.sarr":         { pass:"ecodev@2026", name:"MAMADOU SARR",    initials:"MS" },
+  "mamadou.sarr":   { pass:"ecodev@2025", name:"MAMADOU SARR",    initials:"MS" },
+  "abdoulaye.diop": { pass:"ecodev@2025", name:"ABDOULAYE DIOP",  initials:"AD" }
 };
 
-// ═══ COURS AVEC RESSOURCES INTÉGRÉES ═══
 const COURSES = [
   {
     id:"excel", title:"Excel Avancé", icon:"fas fa-table",
@@ -997,7 +1001,7 @@ const COURSES = [
         {name:"Mettre en page un document",dur:"22min",done:true},
       ]},
       { module:"Module 2 – Création et gestion des bases de données", lessons:[
-        {name:"Création d’une base de données",dur:"25min",done:true},
+        {name:"Création d'une base de données",dur:"25min",done:true},
         {name:"Différence Table et plage de données",dur:"30min",done:true},
         {name:"Insertion des listes déroulantes",dur:"28min",done:true},
         {name:"Filtre avec les segments",dur:"20min",done:false},
@@ -1006,7 +1010,7 @@ const COURSES = [
         {name:"Travaux pratiques",dur:"18min",done:false},
       ]},
       { module:"Module 3 – Les fonctions conditionnelles les fonctions SI", lessons:[
-        {name:"Définition & structure d’une FONCTION",dur:"22min",done:false},
+        {name:"Définition & structure d'une FONCTION",dur:"22min",done:false},
         {name:"Introduction aux fonctions conditionnelles",dur:"35min",done:false},
         {name:"La Fonction SI simple",dur:"20min",done:false},
         {name:"La fonction SI imbriqué",dur:"20min",done:false},
@@ -1015,7 +1019,7 @@ const COURSES = [
         {name:"Les fonctions NB.SI & NB.SI.ENS",dur:"20min",done:false},
       ]},
       { module:"Module 4 – Les fonction de Recherche", lessons:[
-        {name:"TLes fonctions RECHERCHEV et RECHERCHEH",dur:"18min",done:false},
+        {name:"Les fonctions RECHERCHEV et RECHERCHEH",dur:"18min",done:false},
         {name:"Les fonctions INDEX et EQUIV",dur:"25min",done:false},
         {name:"Les fonctions CHERCHE & TROUVE",dur:"30min",done:false},
         {name:"La fonction FILTRE & DECALER",dur:"22min",done:false},
@@ -1035,24 +1039,23 @@ const COURSES = [
         {name:"Évaluation finale",dur:"60min",done:false},
       ]},
     ],
-    // RESSOURCES PAR LEÇON
     resources: {
-      0: [ // Définition des concepts de base
-        { name: "Support de cours – Définition des concepts de base", type: "pdf", url: "https://drive.google.com/file/d/1yo7FteEawWE_soNvpLVYMw0rKxADOHSV/view?usp=drive_link", size: "5.8 MB" },
-        { name: "Fichier d'exercice 1", type: "excel", url: "https://docs.google.com/spreadsheets/d/1PuHPDhaXoPeiAitBmTx_7BYjOlO9A1fn/edit?usp=sharing&ouid=115956588205778948101&rtpof=true&sd=true", size: "1.1 MB" }
+      0: [
+        { name:"Support de cours – Définition des concepts de base", type:"pdf",url:"https://drive.google.com/file/d/1yo7FteEawWE_soNvpLVYMw0rKxADOHSV/view?usp=drive_link", size:"5.8 MB" },
+        { name:"Fichier d'exercice 1", type:"excel", url:"https://docs.google.com/spreadsheets/d/1PuHPDhaXoPeiAitBmTx_7BYjOlO9A1fn/edit?usp=sharing&ouid=115956588205778948101&rtpof=true&sd=true", size:"1.1 MB" }
       ],
-      1: [ // Enregistrer et utiliser des documents
-        { name: "Enregistrer et utiliser des documents", type: "pdf", url: "https://example.com/excel/navigation.pdf", size: "1.8 MB" }
+      1: [
+        { name:"Enregistrer et utiliser des documents", type:"pdf", url:"https://example.com/excel/navigation.pdf", size:"1.8 MB" }
       ],
-      2: [ // Interface et navigation
-        { name: "Interface et navigation", type: "pdf", url: "#", size: "950 KB" },
-        { name: "Fichier pratique formules", type: "excel", url: "#", size: "2.2 MB" }
+      2: [
+        { name:"Interface et navigation", type:"pdf",   url:"#", size:"950 KB" },
+        { name:"Fichier pratique formules", type:"excel", url:"#", size:"2.2 MB" }
       ],
-      3: [ // Calculs simples et avancés
-        { name: "Calculs simples et avancés", type: "pdf", url: "https://example.com/excel/navigation.pdf", size: "1.8 MB" }
+      3: [
+        { name:"Calculs simples et avancés", type:"pdf", url:"https://example.com/excel/navigation.pdf", size:"1.8 MB" }
       ],
-      4: [ // Mettre en page un document
-        { name: "Mettre en page un document", type: "pdf", url: "https://example.com/excel/navigation.pdf", size: "1.8 MB" }
+      4: [
+        { name:"Mettre en page un document", type:"pdf", url:"https://example.com/excel/navigation.pdf", size:"1.8 MB" }
       ],
     }
   },
@@ -1092,11 +1095,11 @@ const COURSES = [
     ],
     resources: {
       0: [
-        { name: "Guide d'installation Power BI", type: "pdf", url: "https://drive.google.com/file/d/1X9JEd7BmTpkfw4avb9LZl2obPRcYnQe8/view?usp=drive_link", size: "3.1 MB" },
-        { name: "Dataset", type: "zip", url: "https://drive.google.com/file/d/1Vs1pU1jC7lJ5H-J_sc7zqed9NfT_1Flc/view?usp=sharing", size: "4.5 MB" }
+        { name:"Guide d'installation Power BI", type:"pdf", url:"https://drive.google.com/file/d/1X9JEd7BmTpkfw4avb9LZl2obPRcYnQe8/view?usp=drive_link", size:"3.1 MB" },
+        { name:"Dataset",                        type:"zip", url:"https://drive.google.com/file/d/1Vs1pU1jC7lJ5H-J_sc7zqed9NfT_1Flc/view?usp=sharing",   size:"4.5 MB" }
       ],
       2: [
-        { name: "Dataset d'exemple", type: "excel", url: "https://drive.google.com/file/d/1Vs1pU1jC7lJ5H-J_sc7zqed9NfT_1Flc/view?usp=sharing", size: "4.5 MB" }
+        { name:"Dataset d'exemple", type:"excel", url:"https://drive.google.com/file/d/1Vs1pU1jC7lJ5H-J_sc7zqed9NfT_1Flc/view?usp=sharing", size:"4.5 MB" }
       ]
     }
   },
@@ -1131,7 +1134,13 @@ const COURSES = [
     ],
     resources: {
       0: [
-        { name: "Introduction Power Query", type: "pdf", url: "https://drive.google.com/file/d/19Hbll4TAXp3s8tfUhlVecxfMeJJ1Mb_v/view?usp=drive_link", size: "1.2 MB" }
+        { name:"Introduction Power Query", type:"pdf", url:"https://drive.google.com/file/d/19Hbll4TAXp3s8tfUhlVecxfMeJJ1Mb_v/view?usp=drive_link", size:"1.2 MB" }
+      ],
+      1: [
+        { name:"Connexion aux sources de données", type:"pdf", url:"https://drive.google.com/file/d/19Hbll4TAXp3s8tfUhlVecxfMeJJ1Mb_v/view?usp=drive_link", size:"1.2 MB" }
+      ],
+      3: [
+        { name:"Nettoyage des données", type:"pdf", url:"https://drive.google.com/file/d/19Hbll4TAXp3s8tfUhlVecxfMeJJ1Mb_v/view?usp=drive_link", size:"1.2 MB" }
       ]
     }
   },
@@ -1273,31 +1282,34 @@ const COURSES = [
   },
 ];
 
-/* ══ STATE ══════════════════════════════════════════ */
-let currentUser   = null;
-let selectedCourse = null;
-let activeCourse  = null;
-let activeLesson  = 0;
-let vimeoPlayer   = null;
-
-/* ══ VIMEO IDS ══════════════════════════════════════ */
+/* ══ VIMEO IDS ══════════════════════════════════════════════════════
+   Clé = "courseId:indexLeçon"  (index global dans tout le curriculum)
+═══════════════════════════════════════════════════════════════════ */
 const VIMEO_IDS = {
-  "excel:0"  : "1189427690",
-  "excel:1"  : "1189429909",
-  "excel:2"  : "1189445730",
-  "excel:3"  : "1189543844",
-  "excel:4"  : null,
-  "powerbi:0": null,
-  "powerbi:1": null,
-  "powerbi:2": null,
+  "excel:0"       : "1189427690",
+  "excel:1"       : "1189429909",
+  "excel:2"       : "1189445730",
+  "excel:3"       : "1189543844",
+  "excel:4"       : null,
+  "powerbi:0"     : null,
+  "powerbi:1"     : null,
+  "powerbi:2"     : null,
   "powerquery:0"  : "1188550214",
   "powerquery:1"  : "1188550214",
   "powerquery:2"  : "1188550214",
+  "powerquery:3"  : "1188550214",
 };
 
 function getVimeoId(courseId, lessonIdx) {
   return VIMEO_IDS[`${courseId}:${lessonIdx}`] || null;
 }
+
+/* ══ STATE ══════════════════════════════════════════ */
+let currentUser   = 0;
+let selectedCourse = null;
+let activeCourse  = null;
+let activeLesson  = 0;
+let vimeoPlayer   = null;
 
 /* ══ HELPERS ════════════════════════════════════════ */
 function showScreen(id) {
@@ -1308,16 +1320,17 @@ function showScreen(id) {
 function showToast(msg, type='success') {
   const t = document.getElementById('toast');
   const i = t.querySelector('i');
-  i.className = type==='success' ? 'fas fa-check-circle' : 'fas fa-info-circle';
+  i.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-info-circle';
   t.className = `toast ${type}`;
   document.getElementById('toast-msg').textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
+/* ══ DESTRUCTION PROPRE DU PLAYER VIMEO ══════════════ */
 function destroyVimeoPlayer() {
   if (vimeoPlayer) {
-    vimeoPlayer.destroy().catch(()=>{});
+    vimeoPlayer.destroy().catch(() => {});
     vimeoPlayer = null;
   }
   const wrapper = document.getElementById('vimeoWrapper');
@@ -1332,7 +1345,6 @@ function telecharger(url, nomFichier) {
     showToast('Fichier non disponible pour le moment.', 'info');
     return;
   }
-  
   const lien = document.createElement('a');
   lien.href = url;
   lien.download = nomFichier;
@@ -1340,16 +1352,15 @@ function telecharger(url, nomFichier) {
   document.body.appendChild(lien);
   lien.click();
   document.body.removeChild(lien);
-  
   showToast(`Téléchargement démarré : ${nomFichier}`, 'success');
 }
 
 /* ══ LOGIN ══════════════════════════════════════════ */
 function selectCourse(el) {
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   const id = el.dataset.course;
-  selectedCourse = COURSES.find(c=>c.id===id);
+  selectedCourse = COURSES.find(c => c.id === id);
   const badge = document.getElementById('selectedCourseBadge');
   badge.classList.remove('empty');
   badge.innerHTML = `
@@ -1364,18 +1375,19 @@ function doLogin() {
   const login = document.getElementById('loginInput').value.trim();
   const pass  = document.getElementById('passInput').value.trim();
   const err   = document.getElementById('loginError');
-
   err.classList.remove('show');
 
   if (!login || !pass) {
     err.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right:6px;"></i> Veuillez remplir tous les champs.';
-    err.classList.add('show'); return;
+    err.classList.add('show');
+    return;
   }
 
   const user = USERS[login];
   if (!user || user.pass !== pass) {
     err.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right:6px;"></i> Identifiants incorrects. Veuillez réessayer.';
-    err.classList.add('show'); return;
+    err.classList.add('show');
+    return;
   }
 
   currentUser = { login, ...user };
@@ -1389,7 +1401,7 @@ function doLogin() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key==='Enter' && document.getElementById('screen-login').classList.contains('active')) doLogin();
+  if (e.key === 'Enter' && document.getElementById('screen-login').classList.contains('active')) doLogin();
 });
 
 /* ══ DASHBOARD ══════════════════════════════════════ */
@@ -1398,9 +1410,9 @@ function buildDashboard() {
   grid.innerHTML = '';
 
   COURSES.forEach(c => {
-    const total = c.curriculum.reduce((a,m)=>a+m.lessons.length,0);
-    const done  = c.curriculum.reduce((a,m)=>a+m.lessons.filter(l=>l.done).length,0);
-    const pct   = Math.round((done/total)*100);
+    const total = c.curriculum.reduce((a, m) => a + m.lessons.length, 0);
+    const done  = c.curriculum.reduce((a, m) => a + m.lessons.filter(l => l.done).length, 0);
+    const pct   = Math.round((done / total) * 100);
 
     const card = document.createElement('div');
     card.className = 'course-card';
@@ -1418,7 +1430,10 @@ function buildDashboard() {
       </div>
       <div class="card-progress">
         <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;"></div></div>
-        <div class="progress-label"><span>${done} leçon${done>1?'s':''} complétée${done>1?'s':''}</span><span>${pct}%</span></div>
+        <div class="progress-label">
+          <span>${done} leçon${done > 1 ? 's' : ''} complétée${done > 1 ? 's' : ''}</span>
+          <span>${pct}%</span>
+        </div>
       </div>`;
     card.onclick = () => openCourse(c);
     grid.appendChild(card);
@@ -1427,8 +1442,8 @@ function buildDashboard() {
 
 /* ══ PLAYER ══════════════════════════════════════════ */
 function openCourse(course) {
-  activeCourse  = course;
-  activeLesson  = 0;
+  activeCourse = course;
+  activeLesson = 0;
   destroyVimeoPlayer();
 
   document.getElementById('playerCourseName').textContent = course.title;
@@ -1436,13 +1451,14 @@ function openCourse(course) {
   document.getElementById('playerUsername').textContent   = currentUser.login;
   document.getElementById('curriculumTitle').textContent  = course.title;
 
-  const total = course.curriculum.reduce((a,m)=>a+m.lessons.length,0);
-  const done  = course.curriculum.reduce((a,m)=>a+m.lessons.filter(l=>l.done).length,0);
-  const pct   = Math.round((done/total)*100);
+  const total = course.curriculum.reduce((a, m) => a + m.lessons.length, 0);
+  const done  = course.curriculum.reduce((a, m) => a + m.lessons.filter(l => l.done).length, 0);
+  const pct   = Math.round((done / total) * 100);
+
   document.getElementById('curriculumSubtitle').textContent = `${course.curriculum.length} modules • ${total} leçons`;
-  document.getElementById('curriculumProgress').style.width = pct+'%';
-  document.getElementById('progressDone').textContent = `${done} leçon${done>1?'s':''} complétée${done>1?'s':''}`;
-  document.getElementById('progressPct').textContent  = pct+'%';
+  document.getElementById('curriculumProgress').style.width = pct + '%';
+  document.getElementById('progressDone').textContent = `${done} leçon${done > 1 ? 's' : ''} complétée${done > 1 ? 's' : ''}`;
+  document.getElementById('progressPct').textContent  = pct + '%';
 
   buildCurriculum();
   loadLesson(0, false);
@@ -1457,6 +1473,7 @@ function buildCurriculum() {
   activeCourse.curriculum.forEach(mod => {
     const group = document.createElement('div');
     group.className = 'module-group';
+
     const modTitle = document.createElement('div');
     modTitle.className = 'module-title';
     modTitle.textContent = mod.module;
@@ -1466,14 +1483,16 @@ function buildCurriculum() {
       const idx = globalIdx;
       const hasVideo = !!getVimeoId(activeCourse.id, idx);
       const item = document.createElement('div');
-      item.className = 'lesson-item' + (idx===activeLesson?' active':'');
+      item.className = 'lesson-item' + (idx === activeLesson ? ' active' : '');
       item.id = `lesson-item-${idx}`;
 
-      const iconClass = lesson.done ? 'done' : (idx===activeLesson ? 'playing' : 'todo');
-      const icon = lesson.done ? 'fa-check' : (idx===activeLesson ? 'fa-play' : 'fa-play');
+      const iconClass = lesson.done ? 'done' : (idx === activeLesson ? 'playing' : 'todo');
+      const icon      = lesson.done ? 'fa-check' : 'fa-play';
 
       item.innerHTML = `
-        <div class="lesson-icon ${iconClass}"><i class="fas ${icon}" style="font-size:.65rem;"></i></div>
+        <div class="lesson-icon ${iconClass}">
+          <i class="fas ${icon}" style="font-size:.65rem;"></i>
+        </div>
         <div class="lesson-info">
           <div class="lesson-name">${lesson.name}</div>
           <div class="lesson-duration">
@@ -1498,8 +1517,8 @@ function getAllLessons() {
 
 function loadLesson(idx, fromClick) {
   activeLesson = idx;
-
   destroyVimeoPlayer();
+
   document.getElementById('videoPlaceholder').style.display = 'flex';
 
   const lessons = getAllLessons();
@@ -1513,9 +1532,10 @@ function loadLesson(idx, fromClick) {
     : `Durée : ${lesson.dur} · Vidéo bientôt disponible`;
 
   const tags = document.getElementById('videoTags');
-  tags.innerHTML = `<span class="tag">${idx<5?'Débutant':idx<12?'Intermédiaire':'Avancé'}</span>
+  tags.innerHTML = `
+    <span class="tag">${idx < 5 ? 'Débutant' : idx < 12 ? 'Intermédiaire' : 'Avancé'}</span>
     <span class="tag">${lesson.dur}</span>
-    <span class="tag">${idx%3===0?'Théorie':idx%3===1?'Pratique':'Démo'}</span>
+    <span class="tag">${idx % 3 === 0 ? 'Théorie' : idx % 3 === 1 ? 'Pratique' : 'Démo'}</span>
     ${vimeoId
       ? '<span class="tag" style="background:rgba(0,201,167,0.15);border-color:rgba(0,201,167,0.4);"><i class="fas fa-video" style="margin-right:4px;"></i>Vimeo</span>'
       : '<span class="tag" style="background:rgba(247,201,72,0.12);border-color:rgba(247,201,72,0.3);color:#f7c948;"><i class="fas fa-clock" style="margin-right:4px;"></i>Bientôt</span>'}`;
@@ -1525,8 +1545,9 @@ function loadLesson(idx, fromClick) {
     "Un zoom approfondi sur les fonctionnalités avancées avec une démonstration pas-à-pas pour consolider vos acquis.",
     "Mise en application directe des notions vues précédemment sur un cas réel tiré du terrain professionnel."
   ];
-  document.getElementById('videoDesc').textContent = descs[idx%3];
+  document.getElementById('videoDesc').textContent = descs[idx % 3];
 
+  // Activer / désactiver le bouton play
   const playBtn = document.querySelector('#videoPlaceholder .play-btn');
   if (playBtn) {
     if (vimeoId) {
@@ -1540,17 +1561,17 @@ function loadLesson(idx, fromClick) {
     }
   }
 
-  // ═══ AFFICHER LES RESSOURCES DE CETTE LEÇON ═══
+  // Ressources de la leçon
   loadLessonResources(idx);
 
-  const allLessons = getAllLessons();
+  // Mise à jour des icônes dans le curriculum
   document.querySelectorAll('.lesson-item').forEach((el, i) => {
     el.classList.toggle('active', i === idx);
     const icon = el.querySelector('.lesson-icon');
     if (i === idx) {
       icon.className = 'lesson-icon playing';
       icon.innerHTML = '<i class="fas fa-play" style="font-size:.65rem;"></i>';
-    } else if (allLessons[i] && allLessons[i].done) {
+    } else if (lessons[i] && lessons[i].done) {
       icon.className = 'lesson-icon done';
       icon.innerHTML = '<i class="fas fa-check" style="font-size:.65rem;"></i>';
     } else {
@@ -1560,14 +1581,14 @@ function loadLesson(idx, fromClick) {
   });
 
   const el = document.getElementById(`lesson-item-${idx}`);
-  if (el) el.scrollIntoView({behavior:'smooth', block:'nearest'});
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
   if (fromClick) showToast(`Leçon chargée : ${lesson.name}`, 'info');
 }
 
-/* ═══ CHARGEMENT DES RESSOURCES PAR LEÇON ═══ */
+/* ══ RESSOURCES PAR LEÇON ═══════════════════════════ */
 function loadLessonResources(lessonIdx) {
-  const resourceList = document.getElementById('resourceList');
+  const resourceList    = document.getElementById('resourceList');
   resourceList.innerHTML = '';
 
   const courseResources = activeCourse.resources || {};
@@ -1579,31 +1600,31 @@ function loadLessonResources(lessonIdx) {
   }
 
   lessonResources.forEach(res => {
-    const iconClass = res.type === 'pdf' ? 'fa-file-pdf' : 
-                      res.type === 'excel' ? 'fa-file-excel' : 
-                      res.type === 'word' ? 'fa-file-word' : 
-                      'fa-file-archive';
-    
-    const iconColor = res.type === 'pdf' ? '#e74c3c' : 
-                      res.type === 'excel' ? '#1d9a4c' : 
-                      res.type === 'word' ? '#2b5797' : 
-                      'var(--accent)';
-
+    const iconClass = res.type === 'pdf'   ? 'fa-file-pdf'     :
+                      res.type === 'excel' ? 'fa-file-excel'   :
+                      res.type === 'word'  ? 'fa-file-word'    :
+                                             'fa-file-archive';
+    const iconColor = res.type === 'pdf'   ? '#e74c3c'  :
+                      res.type === 'excel' ? '#1d9a4c'  :
+                      res.type === 'word'  ? '#2b5797'  :
+                                             'var(--accent)';
     const item = document.createElement('div');
     item.className = 'resource-item';
-    item.onclick = () => telecharger(res.url, res.name);
-    
+    item.onclick   = () => telecharger(res.url, res.name);
     item.innerHTML = `
       <i class="fas ${iconClass}" style="color:${iconColor};"></i>
       <span>${res.name}</span>
       <span class="res-size">${res.size}</span>
-      <i class="fas fa-download" style="color:var(--text-muted);font-size:.85rem;"></i>
-    `;
-    
+      <i class="fas fa-download" style="color:var(--text-muted);font-size:.85rem;"></i>`;
     resourceList.appendChild(item);
   });
 }
 
+/* ══════════════════════════════════════════════════════
+   ✅ CORRECTION PRINCIPALE : startVideo()
+   - On laisse le SDK Vimeo créer et gérer l'iframe lui-même
+   - On ne crée plus d'iframe manuellement avant l'init du SDK
+══════════════════════════════════════════════════════ */
 function startVideo() {
   const vimeoId = getVimeoId(activeCourse.id, activeLesson);
 
@@ -1612,6 +1633,7 @@ function startVideo() {
     return;
   }
 
+  // Masquer le placeholder, afficher le spinner
   document.getElementById('videoPlaceholder').style.display = 'none';
   document.getElementById('vimeoLoading').style.display     = 'flex';
 
@@ -1619,33 +1641,51 @@ function startVideo() {
   wrapper.classList.add('active');
   wrapper.innerHTML = '';
 
-  const iframe = document.createElement('iframe');
-  iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=00c9a7&title=0&byline=0&portrait=0&dnt=1`;
-  iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-  iframe.setAttribute('allowfullscreen', '');
-  iframe.style.cssText = 'width:100%;height:100%;border:0;display:block;';
-  wrapper.appendChild(iframe);
+  // ✅ Conteneur dédié — le SDK Vimeo y injectera son propre iframe
+  const container = document.createElement('div');
+  container.id = 'vimeo-player-container';
+  container.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
+  wrapper.appendChild(container);
 
-  vimeoPlayer = new Vimeo.Player(iframe);
-
-  vimeoPlayer.ready().then(() => {
-    document.getElementById('vimeoLoading').style.display = 'none';
-  }).catch(() => {
-    document.getElementById('vimeoLoading').style.display = 'none';
+  // ✅ Initialisation correcte du SDK : on passe l'élément + les options
+  //    (plus d'iframe manuel → plus de conflit d'initialisation)
+  vimeoPlayer = new Vimeo.Player(container, {
+    id:         parseInt(vimeoId, 10),
+    autoplay:   true,
+    color:      '00c9a7',
+    title:      false,
+    byline:     false,
+    portrait:   false,
+    dnt:        true,
+    responsive: true
   });
 
+  // Quand le player est prêt → cacher le spinner
+  vimeoPlayer.ready().then(() => {
+    document.getElementById('vimeoLoading').style.display = 'none';
+  }).catch((err) => {
+    console.error('Vimeo ready error:', err);
+    document.getElementById('vimeoLoading').style.display = 'none';
+    destroyVimeoPlayer();
+    document.getElementById('videoPlaceholder').style.display = 'flex';
+    showToast("Impossible de charger la vidéo. Vérifiez les droits d'accès Vimeo.", 'info');
+  });
+
+  // Fin de la vidéo → marquer la leçon comme terminée
   vimeoPlayer.on('ended', () => {
     markLessonDone();
   });
 
+  // Erreur player
   vimeoPlayer.on('error', (err) => {
-    console.error('Vimeo error:', err);
+    console.error('Vimeo player error:', err);
     destroyVimeoPlayer();
     document.getElementById('videoPlaceholder').style.display = 'flex';
     showToast('Erreur lors du chargement de la vidéo.', 'info');
   });
 }
 
+/* ══ PROGRESSION ════════════════════════════════════ */
 function markLessonDone() {
   const lessons = getAllLessons();
   if (!lessons[activeLesson].done) {
@@ -1653,11 +1693,11 @@ function markLessonDone() {
     showToast('Leçon terminée ! 🎉');
 
     const total = lessons.length;
-    const done  = lessons.filter(l=>l.done).length;
-    const pct   = Math.round((done/total)*100);
-    document.getElementById('curriculumProgress').style.width = pct+'%';
-    document.getElementById('progressDone').textContent = `${done} leçon${done>1?'s':''} complétée${done>1?'s':''}`;
-    document.getElementById('progressPct').textContent  = pct+'%';
+    const done  = lessons.filter(l => l.done).length;
+    const pct   = Math.round((done / total) * 100);
+    document.getElementById('curriculumProgress').style.width = pct + '%';
+    document.getElementById('progressDone').textContent = `${done} leçon${done > 1 ? 's' : ''} complétée${done > 1 ? 's' : ''}`;
+    document.getElementById('progressPct').textContent  = pct + '%';
 
     setTimeout(() => buildCurriculum(), 600);
   }
@@ -1665,12 +1705,12 @@ function markLessonDone() {
 
 function nextLesson() {
   const total = getAllLessons().length;
-  if (activeLesson < total-1) loadLesson(activeLesson+1, true);
+  if (activeLesson < total - 1) loadLesson(activeLesson + 1, true);
   else showToast('Vous êtes à la dernière leçon du cours.', 'info');
 }
 
 function prevLesson() {
-  if (activeLesson > 0) loadLesson(activeLesson-1, true);
+  if (activeLesson > 0) loadLesson(activeLesson - 1, true);
   else showToast('Vous êtes à la première leçon.', 'info');
 }
 
@@ -1686,40 +1726,18 @@ function doLogout() {
   document.getElementById('loginInput').value = '';
   document.getElementById('passInput').value  = '';
   document.getElementById('loginError').classList.remove('show');
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-  document.getElementById('selectedCourseBadge').classList.add('empty');
-  document.getElementById('selectedCourseBadge').innerHTML = `
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  const badge = document.getElementById('selectedCourseBadge');
+  badge.classList.add('empty');
+  badge.innerHTML = `
     <i class="fas fa-hand-pointer"></i>
-    <div><span class="sc-label">Formation sélectionnée</span>
-    <span class="sc-name">Cliquez sur une formation ci-contre</span></div>`;
+    <div>
+      <span class="sc-label">Formation sélectionnée</span>
+      <span class="sc-name">Cliquez sur une formation ci-contre</span>
+    </div>`;
   showScreen('screen-login');
   showToast('Vous avez été déconnecté(e) avec succès.');
 }
 </script>
-<footer class="pied-accueil">
-     
-    <!--BANNIERE-->
-    <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
-    
-    <!--Reseaux sociaux-->
-<div style="display: grid;align-items: center;">
-    <div class="social-media">
-      <a href="https://www.facebook.com/ecodevconsulting/" target="_blank"><img src="Images & icones/social media/facebook-svgrepo-com (1).svg" style="width: 40px;border-right: 20px;"></a>
-       <a href="" target="_blank"><img src="Images & icones/social media/linkedin-svgrepo-com (1).svg" style="width: 90px;border-right: 20px;" ></a>  
-        <a href="https://wa.me/qr/RLS3AOPKGUOGK1" target="_blank"><img src="Images & icones/social media/whatsapp-logo-svgrepo-com.svg" style=" width: 100px; border-right: 20px;"></a>  
-         <a href="https://www.youtube.com/@ECODEVS%C3%A9n%C3%A9gal" target="_blank"><img src="Images & icones/social media/Youtube/youtube-2-logo-svgrepo-com.svg" style=" width: 80px; border-right: 20px;"></a>  
-    </div>
-   <h2 style="color: #0056cc;align-items: center;font-weight: bold;">@ECODEV SENEGAL-2026</h2>
-</div>
-    <!--CONTACTS-->
-<div class="contacts-card">
- <div class="contacts-header">CONTACTS</div>
-   <div class="contacts-body">
-     <h4><img src="Images & icones/telephone/telephone-svgrepo-com (1).svg" alt="telephone" style="width: 20px;"> +221 77 272 13 24 | +221 77 214 58 74</h4>
-     <h4><img src="Images & icones/Email/email-part-2-svgrepo-com.svg" alt="email" style="width: 20px;margin-right: 10px;">ecodev.senegal@gmail.com</h4>
-     <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 20px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
-</div>
-</div>
-</footer>
 </body>
 </html>
