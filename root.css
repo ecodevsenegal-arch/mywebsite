@@ -7,8 +7,32 @@
     --excel-color:#02932f;
     --powerbi-color:#f2c811;
     --powerquery-color:#3ba518;
+    --navy: #1a2d5a;
+    --blue: #1565c0;
+    --sky: #29b6f6;
+    --cyan: #00e5ff;
+    --teal: #00bfa5;
+    --green: #2e7d32;
+    --light-green: #43a047;
+    --white: #ffffff;
+    --off-white: #f0f8ff;
+    --card-bg: rgba(255,255,255,0.92);
+    --shadow: 0 8px 32px rgba(21,101,192,0.13);
+    --radius: 10px;
+    --vert-fonce: #003223;
+    --vert-foret: #007F3B;
+    --vert-clair: #7AC741;
+    --jaune: #FEC700;
+    --blanc-lin: #F9FAF5;
+    --border: #D8E8D0;
+    --text: #1A1A1A;
+    --muted: #5A6B62;
 }
-.docFormation{
+.programme-doc{
+    display: grid;
+    align-items: center;
+    justify-content: center;}
+.docExcel{
     display: grid; 
     gap:5px;
     justify-content: center;
@@ -27,6 +51,19 @@
     justify-content: center;
     align-items: center;
     border: solid var(--powerbi-color);
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    border-radius: 10px;
+    margin-top: 10px; 
+     width: 250px;
+}
+.docPowerQuery{
+    display: grid; 
+    gap:5px;
+    justify-content: center;
+    align-items: center;
+    border: solid var(--powerquery-color);
     display: flex;
     flex-direction: column;
     padding: 2px;

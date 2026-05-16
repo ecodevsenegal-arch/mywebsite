@@ -6,7 +6,7 @@
     <title>A propos - ECODEV</title>
     <link rel="icon" type="image/png" href="Enseigne_ECODEV_FINALE_0022.png">
     <link rel="stylesheet" href="vue mobile.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles apropos.css">
     <link rel="stylesheet" href="pieds de pages.css">
 </head>
 
@@ -16,7 +16,7 @@
     <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
 </div>
 
-<nav>
+<nav class="nav-APropos">
     <a href="index.html">Accueil</a>
     <a href="a propos.html " class="active">À propos</a>
     <a href="services.html">Services</a>
@@ -24,33 +24,60 @@
     <a href="contacts.html">Contact</a>
 </nav>
 
-<hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"></hr>
+<hr style="border: solid var(--vert-fonce);margin: 0 0 10px 0;"></hr>
 <div class="texte-card">
 <h1 class="titre">Présentation</h1>
-<hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"></hr>
+<hr style="border: solid var(--vert-fonce);margin: 0 0 10px 0;"></hr>
 
 <p class="texte1"> ECODEV est un cabinet d’expertise pluridisciplinaire, spécialisé dans l'ingénierie et le conseil dans les domaines de l’aménagement du territoire, le système d’information géographique (SIG) et la cartographie, l’agroforesterie, la gestion des organisations, le management et le suivi évaluation de projets et programmes. L’équipe est composée de plusieurs associés / collaborateurs, d’experts et spécialistes de l’environnement et du développement durable.</p>
 </div>
+<div class="section02" style="display: flex; gap: 15px;align-items: center;justify-content: center;">
 <div class="texte-card">
 <h2 class="titre">Mission</h2>
-<hr style="border: solid rgb(49, 49, 228);margin: 0 0 5px 0;"></hr>
+<hr style="border: solid var(--vert-fonce);margin: 0 0 5px 0;"></hr>
 <p class="texte1">Le cabinet ECODEV est créé autour d’une volonté partagée de plusieurs consultants expérimentés. Il propose une offre de conseil qui rende opérationnelle la stratégie des organisations, des entreprises et services publics. La philosophie du cabinet de conseil et de ses offres de conseil en stratégie, organisation et management s’appuie sur deux idées :</p>
-<ul>
-​<li class="texte2">Faire simple, c’est-à-dire permettre aux entreprises de dégager le plus simplement possible les gains attendus, ou atteindre les objectifs stratégiques fixés</ul></ul>
-<ul><li class="texte2">Faire rapidement, c’est-à-dire privilégier l’action et la mise en œuvre. Le principe de décision de la mise en œuvre s’appuie sur l’importance relative des enjeux du développement durable.</li></ul>
+  <ul class="texte2">
+​    <li>Faire simple, c’est-à-dire permettre aux entreprises de dégager le plus simplement possible les gains attendus, ou atteindre les objectifs stratégiques fixés</li>
+    <li>Faire rapidement, c’est-à-dire privilégier l’action et la mise en œuvre. Le principe de décision de la mise en œuvre s’appuie sur l’importance relative des enjeux du développement durable.</li>
+  </ul>
  <p class="texte1">La volonté de notre cabinet de conseil est également de proposer une offre neutre et indépendante de toute autre prestation. Les évolutions des dernières années permettent de constater une intégration presque systématique du consulting au sein de grands groupes. Pour autant, notre métier de consultant en stratégie opérationnelle peut trouver sa place dans l’indépendance aux côtés de ces grands acteurs du consulting.
 Les missions de nos consultants comprennent donc aussi bien des études stratégiques “amont” (plans de développement, choix d’externalisation, business plans, amélioration de processus, …) que de direction de projet en “aval” des choix, qui permettent la mise en œuvre opérationnelle (d’une fusion, d’une nouvelle organisation, d’un nouveau schéma de gestion, d’un projets ou programme …).
 Nos secteurs d’intervention sont l’aménagement du territoire, l’environnement et le développement durable, l’agroforesterie, la gestion et management des organisation, étude socio-économique et analyse de données…</p>
 </div>
+<div class="img-container" style="display: flex; flex-direction: column; gap: 2px; align-items: center; margin-top: 20px;">
+<img src="Images & icones/Photos missions Karonghen/image02.jpeg" alt="image mission" width="490px" height="470px" style="border-radius: 15px;">
+<h3 style="background-color: var(--nav-bg); padding: 10px 40px 10px 40px; border-radius: 15px;font-style: italic;">Mission de collecte à Djinacky-2022</h3>
+</div>
+</div>
 </div>
 
-<hr style="border: solid blue; margin: 20px 0 0 0;">
-<footer>
-    <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px;">
-    <div>
-    <h4>Téléphone: +221 77 272 13 24 | +221 77 214 58 74</h4>
-    <h4>Email: ecodev.senegal@gmail.com</h4>
-    <h3>@ECODEV SENEGAL-2026</h3>
+<hr style="border: solid var(--vert-fonce); margin: 20px 0 0 0;">
+<!--PIEDS DE PAGE-->
+<footer class="pied-accueil">
+     
+    <!--BANNIERE-->
+    <img src="Banniere ECODEV 02.jpg" height="160" style="border-radius: 0 0 0 10px">
+    
+    <!--Reseaux sociaux-->
+<div style="display: grid;align-items: center;">
+    <div class="social-media">
+      <a href="https://www.facebook.com/ecodevconsulting/"><img src="Images & icones/social media/facebook-svgrepo-com (1).svg" style="width: 40px;border-right: 20px;"></a>
+       <a href=""><img src="Images & icones/social media/linkedin-svgrepo-com (1).svg" style="width: 90px;border-right: 20px;"></a>  
+        <a href="https://wa.me/qr/RLS3AOPKGUOGK1" target="_blank"><img src="Images & icones/social media/whatsapp-logo-svgrepo-com.svg" style=" width: 100px; border-right: 20px;"></a>  
+         <a href="https://www.youtube.com/@ECODEVS%C3%A9n%C3%A9gal" target="_blank"><img src="Images & icones/social media/Youtube/youtube-2-logo-svgrepo-com.svg" style=" width: 80px; border-right: 20px;"></a>  
+    </div>
+   <h3>@ECODEV SENEGAL-2026</h3>
+</div>
+    <!--CONTACTS-->
+<div class="contacts-card">
+ <div class="contacts-header">CONTACTS</div>
+   <div class="contacts-body">
+     <h4><img src="Images & icones/telephone/telephone-svgrepo-com (1).svg" alt="telephone" style="width: 20px;"> +221 77 272 13 24 | +221 77 214 58 74</h4>
+     <h4><img src="Images & icones/Email/email-part-2-svgrepo-com.svg" alt="email" style="width: 20px;margin-right: 10px;">ecodev.senegal@gmail.com</h4>
+     <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 20px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
+</div>
+</div>
+</footer>
     </div>
 </body>
 

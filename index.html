@@ -9,11 +9,12 @@
 <link rel="stylesheet" href="vue mobile.css">
 <link rel="stylesheet" href="defilement images.css">
 <link rel="stylesheet" href="style annonce formation.css">
+<link rel="stylesheet" href="root.css">
     <style>
         html{
             scroll-behavior:smooth;
        }
-        nav {
+        .nav-accueil {
             display: flex;
             gap: 10px;
             padding: 10px 20px;
@@ -21,27 +22,31 @@
             border-radius: 10px 10px 0 0;
         }
 
-        nav a {
+        .nav-accueil a {
             color: #444;
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 5px;
             font-family: Arial, sans-serif;
-            background-color:#b2c4c2;
-            transition: background-color 0.5s;
+            background-color: var(--nav-bg);
+            transition: background-color 0.3s;
+            border: solid var(--vert-fonce);
         }
 
-        nav a:hover {
+        .nav-accueil a:hover {
             background-color:#d4f7b3;
             color: #011A1E;
             font-weight: bold;
+             box-shadow: 0 0 10px var(--nav-hoverShadow, #007bff), 0 0 20px var(--nav-hoverShadow, #007bff);
+             transform: translate(0 , -10px);
         }
 
-        nav a.active {
-            background-color: #0056cc;
+        .nav-accueil a.active {
+             background-color: var(--vert-fonce);
             color: white;
             font-weight: bold;
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+            box-shadow: 0 0 10px var(--nav-bg),0 0 20px var(--nav-bg);
+            transform: translate(0 , -10px);
         }
         .pied-accueil{
             font-weight: bold;
@@ -56,13 +61,13 @@
         }
         .contacts-body{
         border-radius: 0 0 10px 10px;
-        border: solid #0056cc;
+        border: solid var(--vert-fonce);
         padding: 0.2rem 0.5rem ;
-        height: 108px;
+        height: 110px;
         margin-top: 0;
         margin-bottom: 5px;
         background: transparent; 
-        color: #0056cc; 
+        color: var(--vert-fonce); 
         padding: 0.2rem 0.5rem ;
         }
         .contacts-body h4{
@@ -71,11 +76,11 @@
         }
        
     .contacts-header { 
-        background: #0056cc; 
-        color: #00e5d4; 
+        background: var(--vert-fonce); 
+        color: white; 
         padding: 0.60rem 0.75rem; 
         border-radius: 10px 10px 0 0; 
-        margin-top: 2px;
+        margin-top: 6px;
         overflow: hidden;
     }
         .social-media{
@@ -88,6 +93,8 @@
             gap: 20px;
             align-items: center;
             scale: 1.15;
+            transform: translate(0, -10px);
+            transition: all 0.3s ease;
         }
         .Section-SlidePhoto{
           margin-left: 0;
@@ -106,7 +113,7 @@
     <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
     <h2 style="color: #0056cc"><em>L'ingénierie au service de l'environnement et du développement durable</em></h2>
  </div>
-<nav>
+<nav class="nav-accueil">
     <a href="index.html" class="active">Accueil</a>
     <a href="a propos.html">À propos</a>
     <a href="services.html">Services</a>
@@ -114,7 +121,7 @@
     <a href="contacts.html">Contact</a>
 </nav>
 </div>
-<hr style="border: solid blue; margin: 0 0 10px 0;">
+<hr style="border: solid var(--vert-fonce); margin: 0 0 10px 0;">
 </head>
 <section class="All-Section">
 <section class="Section-SlidePhoto">
@@ -286,7 +293,8 @@
 </section>
 </section>
 <div>
-    <hr style="border: solid blue; margin: 0 0 0 0;">
+    <hr style="border: solid var(--vert-fonce); margin: 0 0 0 0;">
+    <!--PIEDS DE PAGE-->
 <footer class="pied-accueil">
      
     <!--BANNIERE-->

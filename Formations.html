@@ -15,58 +15,63 @@
 <style>
     .texte1 {
         font-family: Arial, sans-serif;
-            gap: 10px;
-            padding: 5px 5px; margin:5px 50px 5px 10px
-            ;
+        gap: 10px;
+        padding: 5px 5px; 
+        margin:5px 50px 5px 10px;
         }
     .texte2 {
-        margin-right: 150px; margin-left: 30px;font-family: Arial, sans-serif;
+        margin-right: 150px; 
+        margin-left: 30px;
+        font-family: Arial, sans-serif;
     }
     .titre{
-        margin:0 600px 0 0;
+        margin:0 500px 0 0;
         border-radius: 5px;
         background-color:#00e5d4;
         font-family: Arial, sans-serif;
         padding: 3px 15px;
         border-radius: 15px 0;
         overflow: hidden;
-        box-shadow: #0056cc 0 5px 0 0;
+        box-shadow: var(--nav-bg) 0 0 3px 0,var(--nav-bg) 0 0 10px 0,var(--nav-bg) 0 0 20px 0;
     }
     .titre-card{
-            border: solid  #0056cc;
+            border: solid  var(--vert-fonce);
             border-radius: 15px;
             margin-top: 25px;
         }
     .nav-formation {
             display: flex;
-            gap: 20px;
+            gap: 10px;
             padding: 10px 20px;
             background-color: #00e5d4;
             border-radius: 10px 10px 0 0;
-            margin-left: 10px;
-            padding-left: 10px;
         }
     .nav-formation a {
             color: #444;
             text-decoration: none;
-            padding: 6px 12px 5px 12px;
+            padding: 10px 20px;
             border-radius: 5px;
             font-family: Arial, sans-serif;
             background-color: var(--nav-bg);
-            transition: background-color 2s;
+            transition: background-color 0.3s;
+            border: solid var(--vert-fonce);
         }
      .nav-formation a:hover {
             background-color:#d4f7b3;
-            color: var(--nav-hoverShadow);
+            color: #011A1E;
             font-weight: bold;
-            box-shadow: 0 0 10px var(--nav-hoverShadow, #007bff), 0 0 20px var(--nav-hoverShadow, #007bff);
+             box-shadow: 0 0 10px var(--nav-hoverShadow, #007bff), 0 0 20px var(--nav-hoverShadow, #007bff);
+             transform: translate(0 , -10px);
+             transition: all 0.3s ease;
         }
         
     .nav-formation a.active {
-            background-color: #007bff;
+            background-color: var(--vert-fonce);
             color: white;
             font-weight: bold;
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+            box-shadow: 0 0 10px var(--nav-bg),0 0 20px var(--nav-bg);
+             transform: translate(0 , -10px);
+             transition: all 0.3s ease;
         }
         nav {
             display: flex;
@@ -119,11 +124,12 @@
             font-weight: bold;
             box-shadow: 0 0 10px var(--nav-hoverShadow, #007bff), 0 0 20px var(--nav-hoverShadow, #007bff);
         }
-         .formations a.active {
-            background-color: #02932f;
+        .section-formation a.active {
+            background-color: var(--vert-fonce);
             color: white;
             font-weight: bold;
-            box-shadow: 0 0 10px rgba(113, 250, 191, 0.7);
+            box-shadow: 0 0 10px var(--nav-bg),0 0 20px var(--nav-bg);
+            transform: translate(0 , -10px);
         }
         .programmes img:hover {
             color: #0056cc;
@@ -139,7 +145,7 @@
             margin-top: 5px;
         }
         .programmes-card{
-            border: solid  #0056cc;
+            border: solid  var(--vert-fonce);
             border-radius: 15px;
             margin-top: 15px;
             height: 300px;
@@ -148,10 +154,13 @@
             background-color: #00e5d4;
             border-radius: 15px 15px 0 0;
             overflow: hidden;
-            padding-left: 0 0 10px 10px;
+            padding-left: 20px 20px 10px 10px;
             margin:0 600px 0 0;
             border-radius: 15px 0;
-            box-shadow: #0056cc 0 5px 0 0;
+            box-shadow: var(--nav-bg) 0 0 5px 0,var(--nav-bg) 0 0 10px 0,var(--nav-bg) 0 0 20px 0;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
             padding-left: 20px;
         }
         .section-formation{
@@ -166,7 +175,7 @@
         .formateurs{
             background-color: transparent;
             border-radius: 10px;
-            border: solid var(--nav-hoverShadow);
+            border: solid var(--vert-fonce);
         }
         .nom-formateur{
             padding: 3px 10px;
@@ -177,6 +186,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            box-shadow: var(--nav-bg) 0 0 5px 0,var(--nav-bg) 0 0 10px 0,var(--nav-bg) 0 0 20px 0;
         }
         .pied-page{
             background-color: var(--footer-bg);
@@ -186,6 +196,14 @@
             height: 40px;
             padding: 5px;
             justify-content: center;
+        }
+        button{
+            padding: 1px 5px;
+            border-radius: 5px;
+            color: var(--vert-fonce);
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
         
 </style>
@@ -217,7 +235,7 @@
     <a href="plateforme_formation v2.html">Espace campus</a>
 </nav>
 </div>
-<hr style="border: solid rgb(49, 49, 228);margin: 0 0 10px 0;"></hr>
+<hr style="border: solid var(--vert-fonce);margin: 0 0 10px 0;"></hr>
 <div class="section-top">
 <div class="titre-card">
 <h1 class="titre">ESPACE FORMATION</h1>
@@ -292,27 +310,35 @@
     
 
 <!--PROGRAMMES-->
-<nav class="programmes"> 
-<div class="programme-excel">
-<img src="Formation Excel ECODEV 1.png" height="150" style="margin: 10px 5px 0 5px;">
-<div class="docFormation">
+<div class="programmes"> 
+<div class="programme-doc">
+<img src="Formation Excel ECODEV 1.png" height="150" style="margin: 0 5px 0 5px;">
+<div class="docExcel">
     <div style="width: 3px;height: 70px;border-radius: 50px 0px 0px 50px;border: solid var(--excel-color);overflow: hidden;position: absolute;left: 38px;background-color: var(--excel-color);"></div>
     <span>Excel Avancé</span>
-    <button>Télécharger le programme</button>
+    <button onclick="downloadFile('14z5d4ADHxd24Uo6hfIeimj-sNcQxIcC4','programme excel avancé')" style="background-color: var(--excel-color);">Télécharger le programme</button>
     <span>Aperçu module 01</span>
 </div>
 </div>
-<div class="programme-pbi">
-<img src="Formation Power BI 1.jpg" height="150" style="margin: 10px 5px 0 5px;">
+<div class="programme-doc">
+<img src="Formation Power BI 1.jpg" height="150" style="margin: 0 5px 0 5px;">
 <div class="docPowerBI">
-    <div style="width: 3px;height: 70px;border-radius: 50px 0px 0px 50px;border: solid var(--powerbi-color);overflow: hidden; position: absolute;left: 38px;background-color: var(--powerbi-color);"></div>
+    <div style="width: 3px;height: 70px;border-radius: 50px 0px 0px 50px;border: solid var(--powerbi-color);overflow: hidden; position: absolute;left:309px;background-color: var(--powerbi-color);"></div>
     <span>Power BI</span>
-    <button>Télécharger le programme</button>
+    <button onclick="downloadFile('1FeFw0HIHciWbnM-SfAEfsPW4vI4ICA90','Programme Power BI.pdf')" style="background-color: var(--powerbi-color);">Télécharger le programme</button>
     <span>Aperçu module 01</span>
     </div>
 </div>
-<img src="Formation Power Query ECODEV 1.jpg" height="150" style="margin: 10px 5px 0 5px;">
-</nav>
+<div class="programme-doc">
+<img src="Formation Power Query ECODEV 1.jpg" height="150" style="margin: 0 5px 0 5px;">
+<div class="docPowerQuery">
+    <div style="width: 3px;height: 70px;border-radius: 50px 0px 0px 50px;border: solid var(--powerquery-color);overflow: hidden; position: absolute;left: 578px;background-color: var(--powerquery-color);"></div>
+    <span>Power Query</span>
+    <button onclick="downloadFile('1r3cpK4UGkLH9cNFScSGHb0NTxZVClYA_', 'programme_power_query.pdf')" style="background-color: var(--powerquery-color);">Télécharger le programme</button>
+    <span>Aperçu module 01</span>
+    </div>
+</div>
+</div>
 </div>
 
 
@@ -379,7 +405,7 @@
     </div>
 </div>
 </div>
-<hr style="border: solid blue; margin: 0 0 0 0;">
+<hr style="border: solid var(--vert-fonce); margin: 0 0 0 0;">
 <footer class="pied-page">
   
     <!--BANNIERE-->
@@ -403,6 +429,18 @@
      <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 20px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
 </div>
 </div>
+<script>
+     function downloadFile(fileId, fileName) {
+    const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName; // nom du fichier souhaité
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+</script>
 </body>
 
 </html>

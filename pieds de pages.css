@@ -1,3 +1,33 @@
+:root{
+    --card-head:#00e5d4;
+    --nav-bg:#33FFFE;
+    --nav-active:rgb(49, 49, 228);
+    --nav-hoverShadow:rgb(49, 49, 228);
+    --footer-bg:#00e5d4;
+    --excel-color:#02932f;
+    --powerbi-color:#f2c811;
+    --powerquery-color:#3ba518;
+    --navy: #1a2d5a;
+    --blue: #1565c0;
+    --sky: #29b6f6;
+    --cyan: #00e5ff;
+    --teal: #00bfa5;
+    --green: #2e7d32;
+    --light-green: #43a047;
+    --white: #ffffff;
+    --off-white: #f0f8ff;
+    --card-bg: rgba(255,255,255,0.92);
+    --shadow: 0 8px 32px rgba(21,101,192,0.13);
+    --radius: 10px;
+    --vert-fonce: #003223;
+    --vert-foret: #007F3B;
+    --vert-clair: #7AC741;
+    --jaune: #FEC700;
+    --blanc-lin: #F9FAF5;
+    --border: #D8E8D0;
+    --text: #1A1A1A;
+    --muted: #5A6B62;
+}
 /* PIEDS DE PAGES */
 footer{
             font-weight: bold;
@@ -5,12 +35,12 @@ footer{
             margin: 0 0 0 0; 
             font-size: 15px;
             align-items: center;
-            gap:50px; 
+            gap:2.4em; 
             justify-content: center;
             padding: 0 0 0 0;
             background-color: #00e5d4;
             border-radius: 0 0 10px 10px;
-            height: 150px;
+            height: 160px;
             width: 100%;
             margin-left: 0;
             margin-right: 0;
@@ -21,20 +51,20 @@ footer{
             margin: 0 0 0 0; 
             font-size: 15px;
             padding: 0 0 0 0;
-            background-color: #97e0f4;
+            background-color: var(--footer-bg);
             border-radius: 0 0 10px 10px;
             height: 160px;
             gap: 100px
         }
        .contacts-body{
         border-radius: 0 0 10px 10px;
-        border: solid #0056cc;
+        border: solid var(--vert-fonce);
         padding: 0.2rem 0.5rem ;
         height: 108px;
         margin-top: 0;
         margin-bottom: 5px;
         background: transparent; 
-        color: #0056cc; 
+        color: var(--vert-fonce); 
         padding: 0.2rem 0.5rem ;
         }
         .contacts-body h4{
@@ -43,7 +73,7 @@ footer{
         }
        
     .contacts-header { 
-        background: #0056cc; 
+        background: var(--vert-fonce); 
         color: white; 
         padding: 0.60rem 0.75rem; 
         border-radius: 10px 10px 0 0; 
@@ -60,4 +90,6 @@ footer{
             gap: 50px;
             align-items: center;
             scale: 1.15;
+            transition: 0.3s;
+            transform: translate(0,-10px);
         }

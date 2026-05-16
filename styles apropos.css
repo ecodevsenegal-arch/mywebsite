@@ -1,0 +1,110 @@
+:root {
+    --navy: #1a2d5a;
+    --blue: #1565c0;
+    --sky: #29b6f6;
+    --cyan: #00e5ff;
+    --teal: #00bfa5;
+    --green: #2e7d32;
+    --light-green: #43a047;
+    --white: #ffffff;
+    --off-white: #f0f8ff;
+    --card-bg: rgba(255,255,255,0.92);
+    --shadow: 0 8px 32px rgba(21,101,192,0.13);
+    --radius: 10px;
+    --vert-fonce: #003223;
+    --vert-foret: #007F3B;
+    --vert-clair: #7AC741;
+    --jaune: #FEC700;
+    --blanc-lin: #F9FAF5;
+    --border: #D8E8D0;
+    --text: #1A1A1A;
+    --muted: #5A6B62;
+    --card-head:#00e5d4;
+    --nav-bg:#33FFFE;
+    --nav-active:rgb(49, 49, 228);
+    --nav-hoverShadow:rgb(49, 49, 228);
+    --footer-bg:#00e5d4;
+    --excel-color:#02932f;
+    --powerbi-color:#f2c811;
+    --powerquery-color:#3ba518;
+  }
+.texte1 {
+        font-family: Arial, sans-serif;
+        gap: 10px;
+        padding: 5px 5px; 
+        margin:5px 50px 5px 10px;
+        
+        }
+.texte2 {
+        margin-right: 20px; 
+        margin-left: 10px;
+        font-family: Arial, sans-serif;
+        padding-right: 0px;
+    }
+.texte-card{
+border: solid var(--vert-fonce);
+margin-top: 15px;
+border-radius: 10px;
+}
+.titre{
+        margin:0;
+        border-radius: 10px 10px 0 0;
+        background-color:#00e5d4;
+        font-family: Arial, sans-serif;
+        padding: 3px 15px;
+        overflow: hidden;
+    }
+.titre2{
+        margin:0 10px 0 5px;
+        border-radius: 10px 10px 0 0;
+        background-color:#00e5d4;
+        font-family: Arial, sans-serif;
+        padding: 5px 10px;
+    }
+.nav-APropos {
+            display: flex;
+            gap: 10px;
+            padding: 10px 20px;
+            background-color: #00e5d4;
+            border-radius: 10px 10px 0 0;
+        }
+.nav-APropos a {
+            color: #444;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            background-color: var(--nav-bg);
+            transition: background-color 0.3s;
+            border: solid var(--vert-fonce);
+        }
+.nav-APropos a:hover {
+            background-color:#d4f7b3;
+            color: #011A1E;
+            font-weight: bold;
+             box-shadow: 0 0 10px var(--nav-hoverShadow, #007bff), 0 0 20px var(--nav-hoverShadow, #007bff);
+             transform: translate(0 , -10px);
+             transition: all 0.3s ease;
+        }
+.nav-APropos a.active {
+            background-color: var(--vert-fonce);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 10px var(--nav-bg),0 0 20px var(--nav-bg);
+            transform: translate(0 , -10px);
+        }
+
+/* PIEDS DE PAGES */
+footer{
+            font-weight: bold;
+            display: flex;
+            margin: 0 0 O 0; 
+            font-size: 15px;
+            align-items: center;
+            gap:500px; 
+            justify-content: center;
+            padding: 0 0 0 0;
+            background-color: #97e0f4;
+            border-radius: 0 0 10px 10px;
+            height: 150px;
+        }

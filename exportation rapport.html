@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice - Rapport d'avancement avec Export PDF</title>
+    <style>
+        /* --- STYLE POUR L'ÉCRAN (NAVIGATEUR) --- */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333333;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .actions-bar {
+            text-align: right;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Rouge Acrobat / PDF */
+        .btn-pdf {
+            background-color: #e53935;
+        }
+
+        .btn-pdf:hover {
+            background-color: #c62828;
+        }
+
+        h1 {
+            color: #1e3d6b;
+            font-size: 24px;
+            border-bottom: 2px solid #1e3d6b;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #555555;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 2px solid #eeeeee;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .text-right {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .montant {
+            color: #2e7d32;
+        }
+
+        /* --- STYLES SÉCIFIQUES POUR L'IMPRESSION / PDF --- */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            /* Masquer complètement le bouton d'exportation pour qu'il n'apparaisse pas sur le PDF final */
+            .actions-bar {
+                display: none; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="actions-bar">
+            <button class="btn btn-pdf" onclick="exporterPDF()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Exporter en PDF
+            </button>
+        </div>
+   <div><h3>Ministére de la Microfinance de l'Economie Sociale et Solidaire</h3></div>
+   <div style="display: flex;gap: 10px;">
+   <hr style="width: 500px;border: solid 1.5px green;"></hr>
+   <span>▣</span>
+   <hr style="width: 500px;border: solid 1.5px green;"></hr>
+</div>
+<h3>Direction de la  Microfinance</h3>
+<div style="display: flex;gap: 5px;justify-content: center;align-items: center;">
+   <hr style="width: 100px;border: solid 1.5px green;"></hr>
+   <span>▣</span>
+   <hr style="width: 100px;border: solid 1.5px green;"></hr>
+</div>
+<h4>Programme de Renforcement de la Microfinance</h4>
+        <div id="rapport">
+            <h1>Rapport d'avancement du projet</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Indicateur</th>
+                        <th class="text-right">Valeur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nombre de bénéficiaires</td>
+                        <td class="text-right">20 500</td>
+                    </tr>
+                    <tr>
+                        <td>Nombre de bénéficiaires payés</td>
+                        <td class="text-right">20 250</td>
+                    </tr>
+                    <tr>
+                        <td>Montant payé</td>
+                        <td class="text-right montant">200 000 000 FCFA</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function exporterPDF() {
+            // Déclenche l'utilitaire de génération de document du navigateur
+            window.print();
+        }
+    </script>
+
+</body>
+</html>
