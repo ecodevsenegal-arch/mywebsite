@@ -49,8 +49,7 @@
         display: flex;
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
-        flex-direction: column;
-        
+        flex-direction: column;  
     }
     .benefits-grid :hover {
         background-color: #d4f7b3;
@@ -68,11 +67,11 @@
         background: #67e2e9;
         border: 1px solid var(--border);
         border-radius: 14px;
-        padding: 12px 10px;
+        padding: 0;
         text-align: center;
         align-items: center;
         margin: 0 70px;
-        width: 400px;
+        width: 600px;
     }
     .benefit-card .b-icon {
         font-size: 28px;

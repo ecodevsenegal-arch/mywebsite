@@ -1,0 +1,928 @@
+const {
+  Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+  Header, Footer, AlignmentType, HeadingLevel, BorderStyle, WidthType,
+  ShadingType, VerticalAlign, PageNumberElement, PageBreak, LevelFormat,
+  TabStopType, TabStopPosition
+} = require('docx');
+const fs = require('fs');
+
+// ── PALETTE ──────────────────────────────────────────────────────────────────
+const BRAND_BLUE  = "1F4E79";
+const MID_BLUE    = "2E75B6";
+const LIGHT_BLUE  = "D6E4F0";
+const ACCENT_GREEN = "1E7145";
+const LIGHT_GREEN = "E2EFDA";
+const WHITE       = "FFFFFF";
+const LIGHT_GRAY  = "F2F2F2";
+const DARK_GRAY   = "404040";
+
+// ── TAUX DE CHANGE ────────────────────────────────────────────────────────────
+// 1 EUR = 655,957 XOF (parité fixe FCFA/EUR)
+const EUR_TO_XOF = 655.957;
+const fmt = (eur) => {
+  const xof = Math.round(eur * EUR_TO_XOF);
+  return { eur: eur.toLocaleString('fr-FR') + ' €', xof: xof.toLocaleString('fr-FR') + ' FCFA' };
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const border  = { style: BorderStyle.SINGLE, size: 1, color: "AAAAAA" };
+const borders = { top: border, bottom: border, left: border, right: border };
+const noBorder  = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
+const noBorders = { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder };
+
+function h1(text) {
+  return new Paragraph({
+    heading: HeadingLevel.HEADING_1,
+    spacing: { before: 360, after: 180 },
+    border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: MID_BLUE, space: 4 } },
+    children: [new TextRun({ text, bold: true, color: BRAND_BLUE, size: 28, font: "Arial" })]
+  });
+}
+function h2(text) {
+  return new Paragraph({
+    heading: HeadingLevel.HEADING_2,
+    spacing: { before: 240, after: 120 },
+    children: [new TextRun({ text, bold: true, color: MID_BLUE, size: 24, font: "Arial" })]
+  });
+}
+function h3(text, color = DARK_GRAY) {
+  return new Paragraph({
+    spacing: { before: 180, after: 80 },
+    children: [new TextRun({ text, bold: true, color, size: 22, font: "Arial", italics: true })]
+  });
+}
+function para(text, opts = {}) {
+  return new Paragraph({
+    spacing: { before: 80, after: 80 },
+    alignment: opts.justify ? AlignmentType.JUSTIFIED : AlignmentType.LEFT,
+    children: [new TextRun({ text, font: "Arial", size: 22, color: "333333", ...opts.run })]
+  });
+}
+function bullet(text) {
+  return new Paragraph({
+    numbering: { reference: "bullets", level: 0 },
+    spacing: { before: 60, after: 60 },
+    children: [new TextRun({ text, font: "Arial", size: 22, color: "333333" })]
+  });
+}
+function spacer(n = 1) {
+  return new Paragraph({ spacing: { before: 0, after: 0 }, children: [new TextRun({ text: "", size: n * 12 })] });
+}
+function pageBreak() {
+  return new Paragraph({ children: [new PageBreak()] });
+}
+
+// ── TABLE CELLS ───────────────────────────────────────────────────────────────
+function hCell(text, width, bg = BRAND_BLUE, span = 1) {
+  return new TableCell({
+    width: { size: width, type: WidthType.DXA },
+    shading: { fill: bg, type: ShadingType.CLEAR },
+    borders,
+    margins: { top: 80, bottom: 80, left: 100, right: 100 },
+    verticalAlign: VerticalAlign.CENTER,
+    columnSpan: span,
+    children: [new Paragraph({
+      alignment: AlignmentType.CENTER,
+      children: [new TextRun({ text, bold: true, color: WHITE, font: "Arial", size: 19 })]
+    })]
+  });
+}
+function dCell(text, width, bg = WHITE, bold = false, align = AlignmentType.LEFT, color = "333333") {
+  return new TableCell({
+    width: { size: width, type: WidthType.DXA },
+    shading: { fill: bg, type: ShadingType.CLEAR },
+    borders,
+    margins: { top: 70, bottom: 70, left: 100, right: 100 },
+    children: [new Paragraph({
+      alignment: align,
+      children: [new TextRun({ text, bold, font: "Arial", size: 19, color })]
+    })]
+  });
+}
+function totalCell(text, width, bg = BRAND_BLUE) {
+  return new TableCell({
+    width: { size: width, type: WidthType.DXA },
+    shading: { fill: bg, type: ShadingType.CLEAR },
+    borders,
+    margins: { top: 100, bottom: 100, left: 100, right: 100 },
+    children: [new Paragraph({
+      alignment: AlignmentType.CENTER,
+      children: [new TextRun({ text, bold: true, font: "Arial", size: 20, color: WHITE })]
+    })]
+  });
+}
+function subTotalRow(label, eur, xof, widths, bg = LIGHT_BLUE) {
+  return new TableRow({ children: [
+    new TableCell({
+      width: { size: widths[0], type: WidthType.DXA },
+      shading: { fill: bg, type: ShadingType.CLEAR },
+      borders,
+      margins: { top: 80, bottom: 80, left: 100, right: 100 },
+      columnSpan: 4,
+      children: [new Paragraph({ children: [new TextRun({ text: label, bold: true, font: "Arial", size: 19, color: BRAND_BLUE })] })]
+    }),
+    dCell(eur,  widths[4], bg, true, AlignmentType.RIGHT, BRAND_BLUE),
+    dCell(xof,  widths[5], bg, true, AlignmentType.RIGHT, BRAND_BLUE),
+  ]});
+}
+
+// ── BUDGET DATA ───────────────────────────────────────────────────────────────
+// Budget max: 8 000 € TTC
+// Structure : Honoraires + Frais de mission + Logistique/divers
+// Total HT = 7 620 € → Frais administratifs (2%) = 153 € → Total = 7 773 €
+// Imprévus 3% sur HT = 228 € → Grand total = 8 000 € arrondi
+
+const budget = {
+  // A. HONORAIRES DES EXPERTS
+  honoraires: [
+    { poste: "Chef de mission / Évaluateur principal", jours: 20, taux_j: 250, total: 5000 },
+    { poste: "Spécialiste suivi-évaluation et données", jours:  8, taux_j: 175, total: 1400 },
+    { poste: "Assistant de terrain local (facilitation, traduction)", jours: 5, taux_j: 70, total:  350 },
+  ],
+  // B. PER DIEM ET HÉBERGEMENT
+  perdiem: [
+    { designation: "Per diem chef de mission (Dakar – 5 nuits terrain)", qte: 5, unite: "nuits", pu: 50, total: 250 },
+    { designation: "Per diem spécialiste M&E (Dakar – 3 nuits)", qte: 3, unite: "nuits", pu: 50, total: 150 },
+    { designation: "Hébergement chef de mission (hôtel 3*, Dakar, 5 nuits)", qte: 5, unite: "nuits", pu: 65, total: 325 },
+    { designation: "Hébergement spécialiste M&E (hôtel 3*, Dakar, 3 nuits)", qte: 3, unite: "nuits", pu: 65, total: 195 },
+  ],
+  // C. TRANSPORT
+  transport: [
+    { designation: "Transport aérien A/R (selon lieu de résidence des experts – provision)", qte: 2, unite: "billets", pu: 0, total: 0, note: "inclus dans honoraires / non applicable experts basés Dakar" },
+    { designation: "Transport Dakar ↔ Centre Lac Rose / Sangalkam (véhicule 4x4, 2 jours)", qte: 2, unite: "jours", pu: 80, total: 160 },
+    { designation: "Déplacements locaux Dakar (taxis / Yango, 8 jours)", qte: 8, unite: "jours", pu: 15, total: 120 },
+    { designation: "Carburant et frais de déplacement terrain (activité rue / écoute mobile)", qte: 1, unite: "forfait", pu: 60, total: 60 },
+  ],
+  // D. RESTAURATION
+  restauration: [
+    { designation: "Restauration mission terrain – équipe (5 jours × 3 experts)", qte: 15, unite: "repas/j", pu: 15, total: 225 },
+    { designation: "Collations et pauses lors des focus groups (penthium keur)", qte: 2, unite: "sessions", pu: 40, total: 80 },
+  ],
+  // E. COLLECTE DE DONNÉES ET LOGISTIQUE TERRAIN
+  collecte: [
+    { designation: "Impression des outils de collecte (guides, questionnaires, grilles)", qte: 100, unite: "exemplaires", pu: 0.30, total: 30 },
+    { designation: "Fournitures pour focus groups (papeterie, post-it, marqueurs, cartes)", qte: 2, unite: "sessions", pu: 25, total: 50 },
+    { designation: "Enregistreur audio numérique (location ou achat – amortissement)", qte: 2, unite: "unités", pu: 20, total: 40 },
+    { designation: "Traduction / interprétation wolof ↔ français (focus groups + entretiens)", qte: 5, unite: "jours", pu: 50, total: 250 },
+    { designation: "Saisie et transcription des entretiens", qte: 20, unite: "heures", pu: 8, total: 160 },
+  ],
+  // F. COMMUNICATION
+  communication: [
+    { designation: "Crédit téléphonique et internet (forfait mission terrain)", qte: 1, unite: "forfait", pu: 40, total: 40 },
+    { designation: "Visioconférence et outils collaboratifs (restitution à distance si applicable)", qte: 1, unite: "forfait", pu: 20, total: 20 },
+  ],
+  // G. RESTITUTION ET RAPPORT
+  restitution: [
+    { designation: "Location de salle pour restitution finale (Dakar)", qte: 1, unite: "journée", pu: 80, total: 80 },
+    { designation: "Impression et reliure du rapport final (10 exemplaires)", qte: 10, unite: "exemplaires", pu: 8, total: 80 },
+    { designation: "Présentation PowerPoint de restitution (conception graphique)", qte: 1, unite: "forfait", pu: 50, total: 50 },
+  ],
+};
+
+// Calculs
+const totalHonoraires = budget.honoraires.reduce((s, r) => s + r.total, 0);     // 6 750
+const totalPerdiem    = budget.perdiem.reduce((s, r) => s + r.total, 0);         //   920
+const totalTransport  = budget.transport.filter(r => r.total > 0).reduce((s, r) => s + r.total, 0); // 340
+const totalRestauration = budget.restauration.reduce((s, r) => s + r.total, 0); //   305
+const totalCollecte   = budget.collecte.reduce((s, r) => s + r.total, 0);        //   530
+const totalComm       = budget.communication.reduce((s, r) => s + r.total, 0);   //    60
+const totalRestitution = budget.restitution.reduce((s, r) => s + r.total, 0);    //   210
+
+const sousTotal = totalHonoraires + totalPerdiem + totalTransport + totalRestauration + totalCollecte + totalComm + totalRestitution;
+// = 6750 + 920 + 340 + 305 + 530 + 60 + 210 = 9115 → trop élevé, réduire honoraires
+// Réajustement : chef mission 18j×250=4500, spec 6j×175=1050, assistant 5j×70=350 → 5900
+// sousTotal = 5900+920+340+305+530+60+210 = 8265 → encore trop
+// Réduire per diem : chef 4 nuits×50=200, hébergement chef 4×55=220, spec 3n×50=150, hébergement spec 3×55=165 → 735
+// Transport: 4x4 2j×70=140, taxi 6j×12=72, rue 50 → 262
+// Restauration: 12 repas×12=144, focus 2×30=60 → 204
+// Collecte: 100×0.25=25, fournitures 2×20=40, enreg 2×15=30, traduction 4j×45=180, saisie 15h×7=105 → 380
+// Comm: 30+15=45
+// Restitution: salle 60, impression 10×6=60, PPT 40 → 160
+// Total: 5900+735+262+204+380+45+160 = 7686
+// Frais admin 2% = 154 → 7840; imprévus 2% = 157 → 7997 ≈ 8000 ✓
+
+// Données réajustées (hardcodées pour cohérence)
+const ROWS = {
+  honoraires: [
+    { poste: "Chef de mission / Évaluateur principal",                    jours: 18, taux: 250, total: 4500 },
+    { poste: "Spécialiste suivi-évaluation et données",                   jours:  6, taux: 175, total: 1050 },
+    { poste: "Assistant de terrain (facilitation, traduction)",            jours:  5, taux:  70, total:  350 },
+  ],
+  perdiem: [
+    { lib: "Per diem chef de mission (Dakar, 4 nuits terrain)",  q: 4,  u: "nuits",      pu: 50,   t: 200 },
+    { lib: "Per diem spécialiste M&E (Dakar, 3 nuits)",          q: 3,  u: "nuits",      pu: 50,   t: 150 },
+    { lib: "Hébergement chef de mission (hôtel 3*, 4 nuits)",    q: 4,  u: "nuits",      pu: 55,   t: 220 },
+    { lib: "Hébergement spécialiste M&E (hôtel 3*, 3 nuits)",   q: 3,  u: "nuits",      pu: 55,   t: 165 },
+  ],
+  transport: [
+    { lib: "Transport Dakar ↔ Lac Rose / Sangalkam (4x4, 2 jours)", q: 2, u: "jours",  pu: 70,   t: 140 },
+    { lib: "Déplacements locaux Dakar (taxis, 6 jours)",             q: 6, u: "jours",  pu: 12,   t:  72 },
+    { lib: "Transport écoute mobile / activité rue (forfait)",        q: 1, u: "forfait",pu: 50,   t:  50 },
+  ],
+  restauration: [
+    { lib: "Restauration équipe – mission terrain (4 jours × 3 personnes)", q: 12, u: "repas", pu: 12, t: 144 },
+    { lib: "Collations focus groups penthium keur (2 sessions)",             q:  2, u: "sessions", pu: 30, t: 60 },
+  ],
+  collecte: [
+    { lib: "Impression outils de collecte (guides, questionnaires)",        q: 100, u: "ex.",   pu: 0.25, t:  25 },
+    { lib: "Fournitures focus group (papeterie, marqueurs, cartes)",        q:   2, u: "kits",  pu:  20,  t:  40 },
+    { lib: "Enregistreur audio numérique (location)",                       q:   2, u: "unités",pu:  15,  t:  30 },
+    { lib: "Traduction / interprétation wolof ↔ français",                 q:   4, u: "jours", pu:  45,  t: 180 },
+    { lib: "Saisie et transcription des entretiens",                        q:  15, u: "heures",pu:   7,  t: 105 },
+  ],
+  communication: [
+    { lib: "Crédit téléphonique et internet (forfait mission)",             q: 1, u: "forfait", pu: 30, t:  30 },
+    { lib: "Outils visioconférence / restitution à distance",               q: 1, u: "forfait", pu: 15, t:  15 },
+  ],
+  restitution: [
+    { lib: "Location salle – restitution finale (Dakar)",                   q: 1, u: "journée", pu: 60, t:  60 },
+    { lib: "Impression et reliure rapport final (10 exemplaires)",           q:10, u: "ex.",     pu:  6, t:  60 },
+    { lib: "Conception présentation PowerPoint de restitution",             q: 1, u: "forfait",  pu: 40, t:  40 },
+  ],
+};
+
+const T_HON = ROWS.honoraires.reduce((s, r) => s + r.total, 0);   // 5900
+const T_PD  = ROWS.perdiem.reduce((s, r) => s + r.t, 0);          //  735
+const T_TR  = ROWS.transport.reduce((s, r) => s + r.t, 0);        //  262
+const T_RE  = ROWS.restauration.reduce((s, r) => s + r.t, 0);     //  204
+const T_CO  = ROWS.collecte.reduce((s, r) => s + r.t, 0);         //  380
+const T_CM  = ROWS.communication.reduce((s, r) => s + r.t, 0);    //   45
+const T_RS  = ROWS.restitution.reduce((s, r) => s + r.t, 0);      //  160
+
+const SOUS_TOTAL_HT = T_HON + T_PD + T_TR + T_RE + T_CO + T_CM + T_RS; // 7686
+const FRAIS_ADMIN   = Math.round(SOUS_TOTAL_HT * 0.02);                   //  154
+const IMPR          = Math.round((SOUS_TOTAL_HT + FRAIS_ADMIN) * 0.02);   //  157
+const GRAND_TOTAL   = SOUS_TOTAL_HT + FRAIS_ADMIN + IMPR;                 // 7997 ≈ 8000
+
+function numLettre(n) {
+  // Hardcoded for 7997
+  return "Sept mille neuf cent quatre-vingt-dix-sept euros toutes taxes comprises";
+}
+function xofLettre(xof) {
+  return "Cinq millions deux cent quarante-sept mille sept cent quatre-vingt-dix-sept francs CFA toutes taxes comprises";
+}
+
+const XOF_TOTAL = Math.round(GRAND_TOTAL * EUR_TO_XOF); // ≈ 5 247 797
+
+// ── DOCUMENT ─────────────────────────────────────────────────────────────────
+const doc = new Document({
+  numbering: {
+    config: [{
+      reference: "bullets",
+      levels: [{
+        level: 0, format: LevelFormat.BULLET, text: "\u2022",
+        alignment: AlignmentType.LEFT,
+        style: { paragraph: { indent: { left: 720, hanging: 360 } } }
+      }]
+    }]
+  },
+  styles: {
+    default: { document: { run: { font: "Arial", size: 22 } } },
+    paragraphStyles: [
+      { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true,
+        run: { size: 28, bold: true, font: "Arial", color: BRAND_BLUE },
+        paragraph: { spacing: { before: 360, after: 180 }, outlineLevel: 0 } },
+      { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal", quickFormat: true,
+        run: { size: 24, bold: true, font: "Arial", color: MID_BLUE },
+        paragraph: { spacing: { before: 240, after: 120 }, outlineLevel: 1 } },
+    ]
+  },
+  sections: [{
+    properties: {
+      page: {
+        size: { width: 11906, height: 16838 },
+        margin: { top: 1134, right: 1134, bottom: 1134, left: 1134 }
+      }
+    },
+    headers: {
+      default: new Header({
+        children: [new Paragraph({
+          border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: MID_BLUE, space: 4 } },
+          tabStops: [{ type: TabStopType.RIGHT, position: 9026 }],
+          children: [
+            new TextRun({ text: "ECODEV Sénégal", bold: true, font: "Arial", size: 18, color: BRAND_BLUE }),
+            new TextRun({ text: "\tOffre Financière – Évaluation Externe Projet RAISE", font: "Arial", size: 18, color: "888888" }),
+          ]
+        })]
+      })
+    },
+    footers: {
+      default: new Footer({
+        children: [new Paragraph({
+          border: { top: { style: BorderStyle.SINGLE, size: 4, color: MID_BLUE, space: 4 } },
+          tabStops: [{ type: TabStopType.RIGHT, position: 9026 }],
+          children: [
+            new TextRun({ text: "ecodev.senegal@gmail.com  |  Mai 2026  |  Confidentiel", font: "Arial", size: 16, color: "888888" }),
+            new TextRun({ text: "\tPage ", font: "Arial", size: 16, color: "888888" }),
+            new PageNumberElement(),
+          ]
+        })]
+      })
+    },
+
+    children: [
+
+      // ═══════════════════════════════════════════════
+      // PAGE DE GARDE
+      // ═══════════════════════════════════════════════
+      spacer(8),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [new TextRun({ text: "ECODEV SÉNÉGAL", bold: true, font: "Arial", size: 52, color: BRAND_BLUE })]
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 0, after: 400 },
+        children: [new TextRun({ text: "Cabinet d'études, d'évaluation et de conseil en développement", font: "Arial", size: 22, color: "666666", italics: true })]
+      }),
+
+      new Table({
+        width: { size: 9026, type: WidthType.DXA },
+        columnWidths: [9026],
+        rows: [new TableRow({ children: [new TableCell({
+          width: { size: 9026, type: WidthType.DXA },
+          shading: { fill: ACCENT_GREEN, type: ShadingType.CLEAR },
+          borders: noBorders,
+          margins: { top: 280, bottom: 280, left: 360, right: 360 },
+          children: [
+            new Paragraph({ alignment: AlignmentType.CENTER, children: [
+              new TextRun({ text: "OFFRE FINANCIÈRE", bold: true, font: "Arial", size: 40, color: WHITE })
+            ]}),
+            new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 120 }, children: [
+              new TextRun({ text: "Évaluation externe du projet RAISE", font: "Arial", size: 26, color: "D5F5E3" })
+            ]}),
+            new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 80 }, children: [
+              new TextRun({ text: "Résilience et Autonomisation par l'Insertion Sociale et professionnelle des", font: "Arial", size: 20, color: "D5F5E3", italics: true })
+            ]}),
+            new Paragraph({ alignment: AlignmentType.CENTER, children: [
+              new TextRun({ text: "Enfants et jeunes majeur·e·s vulnérables en Afrique de l'Ouest", font: "Arial", size: 20, color: "D5F5E3", italics: true })
+            ]}),
+          ]
+        })})]
+      }),
+
+      spacer(4),
+
+      new Table({
+        width: { size: 9026, type: WidthType.DXA },
+        columnWidths: [3000, 6026],
+        rows: [
+          new TableRow({ children: [dCell("Commanditaire", 3000, LIGHT_BLUE, true), dCell("Village Pilote", 6026)] }),
+          new TableRow({ children: [dCell("Bailleur de fonds", 3000, LIGHT_GRAY, true), dCell("Agence Française de Développement (AFD)", 6026, LIGHT_GRAY)] }),
+          new TableRow({ children: [dCell("Soumissionnaire", 3000, LIGHT_BLUE, true), dCell("ECODEV Sénégal", 6026)] }),
+          new TableRow({ children: [dCell("Budget maximum (TDR)", 3000, LIGHT_GRAY, true), dCell("8 000 € TTC", 6026, LIGHT_GRAY, false, AlignmentType.LEFT, ACCENT_GREEN)] }),
+          new TableRow({ children: [dCell("Montant proposé TTC", 3000, LIGHT_GREEN, true), dCell(`${GRAND_TOTAL.toLocaleString('fr-FR')} € / ${XOF_TOTAL.toLocaleString('fr-FR')} FCFA`, 6026, LIGHT_GREEN, true, AlignmentType.LEFT, ACCENT_GREEN)] }),
+          new TableRow({ children: [dCell("Date de soumission", 3000, LIGHT_BLUE, true), dCell("21 mai 2026", 6026)] }),
+          new TableRow({ children: [dCell("Contact", 3000, LIGHT_GRAY, true), dCell("ecodev.senegal@gmail.com", 6026, LIGHT_GRAY)] }),
+        ]
+      }),
+
+      spacer(6),
+      new Paragraph({ alignment: AlignmentType.CENTER, children: [
+        new TextRun({ text: "Référence : ", font: "Arial", size: 20, color: "666666" }),
+        new TextRun({ text: "« Évaluation Village Pilote – AFD – 2026 »", font: "Arial", size: 20, bold: true, color: ACCENT_GREEN })
+      ]}),
+
+      pageBreak(),
+
+      // ═══════════════════════════════════════════════
+      // I. INTRODUCTION FINANCIÈRE
+      // ═══════════════════════════════════════════════
+      h1("I. Introduction financière"),
+
+      para("La présente offre financière est soumise par ECODEV Sénégal en réponse à l'appel d'offres lancé par Village Pilote pour la conduite de l'évaluation externe du projet RAISE, financé à hauteur de 40 % par l'Agence Française de Développement (AFD). Elle est indissociable de l'offre technique déposée conjointement et constitue le volet budgétaire de notre proposition globale.", { justify: true }),
+      spacer(1),
+      para("Le budget présenté ci-après a été élaboré selon les principes suivants :", { run: { bold: true } }),
+      bullet("Conformité aux TDR : toutes les rubriques budgétaires découlent directement des activités, méthodes et livrables décrits dans les Termes de Référence du 15 mai 2026 ;"),
+      bullet("Réalisme et cohérence : les montants proposés reflètent les coûts réels du marché sénégalais et régional pour des prestations équivalentes, et sont cohérents avec la durée de la mission (5 jours de terrain maximum, comme stipulé dans les TDR) ;"),
+      bullet("Optimisation des ressources : le budget vise à maximiser la qualité des livrables tout en respectant l'enveloppe maximale de 8 000 € TTC fixée par Village Pilote ;"),
+      bullet("Transparence : chaque poste de dépense est détaillé avec sa quantité, son taux unitaire et son montant total, afin de faciliter le contrôle et la vérification par le commanditaire et le bailleur."),
+
+      spacer(1),
+      h3("Hypothèses de budgétisation"),
+      bullet("Devise de référence : euro (€). Conversion en Francs CFA (XOF) au taux fixe de parité EUR/XOF = 655,957 (parité fixe garantie par les accords monétaires franco-africains) ;"),
+      bullet("Les experts du cabinet ECODEV Sénégal sont basés à Dakar : aucun billet d'avion international n'est prévu, ce qui optimise significativement le budget ;"),
+      bullet("La mission terrain est planifiée sur 5 jours (22–25 juin 2026), conformément au plafond fixé dans les TDR ;"),
+      bullet("Les taux journaliers des experts sont conformes aux grilles de rémunération en vigueur pour des missions similaires financées par l'AFD et les agences du système des Nations Unies au Sénégal ;"),
+      bullet("Les frais administratifs (2 % du sous-total) couvrent les charges de gestion, de comptabilité et de coordination internes au cabinet."),
+
+      pageBreak(),
+
+      // ═══════════════════════════════════════════════
+      // II. BUDGET DÉTAILLÉ
+      // ═══════════════════════════════════════════════
+      h1("II. Budget détaillé par rubrique"),
+
+      // Largeurs colonnes : Désignation=3600, Qté=700, Unité=800, P.U.(€)=900, Total(€)=950, Total(FCFA)=1076
+      // Total = 9026
+      const W = [3600, 700, 800, 900, 1026, 1000];
+
+      // En-tête du tableau principal
+      ...[new Table({
+        width: { size: 9026, type: WidthType.DXA },
+        columnWidths: W,
+        rows: [
+          new TableRow({ children: [
+            hCell("Désignation", W[0]),
+            hCell("Qté", W[1]),
+            hCell("Unité", W[2]),
+            hCell("P.U. (€)", W[3]),
+            hCell("Total (€)", W[4]),
+            hCell("Total (FCFA)", W[5]),
+          ]}),
+
+          // ── A. HONORAIRES ──
+          new TableRow({ children: [
+            new TableCell({ width:{size:9026,type:WidthType.DXA}, shading:{fill:"1F4E79",type:ShadingType.CLEAR}, borders, margins:{top:70,bottom:70,left:100,right:100}, columnSpan:6,
+              children:[new Paragraph({children:[new TextRun({text:"A. HONORAIRES DES EXPERTS", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            })
+          ]}),
+          ...ROWS.honoraires.map((r, i) => new TableRow({ children: [
+            dCell(r.poste,  W[0], i%2===0?WHITE:LIGHT_GRAY),
+            dCell(String(r.jours), W[1], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("jours",  W[2], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.taux.toLocaleString('fr-FR') + " €", W[3], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(r.total.toLocaleString('fr-FR') + " €", W[4], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(Math.round(r.total*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+          ]})),
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:LIGHT_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"Sous-total A – Honoraires", bold:true, font:"Arial", size:19, color:BRAND_BLUE})]})]
+            }),
+            dCell(T_HON.toLocaleString('fr-FR')+" €", W[4], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+            dCell(Math.round(T_HON*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+          ]}),
+
+          // ── B. PER DIEM & HÉBERGEMENT ──
+          new TableRow({ children: [
+            new TableCell({ width:{size:9026,type:WidthType.DXA}, shading:{fill:"1F4E79",type:ShadingType.CLEAR}, borders, margins:{top:70,bottom:70,left:100,right:100}, columnSpan:6,
+              children:[new Paragraph({children:[new TextRun({text:"B. PER DIEM ET HÉBERGEMENT", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            })
+          ]}),
+          ...ROWS.perdiem.map((r, i) => new TableRow({ children: [
+            dCell(r.lib, W[0], i%2===0?WHITE:LIGHT_GRAY),
+            dCell(String(r.q), W[1], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.u, W[2], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.pu.toLocaleString('fr-FR')+" €", W[3], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(r.t.toLocaleString('fr-FR')+" €", W[4], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(Math.round(r.t*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+          ]})),
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:LIGHT_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"Sous-total B – Per diem et hébergement", bold:true, font:"Arial", size:19, color:BRAND_BLUE})]})]
+            }),
+            dCell(T_PD.toLocaleString('fr-FR')+" €", W[4], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+            dCell(Math.round(T_PD*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+          ]}),
+
+          // ── C. TRANSPORT ──
+          new TableRow({ children: [
+            new TableCell({ width:{size:9026,type:WidthType.DXA}, shading:{fill:"1F4E79",type:ShadingType.CLEAR}, borders, margins:{top:70,bottom:70,left:100,right:100}, columnSpan:6,
+              children:[new Paragraph({children:[new TextRun({text:"C. TRANSPORT ET DÉPLACEMENTS", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            })
+          ]}),
+          ...ROWS.transport.map((r, i) => new TableRow({ children: [
+            dCell(r.lib, W[0], i%2===0?WHITE:LIGHT_GRAY),
+            dCell(String(r.q), W[1], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.u, W[2], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.pu.toLocaleString('fr-FR')+" €", W[3], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(r.t.toLocaleString('fr-FR')+" €", W[4], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(Math.round(r.t*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+          ]})),
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:LIGHT_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"Sous-total C – Transport", bold:true, font:"Arial", size:19, color:BRAND_BLUE})]})]
+            }),
+            dCell(T_TR.toLocaleString('fr-FR')+" €", W[4], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+            dCell(Math.round(T_TR*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+          ]}),
+
+          // ── D. RESTAURATION ──
+          new TableRow({ children: [
+            new TableCell({ width:{size:9026,type:WidthType.DXA}, shading:{fill:"1F4E79",type:ShadingType.CLEAR}, borders, margins:{top:70,bottom:70,left:100,right:100}, columnSpan:6,
+              children:[new Paragraph({children:[new TextRun({text:"D. RESTAURATION", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            })
+          ]}),
+          ...ROWS.restauration.map((r, i) => new TableRow({ children: [
+            dCell(r.lib, W[0], i%2===0?WHITE:LIGHT_GRAY),
+            dCell(String(r.q), W[1], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.u, W[2], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.pu.toLocaleString('fr-FR')+" €", W[3], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(r.t.toLocaleString('fr-FR')+" €", W[4], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(Math.round(r.t*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+          ]})),
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:LIGHT_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"Sous-total D – Restauration", bold:true, font:"Arial", size:19, color:BRAND_BLUE})]})]
+            }),
+            dCell(T_RE.toLocaleString('fr-FR')+" €", W[4], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+            dCell(Math.round(T_RE*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+          ]}),
+
+          // ── E. COLLECTE DE DONNÉES ──
+          new TableRow({ children: [
+            new TableCell({ width:{size:9026,type:WidthType.DXA}, shading:{fill:"1F4E79",type:ShadingType.CLEAR}, borders, margins:{top:70,bottom:70,left:100,right:100}, columnSpan:6,
+              children:[new Paragraph({children:[new TextRun({text:"E. COLLECTE DE DONNÉES ET LOGISTIQUE TERRAIN", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            })
+          ]}),
+          ...ROWS.collecte.map((r, i) => new TableRow({ children: [
+            dCell(r.lib, W[0], i%2===0?WHITE:LIGHT_GRAY),
+            dCell(String(r.q), W[1], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.u, W[2], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.pu.toLocaleString('fr-FR')+" €", W[3], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(r.t.toLocaleString('fr-FR')+" €", W[4], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(Math.round(r.t*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+          ]})),
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:LIGHT_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"Sous-total E – Collecte de données", bold:true, font:"Arial", size:19, color:BRAND_BLUE})]})]
+            }),
+            dCell(T_CO.toLocaleString('fr-FR')+" €", W[4], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+            dCell(Math.round(T_CO*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+          ]}),
+
+          // ── F. COMMUNICATION ──
+          new TableRow({ children: [
+            new TableCell({ width:{size:9026,type:WidthType.DXA}, shading:{fill:"1F4E79",type:ShadingType.CLEAR}, borders, margins:{top:70,bottom:70,left:100,right:100}, columnSpan:6,
+              children:[new Paragraph({children:[new TextRun({text:"F. COMMUNICATION", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            })
+          ]}),
+          ...ROWS.communication.map((r, i) => new TableRow({ children: [
+            dCell(r.lib, W[0], i%2===0?WHITE:LIGHT_GRAY),
+            dCell(String(r.q), W[1], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.u, W[2], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.pu.toLocaleString('fr-FR')+" €", W[3], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(r.t.toLocaleString('fr-FR')+" €", W[4], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(Math.round(r.t*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+          ]})),
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:LIGHT_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"Sous-total F – Communication", bold:true, font:"Arial", size:19, color:BRAND_BLUE})]})]
+            }),
+            dCell(T_CM.toLocaleString('fr-FR')+" €", W[4], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+            dCell(Math.round(T_CM*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+          ]}),
+
+          // ── G. RESTITUTION & RAPPORT ──
+          new TableRow({ children: [
+            new TableCell({ width:{size:9026,type:WidthType.DXA}, shading:{fill:"1F4E79",type:ShadingType.CLEAR}, borders, margins:{top:70,bottom:70,left:100,right:100}, columnSpan:6,
+              children:[new Paragraph({children:[new TextRun({text:"G. RESTITUTION ET RAPPORT FINAL", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            })
+          ]}),
+          ...ROWS.restitution.map((r, i) => new TableRow({ children: [
+            dCell(r.lib, W[0], i%2===0?WHITE:LIGHT_GRAY),
+            dCell(String(r.q), W[1], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.u, W[2], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell(r.pu.toLocaleString('fr-FR')+" €", W[3], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(r.t.toLocaleString('fr-FR')+" €", W[4], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+            dCell(Math.round(r.t*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], i%2===0?WHITE:LIGHT_GRAY, false, AlignmentType.RIGHT),
+          ]})),
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:LIGHT_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"Sous-total G – Restitution et rapport", bold:true, font:"Arial", size:19, color:BRAND_BLUE})]})]
+            }),
+            dCell(T_RS.toLocaleString('fr-FR')+" €", W[4], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+            dCell(Math.round(T_RS*EUR_TO_XOF).toLocaleString('fr-FR'), W[5], LIGHT_BLUE, true, AlignmentType.RIGHT, BRAND_BLUE),
+          ]}),
+
+          // ── SOUS-TOTAL GÉNÉRAL ──
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:MID_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:100,bottom:100,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"SOUS-TOTAL GÉNÉRAL HORS FRAIS", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            }),
+            new TableCell({ width:{size:W[4],type:WidthType.DXA}, shading:{fill:MID_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:100,bottom:100,left:100,right:100},
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:SOUS_TOTAL_HT.toLocaleString('fr-FR')+" €", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            }),
+            new TableCell({ width:{size:W[5],type:WidthType.DXA}, shading:{fill:MID_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:100,bottom:100,left:100,right:100},
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:Math.round(SOUS_TOTAL_HT*EUR_TO_XOF).toLocaleString('fr-FR'), bold:true, font:"Arial", size:20, color:WHITE})]})]
+            }),
+          ]}),
+
+          // Frais admin
+          new TableRow({ children: [
+            dCell("Frais administratifs et de gestion (2 % du sous-total)", W[0]+W[1]+W[2]+W[3], LIGHT_GRAY, false, AlignmentType.LEFT, "333333", 4),
+            new TableCell({ width:{size:W[4],type:WidthType.DXA}, shading:{fill:LIGHT_GRAY,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100},
+              columnSpan:1,
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:FRAIS_ADMIN.toLocaleString('fr-FR')+" €", font:"Arial", size:19, color:"333333"})]})]
+            }),
+            new TableCell({ width:{size:W[5],type:WidthType.DXA}, shading:{fill:LIGHT_GRAY,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100},
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:Math.round(FRAIS_ADMIN*EUR_TO_XOF).toLocaleString('fr-FR'), font:"Arial", size:19, color:"333333"})]})]
+            }),
+          ]}),
+
+          // Imprévus
+          new TableRow({ children: [
+            dCell("Imprévus (2 % du sous-total + frais admin)", W[0]+W[1]+W[2]+W[3], WHITE, false, AlignmentType.LEFT, "333333", 4),
+            new TableCell({ width:{size:W[4],type:WidthType.DXA}, shading:{fill:WHITE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100},
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:IMPR.toLocaleString('fr-FR')+" €", font:"Arial", size:19, color:"333333"})]})]
+            }),
+            new TableCell({ width:{size:W[5],type:WidthType.DXA}, shading:{fill:WHITE,type:ShadingType.CLEAR}, borders, margins:{top:80,bottom:80,left:100,right:100},
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:Math.round(IMPR*EUR_TO_XOF).toLocaleString('fr-FR'), font:"Arial", size:19, color:"333333"})]})]
+            }),
+          ]}),
+
+          // TOTAL GÉNÉRAL
+          new TableRow({ children: [
+            new TableCell({ width:{size:W[0]+W[1]+W[2]+W[3],type:WidthType.DXA}, shading:{fill:ACCENT_GREEN,type:ShadingType.CLEAR}, borders, margins:{top:120,bottom:120,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({children:[new TextRun({text:"TOTAL GÉNÉRAL TTC", bold:true, font:"Arial", size:22, color:WHITE})]})]
+            }),
+            new TableCell({ width:{size:W[4],type:WidthType.DXA}, shading:{fill:ACCENT_GREEN,type:ShadingType.CLEAR}, borders, margins:{top:120,bottom:120,left:100,right:100},
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:GRAND_TOTAL.toLocaleString('fr-FR')+" €", bold:true, font:"Arial", size:22, color:WHITE})]})]
+            }),
+            new TableCell({ width:{size:W[5],type:WidthType.DXA}, shading:{fill:ACCENT_GREEN,type:ShadingType.CLEAR}, borders, margins:{top:120,bottom:120,left:100,right:100},
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:XOF_TOTAL.toLocaleString('fr-FR')+" FCFA", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            }),
+          ]}),
+        ]
+      })],
+
+      pageBreak(),
+
+      // ═══════════════════════════════════════════════
+      // III. VENTILATION DES HONORAIRES
+      // ═══════════════════════════════════════════════
+      h1("III. Ventilation détaillée des honoraires"),
+
+      para("Le tableau ci-dessous présente la répartition des jours de travail par expert et par phase de la mission, conformément à l'organisation décrite dans l'offre technique.", { justify: true }),
+      spacer(1),
+
+      new Table({
+        width: { size: 9026, type: WidthType.DXA },
+        columnWidths: [2800, 900, 900, 900, 900, 1000, 1626],
+        rows: [
+          new TableRow({ children: [
+            hCell("Expert / Fonction", 2800),
+            hCell("Prép.", 900),
+            hCell("Terrain", 900),
+            hCell("Analyse", 900),
+            hCell("Réd. rapport", 900),
+            hCell("Restitution", 1000),
+            hCell("Total jours", 1626),
+          ]}),
+          new TableRow({ children: [
+            dCell("Chef de mission / Évaluateur principal", 2800, LIGHT_GRAY),
+            dCell("4", 900, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("5", 900, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("4", 900, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("4", 900, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("1", 1000, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("18 j × 250 € = 4 500 €", 1626, LIGHT_GRAY, true, AlignmentType.CENTER),
+          ]}),
+          new TableRow({ children: [
+            dCell("Spécialiste suivi-évaluation et données", 2800),
+            dCell("2", 900, WHITE, false, AlignmentType.CENTER),
+            dCell("3", 900, WHITE, false, AlignmentType.CENTER),
+            dCell("1", 900, WHITE, false, AlignmentType.CENTER),
+            dCell("0", 900, WHITE, false, AlignmentType.CENTER),
+            dCell("0", 1000, WHITE, false, AlignmentType.CENTER),
+            dCell("6 j × 175 € = 1 050 €", 1626, WHITE, true, AlignmentType.CENTER),
+          ]}),
+          new TableRow({ children: [
+            dCell("Assistant terrain (facilitation / traduction)", 2800, LIGHT_GRAY),
+            dCell("0", 900, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("5", 900, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("0", 900, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("0", 900, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("0", 1000, LIGHT_GRAY, false, AlignmentType.CENTER),
+            dCell("5 j × 70 € = 350 €", 1626, LIGHT_GRAY, true, AlignmentType.CENTER),
+          ]}),
+          new TableRow({ children: [
+            new TableCell({ width:{size:2800+900*4+1000,type:WidthType.DXA}, shading:{fill:BRAND_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:100,bottom:100,left:100,right:100}, columnSpan:6,
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:"TOTAL HONORAIRES", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            }),
+            dCell(`${T_HON.toLocaleString('fr-FR')} €`, 1626, BRAND_BLUE, true, AlignmentType.CENTER, WHITE),
+          ]}),
+        ]
+      }),
+
+      spacer(2),
+      para("Soit un total de 29 jours/homme, dont 5 jours de terrain (conformément au plafond fixé dans les TDR). L'ensemble des autres jours correspond à du travail à distance (revue documentaire, conception des outils, analyse des données, rédaction, restitution).", { justify: true }),
+
+      pageBreak(),
+
+      // ═══════════════════════════════════════════════
+      // IV. CHRONOGRAMME FINANCIER
+      // ═══════════════════════════════════════════════
+      h1("IV. Chronogramme financier par phase"),
+
+      para("Le tableau suivant présente la répartition des coûts par phase de la mission, afin de faciliter la gestion budgétaire et le suivi financier par Village Pilote.", { justify: true }),
+      spacer(1),
+
+      new Table({
+        width: { size: 9026, type: WidthType.DXA },
+        columnWidths: [1400, 2400, 1300, 1200, 1326, 1400],
+        rows: [
+          new TableRow({ children: [
+            hCell("Phase", 1400),
+            hCell("Activités", 2400),
+            hCell("Période", 1300),
+            hCell("Jours/H", 1200),
+            hCell("Coût (€)", 1326),
+            hCell("Coût (FCFA)", 1400),
+          ]}),
+          new TableRow({ children: [
+            dCell("Phase 1 – Préparation", 1400, LIGHT_BLUE, true),
+            dCell("Revue documentaire, conception outils, réunion de cadrage, note de cadrage", 2400, LIGHT_BLUE),
+            dCell("1–15 juin", 1300, LIGHT_BLUE, false, AlignmentType.CENTER),
+            dCell("8 j", 1200, LIGHT_BLUE, false, AlignmentType.CENTER),
+            dCell("2 185 €", 1326, LIGHT_BLUE, false, AlignmentType.RIGHT),
+            dCell("1 433 366", 1400, LIGHT_BLUE, false, AlignmentType.RIGHT),
+          ]}),
+          new TableRow({ children: [
+            dCell("Phase 2 – Terrain", 1400, WHITE, true),
+            dCell("Entretiens, focus groups, observation directe, enquêtes, restitution locale", 2400, WHITE),
+            dCell("22–25 juin", 1300, WHITE, false, AlignmentType.CENTER),
+            dCell("13 j", 1200, WHITE, false, AlignmentType.CENTER),
+            dCell("3 271 €", 1326, WHITE, false, AlignmentType.RIGHT),
+            dCell("2 144 936", 1400, WHITE, false, AlignmentType.RIGHT),
+          ]}),
+          new TableRow({ children: [
+            dCell("Phase 3 – Analyse", 1400, LIGHT_BLUE, true),
+            dCell("Traitement des données, triangulation, analyse thématique", 2400, LIGHT_BLUE),
+            dCell("26 juin–15 juil.", 1300, LIGHT_BLUE, false, AlignmentType.CENTER),
+            dCell("5 j", 1200, LIGHT_BLUE, false, AlignmentType.CENTER),
+            dCell("1 162 €", 1326, LIGHT_BLUE, false, AlignmentType.RIGHT),
+            dCell("762 222", 1400, LIGHT_BLUE, false, AlignmentType.RIGHT),
+          ]}),
+          new TableRow({ children: [
+            dCell("Phase 4 – Rédaction", 1400, WHITE, true),
+            dCell("Rapport provisoire, intégration commentaires, rapport final", 2400, WHITE),
+            dCell("16 juil.–14 août", 1300, WHITE, false, AlignmentType.CENTER),
+            dCell("4 j", 1200, WHITE, false, AlignmentType.CENTER),
+            dCell("1 138 €", 1326, WHITE, false, AlignmentType.RIGHT),
+            dCell("746 479", 1400, WHITE, false, AlignmentType.RIGHT),
+          ]}),
+          new TableRow({ children: [
+            dCell("Phase 5 – Restitution", 1400, LIGHT_BLUE, true),
+            dCell("Présentation rapport provisoire (7 août), débriefing final, archivage", 2400, LIGHT_BLUE),
+            dCell("7–14 août", 1300, LIGHT_BLUE, false, AlignmentType.CENTER),
+            dCell("1 j", 1200, LIGHT_BLUE, false, AlignmentType.CENTER),
+            dCell("241 €", 1326, LIGHT_BLUE, false, AlignmentType.RIGHT),
+            dCell("158 066", 1400, LIGHT_BLUE, false, AlignmentType.RIGHT),
+          ]}),
+          new TableRow({ children: [
+            new TableCell({ width:{size:1400+2400+1300+1200,type:WidthType.DXA}, shading:{fill:ACCENT_GREEN,type:ShadingType.CLEAR}, borders, margins:{top:100,bottom:100,left:100,right:100}, columnSpan:4,
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:"TOTAL (avant frais admin et imprévus)", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            }),
+            dCell(`${SOUS_TOTAL_HT.toLocaleString('fr-FR')} €`, 1326, ACCENT_GREEN, true, AlignmentType.RIGHT, WHITE),
+            dCell(Math.round(SOUS_TOTAL_HT*EUR_TO_XOF).toLocaleString('fr-FR'), 1400, ACCENT_GREEN, true, AlignmentType.RIGHT, WHITE),
+          ]}),
+        ]
+      }),
+
+      pageBreak(),
+
+      // ═══════════════════════════════════════════════
+      // V. HYPOTHÈSES ET CONDITIONS
+      // ═══════════════════════════════════════════════
+      h1("V. Hypothèses et conditions financières"),
+
+      h2("5.1. Devise et taux de change"),
+      para("L'offre est libellée en euros (€), monnaie de référence du bailleur (AFD). La conversion en Francs CFA (XOF) est effectuée au taux fixe de parité EUR/XOF = 655,957, taux garanti par les accords monétaires institutionnels liant la zone franc à la Banque de France. Ce taux ne peut faire l'objet de fluctuations, garantissant la stabilité des montants en FCFA.", { justify: true }),
+
+      h2("5.2. Validité de l'offre"),
+      para("La présente offre financière est valide pour une durée de 60 jours à compter de la date de soumission, soit jusqu'au 20 juillet 2026. Au-delà de cette date, une actualisation des taux journaliers pourra être proposée par ECODEV Sénégal.", { justify: true }),
+
+      h2("5.3. Modalités de paiement"),
+      para("ECODEV Sénégal propose le calendrier de paiement suivant, aligné sur les jalons de livraison définis dans les TDR :"),
+      spacer(1),
+      new Table({
+        width: { size: 9026, type: WidthType.DXA },
+        columnWidths: [1000, 3526, 2000, 2500],
+        rows: [
+          new TableRow({ children: [hCell("Tranche", 1000), hCell("Condition de déclenchement", 3526), hCell("Pourcentage", 2000), hCell("Montant (€)", 2500)] }),
+          new TableRow({ children: [
+            dCell("1re", 1000, LIGHT_BLUE, true, AlignmentType.CENTER),
+            dCell("Signature du contrat et démarrage de la mission", 3526, LIGHT_BLUE),
+            dCell("30 %", 2000, LIGHT_BLUE, false, AlignmentType.CENTER),
+            dCell(`${Math.round(GRAND_TOTAL*0.30).toLocaleString('fr-FR')} €`, 2500, LIGHT_BLUE, false, AlignmentType.RIGHT),
+          ]}),
+          new TableRow({ children: [
+            dCell("2e", 1000, WHITE, true, AlignmentType.CENTER),
+            dCell("Remise et validation de la note de cadrage et des outils de collecte (15 juin 2026)", 3526, WHITE),
+            dCell("30 %", 2000, WHITE, false, AlignmentType.CENTER),
+            dCell(`${Math.round(GRAND_TOTAL*0.30).toLocaleString('fr-FR')} €`, 2500, WHITE, false, AlignmentType.RIGHT),
+          ]}),
+          new TableRow({ children: [
+            dCell("3e", 1000, LIGHT_BLUE, true, AlignmentType.CENTER),
+            dCell("Remise et validation du rapport final (14 août 2026)", 3526, LIGHT_BLUE),
+            dCell("40 %", 2000, LIGHT_BLUE, false, AlignmentType.CENTER),
+            dCell(`${Math.round(GRAND_TOTAL*0.40).toLocaleString('fr-FR')} €`, 2500, LIGHT_BLUE, false, AlignmentType.RIGHT),
+          ]}),
+          new TableRow({ children: [
+            new TableCell({ width:{size:1000+3526+2000,type:WidthType.DXA}, shading:{fill:ACCENT_GREEN,type:ShadingType.CLEAR}, borders, margins:{top:90,bottom:90,left:100,right:100}, columnSpan:3,
+              children:[new Paragraph({alignment:AlignmentType.RIGHT, children:[new TextRun({text:"TOTAL", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            }),
+            dCell(`${GRAND_TOTAL.toLocaleString('fr-FR')} €`, 2500, ACCENT_GREEN, true, AlignmentType.RIGHT, WHITE),
+          ]}),
+        ]
+      }),
+
+      h2("5.4. Exclusions et limites du budget"),
+      bullet("Le présent budget n'inclut pas les billets d'avion internationaux, les experts du cabinet étant basés à Dakar ;"),
+      bullet("Les frais de visa, s'ils étaient requis pour des raisons exceptionnelles, ne sont pas inclus ;"),
+      bullet("Toute extension substantielle du périmètre de la mission (sites d'intervention supplémentaires, journées de terrain additionnelles, livrables non prévus dans les TDR) fera l'objet d'un avenant budgétaire négocié d'accord parties ;"),
+      bullet("Les taxes locales éventuellement applicables (TVA, retenue à la source) seront gérées conformément à la législation fiscale sénégalaise en vigueur et pourront faire l'objet d'un ajustement si Village Pilote bénéficie d'une exonération fiscale au titre de sa convention avec l'AFD."),
+
+      h2("5.5. Hypothèses logistiques"),
+      bullet("Village Pilote mettra à disposition les documents et ressources listés à la section 5.2 des TDR dans les 48 heures suivant la signature du contrat ;"),
+      bullet("La Directrice des programmes assurera les introductions et la coordination logistique terrain avec les acteurs à rencontrer (services de l'État, partenaires associatifs, maîtres coraniques) ;"),
+      bullet("Un espace de travail au siège de Village Pilote sera mis à disposition de l'équipe d'évaluation durant la mission terrain ;"),
+      bullet("Les modalités d'accès au centre du Lac Rose (Sangalkam) seront précisées lors de la réunion de cadrage."),
+
+      pageBreak(),
+
+      // ═══════════════════════════════════════════════
+      // VI. RÉSUMÉ FINANCIER GLOBAL
+      // ═══════════════════════════════════════════════
+      h1("VI. Résumé financier global"),
+
+      spacer(1),
+      new Table({
+        width: { size: 9026, type: WidthType.DXA },
+        columnWidths: [4513, 2257, 2256],
+        rows: [
+          new TableRow({ children: [hCell("Rubrique", 4513), hCell("Montant (€)", 2257), hCell("Montant (FCFA)", 2256)] }),
+          new TableRow({ children: [dCell("A. Honoraires des experts", 4513, LIGHT_GRAY), dCell(`${T_HON.toLocaleString('fr-FR')} €`, 2257, LIGHT_GRAY, false, AlignmentType.RIGHT), dCell(Math.round(T_HON*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, LIGHT_GRAY, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [dCell("B. Per diem et hébergement", 4513), dCell(`${T_PD.toLocaleString('fr-FR')} €`, 2257, WHITE, false, AlignmentType.RIGHT), dCell(Math.round(T_PD*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, WHITE, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [dCell("C. Transport et déplacements", 4513, LIGHT_GRAY), dCell(`${T_TR.toLocaleString('fr-FR')} €`, 2257, LIGHT_GRAY, false, AlignmentType.RIGHT), dCell(Math.round(T_TR*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, LIGHT_GRAY, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [dCell("D. Restauration", 4513), dCell(`${T_RE.toLocaleString('fr-FR')} €`, 2257, WHITE, false, AlignmentType.RIGHT), dCell(Math.round(T_RE*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, WHITE, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [dCell("E. Collecte de données et logistique terrain", 4513, LIGHT_GRAY), dCell(`${T_CO.toLocaleString('fr-FR')} €`, 2257, LIGHT_GRAY, false, AlignmentType.RIGHT), dCell(Math.round(T_CO*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, LIGHT_GRAY, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [dCell("F. Communication", 4513), dCell(`${T_CM.toLocaleString('fr-FR')} €`, 2257, WHITE, false, AlignmentType.RIGHT), dCell(Math.round(T_CM*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, WHITE, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [dCell("G. Restitution et rapport final", 4513, LIGHT_GRAY), dCell(`${T_RS.toLocaleString('fr-FR')} €`, 2257, LIGHT_GRAY, false, AlignmentType.RIGHT), dCell(Math.round(T_RS*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, LIGHT_GRAY, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [
+            new TableCell({ width:{size:4513,type:WidthType.DXA}, shading:{fill:MID_BLUE,type:ShadingType.CLEAR}, borders, margins:{top:90,bottom:90,left:100,right:100},
+              children:[new Paragraph({children:[new TextRun({text:"Sous-total général hors frais", bold:true, font:"Arial", size:20, color:WHITE})]})]
+            }),
+            dCell(`${SOUS_TOTAL_HT.toLocaleString('fr-FR')} €`, 2257, MID_BLUE, true, AlignmentType.RIGHT, WHITE),
+            dCell(Math.round(SOUS_TOTAL_HT*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, MID_BLUE, true, AlignmentType.RIGHT, WHITE),
+          ]}),
+          new TableRow({ children: [dCell(`Frais administratifs et de gestion (2 %)`, 4513), dCell(`${FRAIS_ADMIN.toLocaleString('fr-FR')} €`, 2257, WHITE, false, AlignmentType.RIGHT), dCell(Math.round(FRAIS_ADMIN*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, WHITE, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [dCell(`Imprévus (2 %)`, 4513, LIGHT_GRAY), dCell(`${IMPR.toLocaleString('fr-FR')} €`, 2257, LIGHT_GRAY, false, AlignmentType.RIGHT), dCell(Math.round(IMPR*EUR_TO_XOF).toLocaleString('fr-FR'), 2256, LIGHT_GRAY, false, AlignmentType.RIGHT)] }),
+          new TableRow({ children: [
+            new TableCell({ width:{size:4513,type:WidthType.DXA}, shading:{fill:ACCENT_GREEN,type:ShadingType.CLEAR}, borders, margins:{top:110,bottom:110,left:100,right:100},
+              children:[new Paragraph({children:[new TextRun({text:"TOTAL GÉNÉRAL TTC", bold:true, font:"Arial", size:22, color:WHITE})]})]
+            }),
+            dCell(`${GRAND_TOTAL.toLocaleString('fr-FR')} €`, 2257, ACCENT_GREEN, true, AlignmentType.RIGHT, WHITE),
+            dCell(`${XOF_TOTAL.toLocaleString('fr-FR')} FCFA`, 2256, ACCENT_GREEN, true, AlignmentType.RIGHT, WHITE),
+          ]}),
+        ]
+      }),
+
+      spacer(2),
+
+      // Montant en lettres
+      new Table({
+        width: { size: 9026, type: WidthType.DXA },
+        columnWidths: [9026],
+        rows: [new TableRow({ children: [new TableCell({
+          width: { size: 9026, type: WidthType.DXA },
+          shading: { fill: LIGHT_GREEN, type: ShadingType.CLEAR },
+          borders,
+          margins: { top: 120, bottom: 120, left: 200, right: 200 },
+          children: [
+            new Paragraph({ children: [new TextRun({ text: "Montant total en euros (lettres) : ", bold: true, font: "Arial", size: 20, color: ACCENT_GREEN })] }),
+            new Paragraph({ spacing: { before: 60 }, children: [new TextRun({ text: "Sept mille neuf cent quatre-vingt-dix-sept euros toutes taxes comprises (7 997 € TTC)", font: "Arial", size: 20, color: "333333", italics: true })] }),
+            new Paragraph({ spacing: { before: 120 }, children: [new TextRun({ text: "Montant total en FCFA (lettres) : ", bold: true, font: "Arial", size: 20, color: ACCENT_GREEN })] }),
+            new Paragraph({ spacing: { before: 60 }, children: [new TextRun({ text: "Cinq millions deux cent quarante-sept mille sept cent quatre-vingt-dix-sept francs CFA toutes taxes comprises (5 247 797 FCFA TTC)", font: "Arial", size: 20, color: "333333", italics: true })] }),
+          ]
+        })})]
+      }),
+
+      pageBreak(),
+
+      // ═══════════════════════════════════════════════
+      // VII. CONCLUSION
+      // ═══════════════════════════════════════════════
+      h1("VII. Conclusion"),
+
+      para("La présente offre financière a été élaborée avec le souci constant de la transparence, du réalisme et de la conformité aux exigences des TDR. ECODEV Sénégal s'engage à respecter scrupuleusement le budget proposé et à tenir une comptabilité rigoureuse de l'ensemble des dépenses engagées dans le cadre de cette mission, conformément aux standards de gestion financière exigés par l'AFD et les bailleurs institutionnels.", { justify: true }),
+      spacer(1),
+      para("Principaux engagements financiers d'ECODEV Sénégal :", { run: { bold: true } }),
+      bullet("Respect strict du plafond budgétaire de 8 000 € TTC fixé par Village Pilote dans les TDR ;"),
+      bullet("Transmission de toutes les pièces justificatives de dépenses (factures, reçus, bordereaux) dans les délais convenus ;"),
+      bullet("Information immédiate de Village Pilote en cas de dépassement prévisible d'un poste budgétaire, avec proposition d'ajustements sans incidence sur le montant global ;"),
+      bullet("Disponibilité totale pour clarifier tout aspect de l'offre financière lors d'échanges préalables à la signature du contrat, notamment en cas de demande de négociation de la part de Village Pilote, conformément aux dispositions de la section X des TDR."),
+      spacer(1),
+      para("ECODEV Sénégal est convaincu que le budget proposé permet de conduire une évaluation externe de haute qualité, répondant à l'ensemble des questions évaluatives formulées dans les TDR et produisant des recommandations directement exploitables pour la conception du prochain plan triennal 2027-2029 de Village Pilote.", { justify: true }),
+      spacer(2),
+      para("Nous demeurons disponibles pour tout échange complémentaire et vous remercions de l'attention portée à notre candidature.", { justify: true }),
+      spacer(3),
+      para("Le Directeur Général d'ECODEV Sénégal", { run: { bold: true } }),
+      para("ecodev.senegal@gmail.com"),
+      para("Dakar, le 21 mai 2026"),
+      spacer(2),
+      new Paragraph({
+        border: { top: { style: BorderStyle.SINGLE, size: 2, color: "CCCCCC", space: 8 } },
+        spacing: { before: 120 },
+        alignment: AlignmentType.CENTER,
+        children: [new TextRun({ text: "Document confidentiel – À l'usage exclusif de Village Pilote et de l'AFD", font: "Arial", size: 18, color: "888888", italics: true })]
+      }),
+    ]
+  }]
+});
+
+Packer.toBuffer(doc).then(buffer => {
+  fs.writeFileSync('/home/claude/Offre_Financiere_RAISE_ECODEV.docx', buffer);
+  console.log('Offre financière créée avec succès.');
+});

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paiement PaiementPro</title>
+  <title>Paiement abonnement</title>
   <style>
     .paiement-card{
         border: solid green;
@@ -19,6 +19,10 @@
         border-radius: 10px 10px 0 0;
         margin-top: 0;
         width: 220px;
+        overflow: hidden;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
     }
     a{
         width: 160px;
@@ -32,11 +36,12 @@
     <div class="paiement-card">
     <h2 class="paiement-head">Passer au paiement</h2>
     <a href="https://formulaire-pro.xpaye.africa/formulaire/7437" target="_blank"><h4>Payer maintenant votre pack</h4></a>
+    <button onclick="lancerPaiement()">Payer</button>
 </Div>
   <!-- Chargement du SDK -->
   <script src="https://www.paiementpro.net/webservice/onlinepayment/js/paiementpro.v1.0.1.js"></script>
-
-  <script>
+    <script>
+    
     function lancerPaiement() {
 
       // Variables GLOBALES (sans const/let/var) comme attendu par le SDK

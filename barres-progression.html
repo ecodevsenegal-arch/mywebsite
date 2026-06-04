@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Démo — Barres de progression</title>
+<style>
+  :root {
+    --rail: #2a2d3a;
+    --fill: #6ee7b7;
+    --fill-2: #34d399;
+    --bg: #15171f;
+    --texte: #e8eaed;
+    --texte-doux: #9aa0ac;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Georgia", serif;
+    background:
+      radial-gradient(circle at 20% 0%, #1e2230 0%, transparent 50%),
+      radial-gradient(circle at 90% 100%, #1a2820 0%, transparent 45%),
+      var(--bg);
+    color: var(--texte);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .carte {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    font-weight: normal;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .sous-titre {
+    color: var(--texte-doux);
+    font-size: 0.85rem;
+    font-family: "Courier New", monospace;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ---- Barre circulaire ---- */
+  .zone-cercle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .barre-circulaire { transform: rotate(0deg); }
+  .fond-cercle {
+    fill: none;
+    stroke: var(--rail);
+    stroke-width: 10;
+  }
+  .progression-cercle {
+    fill: none;
+    stroke: url(#degrade);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.4s ease;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
+  .texte-cercle {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-family: "Courier New", monospace;
+    color: var(--fill);
+  }
+
+  /* ---- Barre horizontale ---- */
+  .label {
+    font-size: 0.8rem;
+    color: var(--texte-doux);
+    font-family: "Courier New", monospace;
+    margin-bottom: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .barre-horizontale {
+    width: 100%;
+    height: 14px;
+    background: var(--rail);
+    border-radius: 7px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .remplissage {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--fill-2), var(--fill));
+    transition: width 0.4s ease;
+  }
+
+  /* ---- Curseur de contrôle ---- */
+  .controle { margin-top: 1rem; }
+  .controle label {
+    font-size: 0.8rem;
+    color: var(--texte-doux);
+    font-family: "Courier New", monospace;
+  }
+  input[type="range"] {
+    width: 100%;
+    margin-top: 0.8rem;
+    accent-color: var(--fill);
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="carte">
+    <h1>Barres de progression</h1>
+    <p class="sous-titre">circulaire + horizontale</p>
+
+    <!-- Barre circulaire -->
+    <div class="zone-cercle">
+      <svg class="barre-circulaire" width="160" height="160">
+        <defs>
+          <linearGradient id="degrade" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#34d399"/>
+            <stop offset="100%" stop-color="#6ee7b7"/>
+          </linearGradient>
+        </defs>
+        <circle cx="80" cy="80" r="70" class="fond-cercle"></circle>
+        <circle cx="80" cy="80" r="70" class="progression-cercle" id="cercle"></circle>
+      </svg>
+      <div class="texte-cercle" id="texteC">0%</div>
+    </div>
+
+    <!-- Barre horizontale -->
+    <div class="label">
+      <span>progression</span>
+      <span id="texteH">0%</span>
+    </div>
+    <div class="barre-horizontale">
+      <div class="remplissage" id="remplissageH"></div>
+    </div>
+
+    <!-- Curseur -->
+    <div class="controle">
+      <label for="curseur">Déplacez pour tester :</label>
+      <input type="range" id="curseur" min="0" max="100" value="0">
+    </div>
+  </div>
+
+<script>
+  // --- Préparation de la barre circulaire ---
+  const cercle = document.getElementById('cercle');
+  const rayon = cercle.r.baseVal.value;            // 70
+  const circonference = 2 * Math.PI * rayon;
+  cercle.style.strokeDasharray = circonference;
+  cercle.style.strokeDashoffset = circonference;   // tout caché au départ
+
+  // --- Fonction unique qui met à jour les deux barres ---
+  function definirProgression(valeur) {
+    valeur = Math.max(0, Math.min(100, valeur));
+
+    // circulaire
+    const decalage = circonference - (valeur / 100) * circonference;
+    cercle.style.strokeDashoffset = decalage;
+    document.getElementById('texteC').textContent = valeur + '%';
+
+    // horizontale
+    document.getElementById('remplissageH').style.width = valeur + '%';
+    document.getElementById('texteH').textContent = valeur + '%';
+  }
+
+  // --- Branchement du curseur ---
+  document.getElementById('curseur').addEventListener('input', (e) => {
+    definirProgression(Number(e.target.value));
+  });
+
+  // valeur de départ
+  definirProgression(0);
+</script>
+</body>
+</html>

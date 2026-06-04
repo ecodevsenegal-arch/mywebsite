@@ -10,13 +10,54 @@
   <link rel="stylesheet" href="Styles.css">
   <link rel="stylesheet" href="nos formations.css">
   <link rel="stylesheet" href="pieds de pages.css">
+  <link rel="stylesheet" href="root.css">
+  <style>
+    .nav-form{
+        display: flex;
+        background: var(--card-head);
+        border-radius: 10px 10px 0 0;
+    }
+    .nav-form a{
+        color: var(--vert-fonce);
+        font-size: 14px;
+        font-weight: 600;
+        padding: 10px 15px 0 15px;
+        background-color: var(--nav-bg);
+        border: solid var(--vert-fonce) 2px;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-form a:hover{
+        background-color: var(--vert-fonce);
+        color: white;
+        transform: translate(0, -10px);
+        transition: 0.3s;
+        border: solid var(--nav-bg) 2px;
+    }
+    .icone-header{
+        margin-top: 0;  
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px 10px 0 0;
+        width: 600px;
+        overflow: hidden;
+        padding: 10px 0 5px 0;
+        border-top: solid var(--vert-fonce) 10px;
+    }
+    .b-texte{
+      font-size: 16px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 15px 15px 20px 15px;
+    }
+  </style>
 </head>
 <body style="background-image: url(image\ background.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
 <div>
     <img src="Enseigne_ECODEV_FINALE_V03.png" height="90" style="margin: 0 90px 0 0; font-size: 50px;">
 </div>
 <div>
-<nav>
+<nav class="nav-form">
     <a href="index.html"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/images/refs/heads/main/icons8-page-d%E2%80%99accueil-96.png" height="25" ;style="margin: 0 30px 0 0;padding-right: 10px;">Accueil</a>
     <a href="a propos.html ">À propos</a>
     <a href="services.html">Services</a>
@@ -24,7 +65,7 @@
     <a href="contacts.html">Contact</a>
     <a href="Espace_formation_ECODEV.html">Espace campus</a>
 </nav>
-<hr style="border: solid blue; margin: 0 0 0 0;">
+<hr style="border: solid var(--vert-fonce); margin: 0 0 15px 0;">
 <div class="container">
   
  <Div>
@@ -561,38 +602,69 @@ function exportWeeklyExcel() {
         <p class="section-title">Tout pour maîtriser l'analyse de données et les outils de la business intelligence</p>
         <div class="benefits-grid">
             <div class="benefit-card">
-                <div class="b-icon"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="30" style="margin: 0 10px 0 0;"></div>
-                <div class="b-title">Microsoft Excel</div>
-                <div class="b-desc">Microsoft Excel, tableur le plus populaire au monde, est un outil professionnel incontournable qui regorge de fonctionnalités avancées souvent méconnues. Cette formation approfondie vise à les maîtriser de calculs, d'analyse de données, des graphiques et tableaux de bord, afin de booster la productivité et les compétences des professionnels au quotidien.</div>
+              <div class="class-header"></div>
+              <div class="icone-header">
+                <img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_excel.png" height="30" style="margin: 0 10px 0 0;">
+                <h2 class="b-title">Microsoft Excel</h2>
+                </div>
+                <p class="b-texte">Microsoft Excel, tableur le plus populaire au monde, est un outil professionnel incontournable qui regorge de fonctionnalités avancées souvent méconnues. Cette formation approfondie vise à les maîtriser de calculs, d'analyse de données, des graphiques et tableaux de bord, afin de booster la productivité et les compétences des professionnels au quotidien.</p>
             </div>
             <div class="benefit-card">
-                <div class="b-icon"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="30" style="margin: 0 10px 0 0;"></div>
-                <div class="b-title">Power BI</div>
-                <div class="b-desc">Dans un contexte professionnel dynamique, maîtriser l'analyse et la visualisation des données est devenu indispensable. Excel et Power BI sont deux outils phares pour créer des tableaux de bord performants et faciliter la prise de décision, mais leur efficacité dépend d'une formation appropriée.</div>
+              <div class="icone-header">
+                <img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_bi.png" height="30" style="margin: 0 10px 0 0;">
+                <h2 class="b-title">Power BI</h2>
+                </div>
+                <p class="b-texte">Dans un contexte professionnel dynamique, maîtriser l'analyse et la visualisation des données est devenu indispensable. Excel et Power BI sont deux outils phares pour créer des tableaux de bord performants et faciliter la prise de décision, mais leur efficacité dépend d'une formation appropriée.</p>
             </div>
             <div class="benefit-card">
-                <div class="b-icon"><img src="Images & icones/kobo.png" height="30" style="margin: 0 10px 0 0;"></div>
-                <div class="b-title">KoboToolbox</div>
-                <div class="b-desc">La formation sur KoboToolbox enseigne comment concevoir, déployer et gérer des formulaires de collecte de données numériques sur mobile et web, même en mode hors connexion. Les participants apprennent à créer des enquêtes efficaces, centraliser les données en temps réel, assurer leur qualité et automatiser le suivi des informations collectées. En maîtrisant cet outil de collecte digitale, ils améliorent la fiabilité des données, accélèrent la prise de décision et renforcent leur profil professionnel dans les domaines du suivi-évaluation, des enquêtes et de la gestion de projets.</div>
+              <div class="icone-header">
+                <img src="Images & icones/kobo.png" height="30" style="margin: 0 10px 0 0;">
+                <h2 class="b-title">KoboToolbox</h2>
+                </div>
+                <p class="b-texte">La formation sur KoboToolbox enseigne comment concevoir, déployer et gérer des formulaires de collecte de données numériques sur mobile et web, même en mode hors connexion. Les participants apprennent à créer des enquêtes efficaces, centraliser les données en temps réel, assurer leur qualité et automatiser le suivi des informations collectées. En maîtrisant cet outil de collecte digitale, ils améliorent la fiabilité des données, accélèrent la prise de décision et renforcent leur profil professionnel dans les domaines du suivi-évaluation, des enquêtes et de la gestion de projets.</p>
                 </div>
                 <div class="benefit-card">
+                  <div class="icone-header">
                 <div class="b-icon"><img src="https://raw.githubusercontent.com/ecodevsenegal-arch/mywebsite/refs/heads/main/logo_power_query.png" height="30" style="margin: 0 10px 0 0;"></div>
-                <div class="b-title">Power Query</div>
-                <div class="b-desc">Cette formation Power Query enseigne comment connecter, nettoyer et transformer des données automatiquement, aussi bien dans Excel que dans Power BI. En maîtrisant cet outil ETL, les participants gagnent du temps, fiabilisent leurs analyses et produisent des rapports dynamiques, tout en renforçant leur profil professionnel.</div>
+                <h2 class="b-title">Power Query</h2>
+                </div>
+                <p class="b-texte">Cette formation Power Query enseigne comment connecter, nettoyer et transformer des données automatiquement, aussi bien dans Excel que dans Power BI. En maîtrisant cet outil ETL, les participants gagnent du temps, fiabilisent leurs analyses et produisent des rapports dynamiques, tout en renforçant leur profil professionnel.</p>
             </div>
-            
+              <div class="benefit-card">
+                  <div class="icone-header">
+                <div class="b-icon"><img src="Images & icones/data-analytic 2.svg" height="30" style="margin: 0 10px 0 0;"></div>
+                <h2 class="b-title">Analyse de données</h2>
+                </div>
+                <p class="b-texte">La formation en Analyse de données enseigne comment collecter, nettoyer, transformer et interpréter des données afin de produire des analyses fiables et pertinentes pour la prise de décision. Les participants apprennent à utiliser des outils d’analyse et de visualisation pour structurer les informations, créer des tableaux de bord dynamiques, automatiser les traitements et générer des rapports clairs et exploitables. En maîtrisant les techniques d’analyse de données, ils améliorent la qualité des décisions stratégiques, optimisent le suivi des performances et renforcent leur profil professionnel dans les domaines du suivi-évaluation, de la recherche, de la gestion de projets et de la business intelligence.</p>
+            </div>
         </div>
     </div>
 </div>
 <div>
-    <hr style="border: solid blue; margin: 0 0 0 0;">
-<footer>
-    <img src="Banniere ECODEV 02.jpg" height="150" style="border-radius: 0 0 0 10px">
-    <div>
-    <h4>Téléphone: +221 77 272 13 24 | +221 77 214 58 74</h4>
-    <h4>Email: ecodev.senegal@gmail.com</h4>
-    <h3>@ECODEV SENEGAL-2026</h3>
+    <hr style="border: solid var(--vert-fonce); margin: 0 0 0 0;">
+<footer class="pied-page">
+  
+    <!--BANNIERE-->
+    <img src="Banniere ECODEV 02.jpg" height="160" style="border-radius: 0 0 0 10px">
+    
+    <!--Reseaux sociaux-->
+<div style="display: grid;align-items: center;">
+    <div class="social-media">
+      <a href="https://www.facebook.com/ecodevconsulting/"><img src="Images & icones/social media/facebook-svgrepo-com (1).svg" style="width: 40px;border-right: 20px;"></a>
+       <a href=""><img src="Images & icones/social media/linkedin-svgrepo-com (1).svg" style="width: 90px;border-right: 20px;"></a>  
+        <a href="https://wa.me/qr/RLS3AOPKGUOGK1" target="_blank"><img src="Images & icones/social media/whatsapp-logo-svgrepo-com.svg" style=" width: 100px; border-right: 20px;"></a>  
     </div>
+   <h3>@ECODEV SENEGAL-2026</h3>
+</div>
+      <!--CONTACTS-->
+<div class="contacts-card">
+ <div class="contacts-header">CONTACTS</div>
+   <div class="contacts-body">
+     <h4><img src="Images & icones/telephone/telephone-svgrepo-com (1).svg" alt="telephone" style="width: 20px;"> +221 77 272 13 24 | +221 77 214 58 74</h4>
+     <h4><img src="Images & icones/Email/email-part-2-svgrepo-com.svg" alt="email" style="width: 20px;margin-right: 10px;">ecodev.senegal@gmail.com</h4>
+     <h4><img src="Images & icones/position gps/map-position-svgrepo-com (1).svg" alt="adresse" style="width: 20px; margin-right: 10px;">Lot N° 1062, Diamniadio Sud Extension Dakar, Sénégal</h4>
+</div>
+</div>
 </footer>
 
 <script>

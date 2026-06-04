@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tableau de Bord de Suivi des Indicateurs</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+:root{
+    --primary:#1e88e5;
+    --secondary:#1565c0;
+    --success:#2e7d32;
+    --light:#f5f7fb;
+    --dark:#263238;
+    --gray:#90a4ae;
+    --white:#ffffff;
+    --shadow:0 4px 15px rgba(0,0,0,0.08);
+    --radius:18px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+.container{
+    width:95%;
+    max-width:1400px;
+    margin:auto;
+    padding:20px;
+}
+
+/* HEADER */
+
+.dashboard-header{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    color:white;
+    padding:25px;
+    border-radius:var(--radius);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    box-shadow:var(--shadow);
+    margin-bottom:25px;
+}
+
+.dashboard-header h1{
+    font-size:2rem;
+    font-weight:700;
+}
+
+.last-update{
+    font-size:0.95rem;
+    background:rgba(255,255,255,0.15);
+    padding:10px 15px;
+    border-radius:10px;
+}
+
+/* FILTERS */
+
+.filters{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.filter-box{
+    background:var(--white);
+    padding:15px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+}
+
+.filter-box label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.filter-box select{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    font-size:14px;
+}
+
+/* KPI CARDS */
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.kpi-card{
+    position:relative;
+    overflow:hidden;
+    background:var(--white);
+    border-radius:var(--radius);
+    padding:25px;
+    box-shadow:var(--shadow);
+    transition:0.3s ease;
+}
+
+.kpi-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.kpi-card::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:6px;
+    top:0;
+    left:0;
+}
+
+.kpi-blue::before{background:#1e88e5;}
+.kpi-green::before{background:#43a047;}
+.kpi-orange::before{background:#fb8c00;}
+.kpi-purple::before{background:#8e24aa;}
+.kpi-red::before{background:#e53935;}
+
+.kpi-content{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.kpi-text h3{
+    font-size:15px;
+    color:var(--gray);
+    margin-bottom:10px;
+}
+
+.kpi-text h2{
+    font-size:2rem;
+    font-weight:700;
+}
+
+.kpi-icon{
+    width:65px;
+    height:65px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    color:white;
+}
+
+.icon-blue{background:#1e88e5;}
+.icon-green{background:#43a047;}
+.icon-orange{background:#fb8c00;}
+.icon-purple{background:#8e24aa;}
+.icon-red{background:#e53935;}
+
+/* CHARTS */
+
+.chart-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.chart-card{
+    background:var(--white);
+    padding:25px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+}
+
+.chart-card h3{
+    margin-bottom:20px;
+}
+
+/* PROGRESS */
+
+.progress-section{
+    background:var(--white);
+    padding:25px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+}
+
+.progress-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.progress-bar{
+    width:100%;
+    height:18px;
+    background:#e0e0e0;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    width:78%;
+    background:linear-gradient(90deg,var(--success),#66bb6a);
+    border-radius:20px;
+    animation:progressAnimation 2s ease;
+}
+
+@keyframes progressAnimation{
+    from{
+        width:0;
+    }
+    to{
+        width:78%;
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+    .chart-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:768px){
+
+    .dashboard-header{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+
+    .dashboard-header h1{
+        font-size:1.5rem;
+    }
+
+    .kpi-text h2{
+        font-size:1.7rem;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+        <div>
+            <h1>📊 Tableau de Bord de Suivi des Indicateurs</h1>
+        </div>
+
+        <div class="last-update">
+            <i class="fa-solid fa-clock"></i>
+            Dernière mise à jour :
+            <span id="updateDate"></span>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+
+        <div class="filter-box">
+            <label>Région</label>
+            <select>
+                <option>Toutes les régions</option>
+                <option>Dakar</option>
+                <option>Thiès</option>
+                <option>Saint-Louis</option>
+            </select>
+        </div>
+
+        <div class="filter-box">
+            <label>Département</label>
+            <select>
+                <option>Tous les départements</option>
+                <option>Pikine</option>
+                <option>Rufisque</option>
+                <option>Mbour</option>
+            </select>
+        </div>
+
+        <div class="filter-box">
+            <label>Période</label>
+            <select>
+                <option>Année en cours</option>
+                <option>Trimestre</option>
+                <option>Mois</option>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+
+        <div class="kpi-card kpi-blue">
+            <div class="kpi-content">
+                <div class="kpi-text">
+                    <h3>Nombre de bénéficiaires</h3>
+                    <h2 id="beneficiaires">12 580</h2>
+                </div>
+
+                <div class="kpi-icon icon-blue">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-card kpi-green">
+            <div class="kpi-content">
+                <div class="kpi-text">
+                    <h3>Nombre de relais</h3>
+                    <h2 id="relais">485</h2>
+                </div>
+
+                <div class="kpi-icon icon-green">
+                    <i class="fa-solid fa-network-wired"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-card kpi-orange">
+            <div class="kpi-content">
+                <div class="kpi-text">
+                    <h3>Bénéficiaires CEC</h3>
+                    <h2 id="cec">3 420</h2>
+                </div>
+
+                <div class="kpi-icon icon-orange">
+                    <i class="fa-solid fa-user-group"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-card kpi-purple">
+            <div class="kpi-content">
+                <div class="kpi-text">
+                    <h3>Nombre de superviseurs</h3>
+                    <h2 id="superviseurs">82</h2>
+                </div>
+
+                <div class="kpi-icon icon-purple">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-card kpi-red">
+            <div class="kpi-content">
+                <div class="kpi-text">
+                    <h3>Nombre de groupes</h3>
+                    <h2 id="groupes">265</h2>
+                </div>
+
+                <div class="kpi-icon icon-red">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CHARTS -->
+    <div class="chart-grid">
+
+        <div class="chart-card">
+            <h3>📈 Évolution des indicateurs</h3>
+            <canvas id="lineChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>🟢 Répartition des bénéficiaires</h3>
+            <canvas id="pieChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-section">
+
+        <div class="progress-header">
+            <h3>Taux de réalisation du programme</h3>
+            <span>78%</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ==============================
+   DATE DERNIERE MISE A JOUR
+================================= */
+
+const today = new Date();
+
+document.getElementById("updateDate").innerHTML =
+today.toLocaleDateString('fr-FR') + " " +
+today.toLocaleTimeString('fr-FR');
+
+/* ==============================
+   LINE CHART
+================================= */
+
+const ctx1 = document.getElementById('lineChart');
+
+new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+        datasets: [
+            {
+                label: 'Bénéficiaires',
+                data: [1200, 2100, 3400, 5000, 7600, 12580],
+                borderColor: '#1e88e5',
+                backgroundColor: 'rgba(30,136,229,0.1)',
+                fill: true,
+                tension: 0.4
+            },
+            {
+                label: 'Relais',
+                data: [50, 120, 180, 250, 350, 485],
+                borderColor: '#43a047',
+                backgroundColor: 'rgba(67,160,71,0.1)',
+                fill: true,
+                tension: 0.4
+            }
+        ]
+    },
+    options: {
+        responsive:true,
+        plugins:{
+            legend:{
+                position:'top'
+            }
+        }
+    }
+});
+
+/* ==============================
+   PIE CHART
+================================= */
+
+const ctx2 = document.getElementById('pieChart');
+
+new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+        labels: ['CEC', 'Autres'],
+        datasets: [{
+            data: [3420, 9160],
+            backgroundColor: [
+                '#fb8c00',
+                '#1e88e5'
+            ],
+            borderWidth:0
+        }]
+    },
+    options:{
+        responsive:true,
+        cutout:'70%'
+    }
+});
+
+/* ==============================
+   INTEGRATION DAX / POWER BI
+=================================
+
+Exemple de mesures DAX :
+
+Nombre_Beneficiaires =
+COUNT(Beneficiaires[ID])
+
+Nombre_Relais =
+COUNT(Relais[ID])
+
+Nombre_Beneficiaires_CEC =
+CALCULATE(
+    COUNT(Beneficiaires[ID]),
+    Beneficiaires[Type] = "CEC"
+)
+
+Nombre_Superviseurs =
+COUNT(Superviseurs[ID])
+
+Nombre_Groupes =
+COUNT(Groupes[ID])
+
+=================================
+
+INTÉGRATION POSSIBLE :
+
+1. Power BI Embedded
+2. API DAX
+3. Azure Analysis Services
+4. Fabric / Semantic Model
+5. DirectQuery
+
+Les IDs HTML peuvent être alimentés
+dynamiquement via JavaScript :
+
+document.getElementById("beneficiaires").innerText = daxData.Nombre_Beneficiaires;
+
+=================================
+*/
+
+</script>
+
+</body>
+</html>

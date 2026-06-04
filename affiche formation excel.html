@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Formation Microsoft Excel Avancé - ECODEV Sénégal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --excel:#217346;
+    --excel-dark:#165A34;
+    --excel-light:#2ca564;
+    --dark:#222;
+    --gray:#f4f5f7;
+    --border:#d8d8d8;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    background:#ececec;
+    padding:30px;
+}
+
+.poster{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:white;
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(0,0,0,.15);
+}
+
+/* HEADER */
+
+.hero{
+    display:grid;
+    grid-template-columns:55% 45%;
+    padding:35px;
+    background:
+    linear-gradient(135deg,#ffffff 0%,#f7f8f8 100%);
+}
+
+.logo-zone{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.logo{
+    width:110px;
+}
+
+.org-name{
+    color:var(--excel-dark);
+}
+
+.org-name h3{
+    font-size:18px;
+    font-weight:500;
+}
+
+.org-name h1{
+    font-size:42px;
+    line-height:1.1;
+    font-weight:800;
+}
+
+.badge{
+    display:inline-block;
+    background:var(--excel);
+    color:white;
+    padding:10px 25px;
+    border-radius:10px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.main-title{
+    font-size:78px;
+    line-height:.95;
+    font-weight:900;
+    color:#111;
+}
+
+.main-title span{
+    color:var(--excel);
+}
+
+.subtitle{
+    margin-top:20px;
+    font-size:24px;
+    line-height:1.5;
+    color:#333;
+}
+
+.subtitle strong{
+    color:var(--excel);
+}
+
+.hero-right{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.hero-right img{
+    width:100%;
+}
+
+/* ICONS */
+
+.icons-row{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:15px;
+    padding:0 35px 25px;
+}
+
+.icon-card{
+    text-align:center;
+    background:white;
+    border-radius:15px;
+    padding:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.icon-card div:first-child{
+    font-size:38px;
+}
+
+.icon-card p{
+    margin-top:10px;
+    font-size:13px;
+    font-weight:700;
+}
+
+/* CONTENT */
+
+.content{
+    display:grid;
+    grid-template-columns:55% 45%;
+    gap:25px;
+    padding:0 35px;
+}
+
+.card{
+    border:2px solid #dfe4df;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.card-header{
+    background:var(--excel);
+    color:white;
+    font-size:24px;
+    font-weight:800;
+    padding:15px 20px;
+}
+
+.modules{
+    padding:20px;
+}
+
+.module{
+    display:flex;
+    gap:15px;
+    margin-bottom:14px;
+    align-items:center;
+}
+
+.module-tag{
+    min-width:110px;
+    text-align:center;
+    background:var(--excel);
+    color:white;
+    padding:8px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.module-title{
+    font-size:15px;
+}
+
+.info{
+    padding:20px;
+}
+
+.info-item{
+    margin-bottom:25px;
+}
+
+.info-item h4{
+    color:var(--excel-dark);
+    margin-bottom:5px;
+}
+
+.price{
+    font-size:46px;
+    color:var(--excel);
+    font-weight:900;
+}
+
+/* COMPETENCES */
+
+.bottom-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    padding:25px 35px;
+}
+
+.list-card{
+    border:2px solid #dfe4df;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.list-content{
+    padding:20px;
+}
+
+.list-content ul{
+    list-style:none;
+}
+
+.list-content li{
+    margin-bottom:12px;
+    padding-left:25px;
+    position:relative;
+}
+
+.list-content li::before{
+    content:"✓";
+    color:var(--excel);
+    font-weight:900;
+    position:absolute;
+    left:0;
+}
+
+.why-icons{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    text-align:center;
+}
+
+.why-icons div{
+    padding:20px 10px;
+}
+
+.why-icons span{
+    display:block;
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+/* CTA */
+
+.cta{
+    margin-top:20px;
+    background:
+    linear-gradient(135deg,#0f5d34,#217346);
+    color:white;
+    padding:35px;
+}
+
+.cta-grid{
+    display:grid;
+    grid-template-columns:55% 45%;
+    align-items:center;
+}
+
+.cta-title{
+    font-size:45px;
+    line-height:.95;
+    font-weight:900;
+}
+
+.cta-title span{
+    color:#FFD02C;
+}
+
+.contacts{
+    font-size:20px;
+    line-height:2;
+}
+
+.footer{
+    background:#0f2f1d;
+    color:white;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    text-align:center;
+    padding:20px;
+}
+
+.footer div{
+    font-weight:600;
+}
+
+@media print{
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .poster{
+        width:100%;
+        box-shadow:none;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="poster">
+
+    <section class="hero">
+
+        <div>
+
+            <div class="logo-zone">
+
+                <img src="logo-ecodev.png" class="logo">
+
+                <div class="org-name">
+                    <h3>Cabinet</h3>
+                    <h1>Conseil en Économie et Développement Durable</h1>
+                    <h2>ECODEV SÉNÉGAL</h2>
+                </div>
+
+            </div>
+
+            <div class="badge">
+                FORMATION CERTIFIANTE
+            </div>
+
+            <div class="main-title">
+                MICROSOFT<br>
+                <span>EXCEL</span><br>
+                AVANCÉ
+            </div>
+
+            <div class="subtitle">
+                Développez votre expertise en
+                <strong>analyse</strong> et
+                <strong>automatisation</strong>
+                des données avec Excel.
+            </div>
+
+        </div>
+
+        <div class="hero-right">
+            <img src="excel-dashboard.png" alt="">
+        </div>
+
+    </section>
+
+    <section class="icons-row">
+
+        <div class="icon-card">
+            <div>📊</div>
+            <p>Analyse de données</p>
+        </div>
+
+        <div class="icon-card">
+            <div>📈</div>
+            <p>Tableaux de bord</p>
+        </div>
+
+        <div class="icon-card">
+            <div>📉</div>
+            <p>Graphiques</p>
+        </div>
+
+        <div class="icon-card">
+            <div>⚙️</div>
+            <p>Automatisation</p>
+        </div>
+
+        <div class="icon-card">
+            <div>💻</div>
+            <p>Bureautique</p>
+        </div>
+
+        <div class="icon-card">
+            <div>🟩</div>
+            <p>Microsoft Excel</p>
+        </div>
+
+    </section>
+
+    <section class="content">
+
+        <div class="card">
+
+            <div class="card-header">
+                PROGRAMME DE LA FORMATION
+            </div>
+
+            <div class="modules">
+
+                <div class="module">
+                    <div class="module-tag">MODULE 1</div>
+                    <div class="module-title">Les bases et fondamentaux de Microsoft Excel</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 2</div>
+                    <div class="module-title">Création et gestion des bases de données</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 3</div>
+                    <div class="module-title">Fonctions conditionnelles : les SI</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 4</div>
+                    <div class="module-title">Fonctions de recherche</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 5</div>
+                    <div class="module-title">Fonctions de Date</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 6</div>
+                    <div class="module-title">Formules matricielles</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 7</div>
+                    <div class="module-title">Tableaux croisés dynamiques</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 8</div>
+                    <div class="module-title">Les graphiques</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 9</div>
+                    <div class="module-title">Mise en forme conditionnelle</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 10</div>
+                    <div class="module-title">Gestion de données</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 11</div>
+                    <div class="module-title">Protection et sécurité des données</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-tag">MODULE 12</div>
+                    <div class="module-title">Conception de tableau de bord</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+                INFORMATIONS PRATIQUES
+            </div>
+
+            <div class="info">
+
+                <div class="info-item">
+                    <h4>Durée</h4>
+                    <p>40 heures en 8 week-end</p>
+                </div>
+
+                <div class="info-item">
+                    <h4>Date</h4>
+                    <p>À partir de Juin 2026</p>
+                </div>
+
+                <div class="info-item">
+                    <h4>Horaires</h4>
+                    <p>Samedi & Dimanche<br>15H00 - 17H00</p>
+                </div>
+
+                <div class="info-item">
+                    <h4>Lieu</h4>
+                    <p>En ligne via Zoom</p>
+                </div>
+
+                <div class="info-item">
+                    <h4>Prix</h4>
+                    <div class="price">75 000 FCFA</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="bottom-grid">
+
+        <div class="list-card">
+            <div class="card-header">
+                À L'ISSUE DE CETTE FORMATION
+            </div>
+
+            <div class="list-content">
+                <ul>
+                    <li>Concevoir des tableaux de bord dynamiques</li>
+                    <li>Maîtriser les fonctions avancées</li>
+                    <li>Automatiser les tâches répétitives</li>
+                    <li>Analyser et visualiser les données</li>
+                    <li>Exploiter les tableaux croisés dynamiques</li>
+                    <li>Produire des reportings professionnels</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="list-card">
+
+            <div class="card-header">
+                POURQUOI SUIVRE CETTE FORMATION ?
+            </div>
+
+            <div class="why-icons">
+
+                <div><span>🎯</span>Formation pratique</div>
+                <div><span>💼</span>Cas réels</div>
+                <div><span>👨‍🏫</span>Expert</div>
+                <div><span>📚</span>Support offert</div>
+                <div><span>🏆</span>Certificat</div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="cta">
+
+        <div class="cta-grid">
+
+            <div class="cta-title">
+                INSCRIVEZ-VOUS<br>
+                <span>DÈS MAINTENANT !</span>
+            </div>
+
+            <div class="contacts">
+
+                📞 +221 76 346 99 80<br>
+                WhatsApp : +221 76 346 99 80<br>
+                ✉ ecodev.senegal@gmail.com<br>
+                🌐 www.ecodev-senegal.com
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="footer">
+
+        <div>Formation certifiante reconnue</div>
+        <div>Approche 100% pratique</div>
+        <div>Boostez votre carrière avec Excel</div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

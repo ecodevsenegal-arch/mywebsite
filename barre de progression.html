@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Progression dynamique</title>
+
+<style>
+.progress-bar{
+    width:300px;
+    height:15px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress{
+    height:100%;
+    width:0%;
+    background:#0a8a21;
+    color:white;
+    text-align:center;
+    line-height:15px;
+    transition:0.3s;
+}
+.container{
+    width:300px;
+    border:1px solid #220303;
+    padding:0 20px 10px 20px;
+    border-radius:10px;
+}
+.titre{
+    text-align:center;
+    overflow:hidden;
+    border-bottom:1px solid #220303;
+    background:#0a8a21;
+    color:white;
+    position:relative;
+    margin:0 -20px 20px -20px;
+    border-radius:10px 10px 0 0;
+}
+.container-soustitre{
+    display:flex;
+    justify-content:center;
+    margin-bottom:10px;
+    gap:1.2em;
+    align-items:center;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h3 class="titre">Taux de paiement</h3>
+    <div class="container-soustitre">
+    <h4 class="sous-titre">💰 Nbre payé: 12000</h4>
+    <h4 class="sous-titre">💴 Nbre restant: 8000</h4>
+    </div>
+<div class="progress-bar">
+    <div class="progress" id="progress">0%</div>
+</div>
+</div>
+<script>
+let value = 0;
+let bar = document.getElementById("progress");
+
+let interval = setInterval(() => {
+    value++;
+
+    bar.style.width = value + "%";
+    bar.textContent = value + "%";
+
+    if(value >= 100){
+        clearInterval(interval);
+    }
+}, 50);
+</script>
+
+</body>
+</html>
